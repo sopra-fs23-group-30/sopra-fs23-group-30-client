@@ -63,7 +63,7 @@ const Login = () => {
             type="submit"
             width="w-max"
             isloading={0}
-            text={isSigningIn ? "Signing In" : "Sign in"}
+            text={isSigningIn ? "Signing in" : "Sign in"}
           />
           <span className="text-sm">
             Don't have an account yet?
