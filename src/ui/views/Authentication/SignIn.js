@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import "styles/views/Login.scss";
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { AtSymbolIcon } from "@heroicons/react/24/outline";
-import Container from "components/Components/General/Container";
-import Label from "components/Components/General/Label";
-import IconTextInput from "components/Components/General/IconTextInput";
+import Container from "ui/components/general/Container";
+import Label from "ui/components/general/Label";
+import IconTextInput from "ui/components/general/IconTextInput";
 import { api } from "helpers/api";
-import Button from "components/Components/General/Button";
+import Button from "ui/components/general/Button";
 
 const Login = () => {
   const [email, setEmail] = useState();
@@ -19,6 +18,7 @@ const Login = () => {
     e.preventDefault();
     const requestBody = JSON.stringify({ email, password });
     const response = await api.post("/users", requestBody);
+    
     if (response.status === 200) {
       //user login success -> set cookie + navigate to home
     } else {

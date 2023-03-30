@@ -6,9 +6,9 @@ import {
 } from "@heroicons/react/20/solid";
 import { api } from "helpers/api";
 import React, { useState } from "react";
-import Button from "../../Components/General/Button";
-import IconTextInput from "../../Components/General/IconTextInput";
-import Label from "../../Components/General/Label";
+import Button from "../../components/general/Button";
+import IconTextInput from "../../components/general/IconTextInput";
+import Label from "../../components/general/Label";
 
 export default function Signup() {
   const [generalInformationSuccessful, setGeneralInformationSuccessful] =

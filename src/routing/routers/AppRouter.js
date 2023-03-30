@@ -1,12 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import SignIn from "components/views/Authentication/SignIn";
-import SignUp from "components/views/Authentication/SignUp";
-import LoggedOutHeader from "components/views/LoggedOutHeader";
+import NavbarSignedOut from "ui/components/shared/NavbarSignedOut";
+import SignIn from "ui/views/Authentication/SignIn";
+import SignUp from "ui/views/Authentication/SignUp";
 
 const AppRouter = () => {
   return (
     <div>
-      <LoggedOutHeader />
+      <NavbarSignedOut />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SignIn />} />
