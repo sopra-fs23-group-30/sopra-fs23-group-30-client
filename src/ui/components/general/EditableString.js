@@ -7,14 +7,14 @@ import {
 import { useEffect, useRef, useState } from "react";
 
 function EditableString(props) {
-  const [editable, setEditable] = useState();
+  const [editable, setEditable] = useState(false);
   const [showSaved, setShowSaved] = useState(false);
-  const [content, setContent] = useState();
-  const [initialContent, setInitialContent] = useState();
+  const [content, setContent] = useState(props.content);
+  const [initialContent, setInitialContent] = useState(props.content);
   const inputRef = useRef(null);
+  const [inputWidth, setInputWidth] = useState('100%'); // Added state to track input width
 
   useEffect(() => {
-    setEditable(false);
     setContent(props.content);
     setInitialContent(props.content);
   }, [props.content]);
@@ -26,6 +26,16 @@ function EditableString(props) {
     setTimeout(() => {
       setShowSaved(false);
     }, 3000);
+  };
+
+  const cancel = () => {
+    setEditable(false);
+    setContent(initialContent);
+  };
+
+  const handleInputChange = (event) => {
+    setContent(event.target.value);
+    setInputWidth(`${event.target.scrollWidth}px`); // Update input width based on content width
   };
 
   return (
@@ -49,19 +59,27 @@ function EditableString(props) {
       </div>
 
       <div className="px-2 py-1 mx-0 flex justify-between border border-gray-300 rounded-lg bg-gray-50">
-        <input
-          {...props}
-          ref={inputRef}
-          type="text"
-          className={`p-0 t text-sm border-none bg-transparent focus:border-none focus:ring-transparent block w-full ${
-            editable ? "text-black-900" : "text-gray-400"
-          }`}
-          value={content ?? ""}
-          onChange={({ target: { value: content } }) => {
-            setContent(content);
-          }}
-          disabled={!editable}
-        />
+        {!editable && (
+          <p
+            className="text-sm cursor-pointer"
+            onClick={() => setEditable(true)}
+          >
+            {content}
+          </p>
+        )}
+
+        {editable && (
+          <textarea
+            {...props}
+            ref={inputRef}
+            className="p-0 text-sm border-none bg-transparent focus:border-none focus:ring-transparent block w-full text-black-900"
+            rows={Math.max(Math.ceil(content.length / 45), 1)}
+            value={content ?? ""}
+            onChange={({ target: { value: content } }) => {
+              setContent(content);
+            }}
+          />
+        )}
 
         <div
           id="actionsContainer"
@@ -82,27 +100,26 @@ function EditableString(props) {
                 height={18}
                 color="blue"
                 onClick={() => {
-                  inputRef.current.focus();
                   setEditable(true);
+                  setTimeout(() => {
+                    inputRef.current.focus();
+                  }, 0);
                 }}
                 className="inline-block align-middle text-blue-500"
               />
             )}
           </span>
 
-          <span className="inline-block align-middle ...">
-            {editable && (
+          {editable && (
+            <span className="inline-block align-middle ...">
               <XMarkIcon
                 height={18}
                 color="blue"
-                onClick={() => {
-                  setEditable(false);
-                  setContent(initialContent);
-                }}
+                onClick={() => cancel()}
                 className="inline-block align-middle text-blue-500"
               />
-            )}
-          </span>
+            </span>
+          )}
         </div>
       </div>
     </div>
@@ -111,6 +128,9 @@ function EditableString(props) {
 
 EditableString.propTypes = {
   content: PropTypes.string,
+
 };
+
+
 
 export default EditableString;
