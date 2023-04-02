@@ -17,14 +17,14 @@ const Login = () => {
     setIsSigningIn(true);
     e.preventDefault();
     const requestBody = JSON.stringify({ email, password });
-    const response = await api.post("/users", requestBody);
-    
-    if (response.status === 200) {
-      //user login success -> set cookie + navigate to home
-    } else {
-      setErrorMsg("Login failed, please try again");
-    }
-    setIsSigningIn(false);
+    let response = await api
+      .post("/login", requestBody)
+      .catch(function (error) {
+        setErrorMsg("Login failed, please try again");
+        setIsSigningIn(false);
+      });
+    localStorage.setItem("authtoken", response.data.token);
+    window.location.href = "/";
   };
 
   return (

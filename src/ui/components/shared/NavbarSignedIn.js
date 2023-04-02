@@ -1,10 +1,10 @@
 import { Avatar, Dropdown } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { Navbar } from "flowbite-react";
+import jwt_decode from "jwt-decode";
 
 const handleLogout = () => {
-  localStorage.removeItem("jwtToken");
-  localStorage.removeItem("user");
+  localStorage.removeItem("authtoken");
   window.location.href = "/signin";
 };
 
@@ -14,12 +14,16 @@ function NavbarSignedIn() {
   const [lastname, setLastname] = useState();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      setFirstname(user.firstname);
-      setLastname(user.lastname);
-      setEmail(user.email);
-    }
+    const token = localStorage.getItem("authtoken");
+    const decoded = jwt_decode(token);
+    console.log(decoded);
+
+    // const user = JSON.parse(localStorage.getItem("user"));
+    // if (user) {
+    //   setFirstname(user.firstname);
+    //   setLastname(user.lastname);
+    //   setEmail(user.email);
+    // }
   }, []);
 
   return (
@@ -57,18 +61,6 @@ function NavbarSignedIn() {
             arrowIcon={false}
             inline={true}
           >
-            <Dropdown.Header className="block md:hidden md:w-48">
-              <span className="block text-sm">
-                {firstname} {lastname}
-              </span>
-              <span className="block truncate text-sm font-medium">
-                {email}
-              </span>
-            </Dropdown.Header>
-            <Dropdown.Item>
-              <a href="/profile">Application Profile</a>
-            </Dropdown.Item>
-            <Dropdown.Divider />
             <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
           </Dropdown>
         </div>
@@ -78,7 +70,7 @@ function NavbarSignedIn() {
         <Navbar.Link className="font-bold text-sm" href="/">
           Search
         </Navbar.Link>
-        <Navbar.Link className="text-sm" href="/navbars">
+        <Navbar.Link className="text-sm" href="/applications">
           Applications
         </Navbar.Link>
       </Navbar.Collapse>

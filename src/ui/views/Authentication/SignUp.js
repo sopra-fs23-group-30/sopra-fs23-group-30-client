@@ -16,7 +16,7 @@ export default function Signup() {
   const [accountTypeSuccessful, setAccountTypeSuccessful] = useState(false);
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phoneNumber, setPhone] = useState("");
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [repeatedPassword, setRepeatedPassword] = useState();
@@ -36,18 +36,23 @@ export default function Signup() {
       firstname,
       lastname,
       email,
-      phone,
+      phoneNumber,
       password,
-      repeatedPassword,
-      isSearcherType: isSearcherType,
+      isSearcher: isSearcherType,
     });
-    const response = await api.post("/users", requestBody);
+
+    let response = await api
+      .post("/registration", requestBody)
+      .catch(function (error) {
+        setErrorMsg("Registration failed, please try again");
+        setAccountTypeSuccessful(false);
+        setGeneralInformationSuccessful(false);
+        return;
+      });
+
     if (response.status === 201) {
       setAccountTypeSuccessful(true);
     } else {
-      setErrorMsg("Registration failed, please try again");
-      setAccountTypeSuccessful(false);
-      setGeneralInformationSuccessful(false);
     }
     setIsSigningUp(false);
   };
@@ -259,19 +264,20 @@ export default function Signup() {
               <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden py-6 sm:py-12 bg-white">
                 <div className="max-w-xl px-5 text-center">
                   <h2 className="mb-2 text-[42px] font-bold text-zinc-800">
-                    Check your inbox
+                    Account created
                   </h2>
                   <p className="mb-2 text-lg text-zinc-500">
-                    We are glad, that you’re with us ? We’ve sent you a
-                    verification link to the email address{" "}
-                    <span className="font-medium text-indigo-500">{email}</span>
-                    .
+                    We are glad, that you’re with us{" "}
+                    <span className="font-medium text-indigo-500">
+                      {firstname}
+                    </span>
+                    !
                   </p>
                   <a
                     href="/signin"
                     className="mt-3 inline-block w-96 rounded bg-indigo-600 px-5 py-3 font-medium text-white shadow-md shadow-indigo-500/20 hover:bg-indigo-700"
                   >
-                    Open the App →
+                    Sign in to the App →
                   </a>
                 </div>
               </div>
