@@ -12,6 +12,7 @@ function NavbarSignedIn() {
   const [email, setEmail] = useState();
   const [firstname, setFirstname] = useState();
   const [lastname, setLastname] = useState();
+  const [isSearcherType, setIsSearcherType] = useState();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -19,6 +20,7 @@ function NavbarSignedIn() {
       setFirstname(user.firstname);
       setLastname(user.lastname);
       setEmail(user.email);
+      setIsSearcherType(user.isSearcherType);
     }
   }, []);
 
@@ -31,7 +33,7 @@ function NavbarSignedIn() {
           alt="Upsearch Logo"
         />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          upsearch.
+          upsearch
         </span>
       </Navbar.Brand>
       <div className="flex md:order-2">
@@ -65,21 +67,33 @@ function NavbarSignedIn() {
                 {email}
               </span>
             </Dropdown.Header>
-            <Dropdown.Item>
-              <a href="/profile">Application Profile</a>
-            </Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
+            <Dropdown.Item onClick={handleLogout} className="text-red-500">Sign out</Dropdown.Item>
           </Dropdown>
         </div>
         <Navbar.Toggle className="ml-3" />
       </div>
       <Navbar.Collapse>
-        <Navbar.Link className="font-bold text-sm" href="/">
-          Search
-        </Navbar.Link>
-        <Navbar.Link className="text-sm" href="/navbars">
-          Applications
+        {isSearcherType ? (
+            <>
+              <Navbar.Link className="font-bold text-sm" href="/search">
+                Search
+              </Navbar.Link>
+              <Navbar.Link className="text-sm" href="/applications">
+                My Applications
+              </Navbar.Link>
+            </>
+        ) : (
+            <>
+              <Navbar.Link className="font-bold text-sm" href="/listings">
+                Create Listing
+              </Navbar.Link>
+              <Navbar.Link className="text-sm" href="/listings">
+                My Listings
+              </Navbar.Link>
+            </>
+        )}
+        <Navbar.Link className="text-sm" href="/profilepage">
+          My Profile
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
