@@ -2,7 +2,7 @@ import BackButton from "ui/components/general/BackButton";
 import EditableString from "ui/components/general/EditableString";
 
 
-export default function ProfilePage() {
+export default function ProfilePageEditable() {
 
     return (
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
