@@ -69,7 +69,7 @@ export default function Search() {
   }, []);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white px-2 py-2.5  sm:px-4 rounded px-4 md:mx-48">
       <div>
         {/* Mobile filter dialog */}
         <Transition.Root show={mobileFiltersOpen} as={Fragment}>

@@ -6,7 +6,7 @@ import SignUp from "ui/views/Authentication/SignUp";
 import Search from "ui/views/Listing/Search";
 import NotFound from "ui/views/NotFound";
 import ProfilePage from "ui/views/Profile/ProfilePage";
-import ProfilePageEditable from "ui/views/ProfilePageEditable";
+import ProfilePageEditable from "ui/views/Profile/ProfilePageEditable";
 
 const AppRouter = () => {
   let isLoggedIn = localStorage.getItem("authtoken");
@@ -20,11 +20,6 @@ const AppRouter = () => {
             <Route path="/" element={<SignIn />} exact />
             <Route path="/signin" element={<SignIn />} exact />
             <Route path="/signup" element={<SignUp />} exact />
-            <Route path="profilepage" element={<ProfilePage />} />
-            <Route
-              path="profilepageeditable"
-              element={<ProfilePageEditable />}
-            />
             <Route path="*" element={<NotFound />} exact />
           </Routes>
         </BrowserRouter>
@@ -37,9 +32,9 @@ const AppRouter = () => {
       <NavbarSignedIn />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<SignIn />} />
-          <Route path="signin" element={<SignIn />} />
-          <Route path="signup" element={<SignUp />} />
+          <Route path="/" element={<Search />} exact />
+          <Route path="/profile" element={<ProfilePage />} exact />
+          <Route path="/profileedit" element={<ProfilePageEditable />} exact />
           <Route path="*" element={<NotFound />} exact />
         </Routes>
       </BrowserRouter>

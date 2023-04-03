@@ -20,7 +20,7 @@ export default function Signup() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [repeatedPassword, setRepeatedPassword] = useState();
-  const [isSearcherType, setIsSearcherType] = useState(true);
+  const [isSearcher, setIsSearcher] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
   const [isSigningUp, setIsSigningUp] = useState(false);
 
@@ -38,7 +38,7 @@ export default function Signup() {
       email,
       phoneNumber,
       password,
-      isSearcher: isSearcherType,
+      isSearcher,
     });
 
     let response = await api
@@ -170,7 +170,7 @@ export default function Signup() {
                 <div className="mt-6 space-y-8 xl:mt-12">
                   <div
                     onClick={() => {
-                      setIsSearcherType(true);
+                      setIsSearcher(true);
                     }}
                     className="flex items-center justify-between max-w-2xl px-8 py-4 mx-auto border cursor-pointer rounded-xl dark:border-gray-700"
                   >
@@ -181,7 +181,7 @@ export default function Signup() {
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
-                        {isSearcherType && (
+                        {isSearcher && (
                           <path
                             fillRule="evenodd"
                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -204,7 +204,7 @@ export default function Signup() {
 
                   <div
                     onClick={() => {
-                      setIsSearcherType(false);
+                      setIsSearcher(false);
                     }}
                     className="flex items-center justify-between max-w-2xl px-8 py-4 mx-auto border cursor-pointer rounded-xl dark:border-gray-700"
                   >
@@ -215,7 +215,7 @@ export default function Signup() {
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
-                        {!isSearcherType && (
+                        {!isSearcher && (
                           <path
                             fillRule="evenodd"
                             d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"

@@ -9,22 +9,12 @@ const handleLogout = () => {
 };
 
 function NavbarSignedIn() {
-  const [email, setEmail] = useState();
-  const [firstname, setFirstname] = useState();
-  const [lastname, setLastname] = useState();
-  const [isSearcherType, setIsSearcherType] = useState();
+  const [isSearcher, setIsSearcher] = useState();
 
   useEffect(() => {
     const token = localStorage.getItem("authtoken");
-    const decoded = jwt_decode(token);
-    console.log(decoded);
-
-    // const user = JSON.parse(localStorage.getItem("user"));
-    // if (user) {
-    //   setFirstname(user.firstname);
-    //   setLastname(user.lastname);
-    //   setEmail(user.email);
-    // }
+    const claims = jwt_decode(token);
+    setIsSearcher(claims.isSearcher);
   }, []);
 
   return (
@@ -46,32 +36,14 @@ function NavbarSignedIn() {
               <div className="flex flex-row">
                 <Avatar
                   alt="User settings"
-                  img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                  img="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg"
                   rounded={true}
                 />
-                <div className="hidden md:block font-medium ml-3">
-                  <div className="text-left">
-                    {firstname} {lastname}
-                  </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    {email}
-                  </div>
-                </div>
               </div>
             }
             arrowIcon={false}
             inline={true}
           >
-            <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
-
-            <Dropdown.Header className="block md:hidden md:w-48">
-              <span className="block text-sm">
-                {firstname} {lastname}
-              </span>
-              <span className="block truncate text-sm font-medium">
-                {email}
-              </span>
-            </Dropdown.Header>
             <Dropdown.Item onClick={handleLogout} className="text-red-500">
               Sign out
             </Dropdown.Item>
@@ -80,14 +52,7 @@ function NavbarSignedIn() {
         <Navbar.Toggle className="ml-3" />
       </div>
       <Navbar.Collapse>
-        <Navbar.Link className="font-bold text-sm" href="/">
-          Search
-        </Navbar.Link>
-        <Navbar.Link className="text-sm" href="/applications">
-          Applications
-        </Navbar.Link>
-
-        {isSearcherType ? (
+        {isSearcher ? (
           <>
             <Navbar.Link className="font-bold text-sm" href="/search">
               Search
@@ -106,7 +71,7 @@ function NavbarSignedIn() {
             </Navbar.Link>
           </>
         )}
-        <Navbar.Link className="text-sm" href="/profilepage">
+        <Navbar.Link className="text-sm" href="/profile">
           My Profile
         </Navbar.Link>
       </Navbar.Collapse>
