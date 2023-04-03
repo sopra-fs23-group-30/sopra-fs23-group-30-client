@@ -53,19 +53,19 @@ export default function Search() {
   });
 
   useEffect(() => {
-    return;
-    let token = localStorage.getItem("jwtToken");
-    fetch("https://localhost:7135/api/listings", {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }).then((response) =>
-      response.json().then((loadedListings) => {
-        setListings(loadedListings);
-      })
-    );
+    setListings(null);
+    // let token = localStorage.getItem("jwtToken");
+    // fetch("https://localhost:7135/api/listings", {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-type": "application/json",
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // }).then((response) =>
+    //   response.json().then((loadedListings) => {
+    //     setListings(loadedListings);
+    //   })
+    // );
   }, []);
 
   return (

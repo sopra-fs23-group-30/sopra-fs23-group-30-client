@@ -32,6 +32,12 @@ export default function Signup() {
     setIsSigningUp(true);
     e.preventDefault();
 
+    if (repeatedPassword !== password) {
+      setErrorMsg("Passwords do not match");
+      setIsSigningUp(false);
+      return;
+    }
+
     const requestBody = JSON.stringify({
       firstname,
       lastname,

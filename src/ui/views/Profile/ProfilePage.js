@@ -1,5 +1,3 @@
-import EditableString from "ui/components/general/EditableString";
-
 export default function ProfilePage() {
   return (
     <div className="px-2 py-2.5  sm:px-4 rounded px-4 md:mx-48">
@@ -38,7 +36,7 @@ export default function ProfilePage() {
                 ></path>
               </svg>
               <a
-                href="#"
+                href="/profile"
                 class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white"
               >
                 Profile Page
@@ -53,7 +51,7 @@ export default function ProfilePage() {
           <img
             class="h-32 w-32 object-cover rounded-full border-2 shadow-md"
             src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg"
-            alt="Profile Picture"
+            alt="Profile"
           />
         </div>
         <div class="mt-2">
@@ -65,7 +63,7 @@ export default function ProfilePage() {
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-10">
         <div class="space-y-4">
           <a
-            href="#"
+            href="/"
             class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
           >
             <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
@@ -76,7 +74,7 @@ export default function ProfilePage() {
             </p>
           </a>
           <a
-            href="#"
+            href="/"
             class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
           >
             <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
@@ -87,7 +85,7 @@ export default function ProfilePage() {
             </p>
           </a>
           <a
-            href="#"
+            href="/"
             class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
           >
             <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
@@ -100,7 +98,7 @@ export default function ProfilePage() {
         </div>
         <div class="space-y-4">
           <a
-            href="#"
+            href="/"
             class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
           >
             <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
@@ -111,7 +109,7 @@ export default function ProfilePage() {
             </p>
           </a>
           <a
-            href="#"
+            href="/"
             class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
           >
             <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
@@ -124,7 +122,7 @@ export default function ProfilePage() {
         </div>
         <div class="space-y-4">
           <a
-            href="#"
+            href="/"
             class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
           >
             <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
