@@ -53,7 +53,7 @@ export default function Search() {
   });
 
   useEffect(() => {
-    setListings(null);
+    setListings([]);
     // let token = localStorage.getItem("jwtToken");
     // fetch("https://localhost:7135/api/listings", {
     //   method: "GET",
