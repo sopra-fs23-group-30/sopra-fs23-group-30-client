@@ -12,7 +12,6 @@ function EditableString(props) {
   const [content, setContent] = useState(props.content);
   const [initialContent, setInitialContent] = useState(props.content);
   const inputRef = useRef(null);
-  const [inputWidth, setInputWidth] = useState('100%'); // Added state to track input width
 
   useEffect(() => {
     setContent(props.content);
@@ -31,11 +30,6 @@ function EditableString(props) {
   const cancel = () => {
     setEditable(false);
     setContent(initialContent);
-  };
-
-  const handleInputChange = (event) => {
-    setContent(event.target.value);
-    setInputWidth(`${event.target.scrollWidth}px`); // Update input width based on content width
   };
 
   return (
@@ -128,9 +122,6 @@ function EditableString(props) {
 
 EditableString.propTypes = {
   content: PropTypes.string,
-
 };
-
-
 
 export default EditableString;
