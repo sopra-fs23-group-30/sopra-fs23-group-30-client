@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { decodeToken } from "react-jwt";
 import EditableString from "ui/components/general/EditableString";
 import toast from "react-hot-toast";
+import EditableTextarea from "ui/components/general/EditableTextarea";
 
 export default function ProfilePage() {
   const [profileData, setProfileData] = useState(null);
@@ -46,6 +47,41 @@ export default function ProfilePage() {
     updateProfile();
   };
 
+  const handleBirthdateChange = (newVal) => {
+    let existingData = profileData;
+    existingData.birthday = newVal;
+    setProfileData(existingData);
+    updateProfile();
+  };
+
+  const handlePhonenumber = (newVal) => {
+    let existingData = profileData;
+    existingData.phoneNumber = newVal;
+    setProfileData(existingData);
+    updateProfile();
+  };
+
+  const handleGender = (newVal) => {
+    let existingData = profileData;
+    existingData.gender = newVal;
+    setProfileData(existingData);
+    updateProfile();
+  };
+
+  const handleBiography = (newVal) => {
+    let existingData = profileData;
+    existingData.biography = newVal;
+    setProfileData(existingData);
+    updateProfile();
+  };
+
+  const handleFlatemateDescription = (newVal) => {
+    let existingData = profileData;
+    existingData.futureFlatmatesDescription = newVal;
+    setProfileData(existingData);
+    updateProfile();
+  };
+
   const updateProfile = async (e) => {
     let token = localStorage.getItem("authtoken");
     const decoded = decodeToken(token);
@@ -55,22 +91,29 @@ export default function ProfilePage() {
       headers: { Authorization: `Bearer ${token}` },
     };
 
-    let response = await api.put("/profiles/" + userId, profileData, config);
-    loadProfile();
-    console.log(response);
-    if (response.status === 204) {
-      toast("Save successful", {
-        duration: 4000,
-        position: "top-right",
-        icon: "✅",
-      });
-    } else {
+    try {
+      let response = await api.put("/profiles/" + userId, profileData, config);
+      if (response.status === 204) {
+        toast("Save successful", {
+          duration: 4000,
+          position: "top-right",
+          icon: "✅",
+        });
+      } else {
+        toast("Save unsuccessful", {
+          duration: 4000,
+          position: "top-right",
+          icon: "❌",
+        });
+      }
+    } catch (ex) {
       toast("Save unsuccessful", {
         duration: 4000,
         position: "top-right",
         icon: "❌",
       });
     }
+    loadProfile();
   };
 
   return (
@@ -130,6 +173,36 @@ export default function ProfilePage() {
           label="Lastname"
           content={profileData?.lastname}
           onSave={handleLastnameChange}
+        />
+
+        <EditableString
+          label="Birthdate"
+          content={profileData?.birthday}
+          onSave={handleBirthdateChange}
+        />
+
+        <EditableString
+          label="Phone"
+          content={profileData?.phoneNumber}
+          onSave={handlePhonenumber}
+        />
+
+        <EditableString
+          label="Gender"
+          content={profileData?.gender}
+          onSave={handleGender}
+        />
+
+        <EditableTextarea
+          label="About Me"
+          content={profileData?.biography}
+          onSave={handleBiography}
+        />
+
+        <EditableTextarea
+          label="I am looking for"
+          content={profileData?.futureFlatmatesDescription}
+          onSave={handleFlatemateDescription}
         />
       </div>
     </div>
