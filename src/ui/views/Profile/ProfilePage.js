@@ -1,6 +1,57 @@
+import { api } from "helpers/api";
+import { useEffect, useState } from "react";
+import { decodeToken } from "react-jwt";
+import EditableString from "ui/components/general/EditableString";
+
 export default function ProfilePage() {
+  const [profileData, setProfileData] = useState(null);
+
+  useEffect(() => {
+    loadProfile().catch(console.error);
+  }, []);
+
+  const loadProfile = async () => {
+    let token = localStorage.getItem("authtoken");
+    const decoded = decodeToken(token);
+    const userId = decoded.userId;
+
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    let response = await api.get("/profiles/" + userId, config);
+    setProfileData(response.data);
+  };
+
+  const handleFirstnameChange = (newVal) => {
+    let existingData = profileData;
+    existingData.firstname = newVal;
+    setProfileData(existingData);
+    updateProfile();
+  };
+
+  const handleLastnameChange = (newVal) => {
+    let existingData = profileData;
+    existingData.lastname = newVal;
+    setProfileData(existingData);
+    updateProfile();
+  };
+
+  const updateProfile = async (e) => {
+    let token = localStorage.getItem("authtoken");
+    const decoded = decodeToken(token);
+    const userId = decoded.userId;
+
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    let response = await api.put("/profiles/" + userId, profileData, config);
+    loadProfile();
+  };
+
   return (
-    <div className="px-2 py-2.5  sm:px-4 rounded px-4 md:mx-48">
+    <div className="px-2 py-2.5 sm:px-4 rounded px-4 md:mx-48">
       <nav class="flex" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
           <li class="inline-flex items-center">
@@ -30,109 +81,33 @@ export default function ProfilePage() {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 ></path>
               </svg>
               <a
                 href="/profile"
                 class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white"
               >
-                Profile Page
+                Profile Page {profileData?.firstname} {profileData?.lastname}
               </a>
             </div>
           </li>
         </ol>
       </nav>
 
-      <div class="flex flex-col items-center">
-        <div class="mt-14">
-          <img
-            class="h-32 w-32 object-cover rounded-full border-2 shadow-md"
-            src="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg"
-            alt="Profile"
-          />
-        </div>
-        <div class="mt-2">
-          <h2 class="text-lg font-medium text-gray-900 text-center">
-            John Doe
-          </h2>
-        </div>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-10">
-        <div class="space-y-4">
-          <a
-            href="/"
-            class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-          >
-            <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-              Age
-            </h5>
-            <p class="font-normal text-sm text-gray-700 dark:text-gray-400">
-              21
-            </p>
-          </a>
-          <a
-            href="/"
-            class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-          >
-            <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-              Gender
-            </h5>
-            <p class="font-normal text-sm text-gray-700 dark:text-gray-400">
-              Male
-            </p>
-          </a>
-          <a
-            href="/"
-            class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-          >
-            <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-              Bio
-            </h5>
-            <p class="font-normal text-sm text-gray-700 dark:text-gray-400">
-              I love sushi
-            </p>
-          </a>
-        </div>
-        <div class="space-y-4">
-          <a
-            href="/"
-            class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-          >
-            <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-              Education
-            </h5>
-            <p class="font-normal text-sm text-gray-700 dark:text-gray-400">
-              University of Zurich
-            </p>
-          </a>
-          <a
-            href="/"
-            class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-          >
-            <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-              Experience
-            </h5>
-            <p class="font-normal text-sm text-gray-700 dark:text-gray-400">
-              2 years of Web development
-            </p>
-          </a>
-        </div>
-        <div class="space-y-4">
-          <a
-            href="/"
-            class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-          >
-            <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-              I am looking for
-            </h5>
-            <p class="font-normal text-sm text-gray-700 dark:text-gray-400">
-              an apartment with
-            </p>
-          </a>
-        </div>
+      <div class="flex flex-col">
+        <EditableString
+          label="Firstname"
+          content={profileData?.firstname}
+          onSave={handleFirstnameChange}
+        />
+        <EditableString
+          label="Lastname"
+          content={profileData?.lastname}
+          onSave={handleLastnameChange}
+        />
       </div>
     </div>
   );

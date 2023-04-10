@@ -25,6 +25,8 @@ function EditableString(props) {
     setTimeout(() => {
       setShowSaved(false);
     }, 3000);
+
+    props.onSave(content);
   };
 
   const cancel = () => {
