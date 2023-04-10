@@ -2,6 +2,7 @@ import { api } from "helpers/api";
 import { useEffect, useState } from "react";
 import { decodeToken } from "react-jwt";
 import EditableString from "ui/components/general/EditableString";
+import toast from "react-hot-toast";
 
 export default function ProfilePage() {
   const [profileData, setProfileData] = useState(null);
@@ -20,6 +21,14 @@ export default function ProfilePage() {
     };
 
     let response = await api.get("/profiles/" + userId, config);
+
+    if (response.status !== 200) {
+      toast("Fetch unsuccessful", {
+        duration: 4000,
+        position: "top-right",
+        icon: "❌",
+      });
+    }
     setProfileData(response.data);
   };
 
@@ -48,20 +57,34 @@ export default function ProfilePage() {
 
     let response = await api.put("/profiles/" + userId, profileData, config);
     loadProfile();
+    console.log(response);
+    if (response.status === 204) {
+      toast("Save successful", {
+        duration: 4000,
+        position: "top-right",
+        icon: "✅",
+      });
+    } else {
+      toast("Save unsuccessful", {
+        duration: 4000,
+        position: "top-right",
+        icon: "❌",
+      });
+    }
   };
 
   return (
     <div className="px-2 py-2.5 sm:px-4 rounded px-4 md:mx-48">
-      <nav class="flex" aria-label="Breadcrumb">
-        <ol class="inline-flex items-center space-x-1 md:space-x-3">
-          <li class="inline-flex items-center">
+      <nav className="flex" aria-label="Breadcrumb">
+        <ol className="inline-flex items-center space-x-1 md:space-x-3">
+          <li className="inline-flex items-center">
             <a
               href="/"
-              class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
+              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
             >
               <svg
                 aria-hidden="true"
-                class="w-4 h-4 mr-2"
+                className="w-4 h-4 mr-2"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -72,10 +95,10 @@ export default function ProfilePage() {
             </a>
           </li>
           <li>
-            <div class="flex items-center">
+            <div className="flex items-center">
               <svg
                 aria-hidden="true"
-                class="w-6 h-6 text-gray-400"
+                className="w-6 h-6 text-gray-400"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +111,7 @@ export default function ProfilePage() {
               </svg>
               <a
                 href="/profile"
-                class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white"
+                className="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white"
               >
                 Profile Page {profileData?.firstname} {profileData?.lastname}
               </a>
@@ -97,7 +120,7 @@ export default function ProfilePage() {
         </ol>
       </nav>
 
-      <div class="flex flex-col">
+      <div className="flex flex-col">
         <EditableString
           label="Firstname"
           content={profileData?.firstname}
