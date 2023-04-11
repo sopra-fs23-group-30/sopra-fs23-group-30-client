@@ -4,10 +4,12 @@ import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 import { format } from 'date-fns'
 import { Badge } from "flowbite-react";
+import DecisionConfirmationInquiry from "ui/components/shared/DecisionConfirmationInquiry";
 
 
 export default function MyApplications() {
   const [applications, setApplications] = useState([]);
+  const [showInquiry, setShowInquiry] = useState(true);
 
   useEffect(() => {
     loadApplications().catch(console.error);
@@ -43,6 +45,13 @@ export default function MyApplications() {
   const applicationItem = (application) => {
     return (
       <div class="rounded-lg overflow-hidden shadow-lg bg-white mb-4">
+        <DecisionConfirmationInquiry
+          show={showInquiry}
+          title="Do you really want to take back the application?"
+          content="This will be permanent."
+          onClick={() => {}}
+          onClose={() => {setShowInquiry(false)}}
+        />
         <div class="flex flex-row items-center justify-between p-4">
           <div> 
             <p class="text-sm">{format(new Date(application.creationDate), 'dd.mm.yyyy')}</p>
@@ -54,7 +63,7 @@ export default function MyApplications() {
           </div>
           {getStateBadge(application.state)}
           <div class="flex flex-row items-center gap-4">
-            <a href="#" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-red-700 focus:outline-none">take back</a>
+            <a onClick={() => {setShowInquiry(true)}} class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-red-700 focus:outline-none">take back</a>
             <a href="#" class="text-sm text-primary hover:underline">See Listing</a>
           </div>
         </div>
