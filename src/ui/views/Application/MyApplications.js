@@ -1,19 +1,24 @@
 import { api } from "helpers/api";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
+import { format } from 'date-fns'
+import { Badge } from "flowbite-react";
+
 
 export default function MyApplications() {
+  const [applications, setApplications] = useState([]);
+
   useEffect(() => {
-    loadProfile().catch(console.error);
+    loadApplications().catch(console.error);
   }, []);
 
-  const loadProfile = async () => {
+  const loadApplications = async () => {
     let token = localStorage.getItem("authtoken");
     const decoded = decodeToken(token);
     const userId = decoded.userId;
 
-    let response = await api.get("/profiles/" + userId);
+    let response = await api.get("/profiles/" + userId + "/applications");
 
     if (response.status !== 200) {
       toast("Fetch unsuccessful", {
@@ -22,7 +27,40 @@ export default function MyApplications() {
         icon: "❌",
       });
     }
+    setApplications(response.data);
+    console.log(response.data);
   };
+
+  const getStateBadge = (state) => {
+    return (<Badge
+      color="success"
+      size="sm"
+    >
+      {state}
+    </Badge>)
+  }
+
+  const applicationItem = (application) => {
+    return (
+      <div class="rounded-lg overflow-hidden shadow-lg bg-white mb-4">
+        <div class="flex flex-row items-center justify-between p-4">
+          <div> 
+            <p class="text-sm">{format(new Date(application.creationDate), 'dd.mm.yyyy')}</p>
+            <div class="flex flex-row gap-4">
+              <p class="font-bold text-secondary">{application.listingTitle}</p>
+              <p class="font-bold">|</p>
+              <p class="text-gray-500">{application.listingStreetName} {application.listingStreetNumber}, {application.listingZipCode} {application.listingCityName}</p>
+            </div>
+          </div>
+          {getStateBadge(application.state)}
+          <div class="flex flex-row items-center gap-4">
+            <a href="#" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-red-700 focus:outline-none">take back</a>
+            <a href="#" class="text-sm text-primary hover:underline">See Listing</a>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="px-2 py-2.5 sm:px-4 rounded px-4 md:mx-48">
@@ -70,6 +108,18 @@ export default function MyApplications() {
           </li>
         </ol>
       </nav>
+      <h1 class="mt-4 mb-4 font-bold">My Applications</h1>
+      <div class="mb-20 ml-6">
+        <h2 class="font-bold mb-4">Pending</h2>
+          {applications.filter((application) => (application.state == "PENDING")).map((application) => applicationItem(application))}
+      </div>
+      <div class="mt-20 ml-6">
+        <h2 class="font-bold mb-4">Accepted</h2>
+
+      </div>
+      <div class="mt-20 ml-6">
+        <h2 class="font-bold mb-4">Rejected</h2>
+      </div>
     </div>
   );
 }
