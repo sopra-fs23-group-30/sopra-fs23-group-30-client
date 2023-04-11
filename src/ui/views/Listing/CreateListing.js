@@ -1,22 +1,32 @@
 import { Button, Label, Textarea, TextInput } from "flowbite-react";
 import { api } from "helpers/api";
+import { useState } from "react";
 import { decodeToken } from "react-jwt";
 
 export default function CreateListing() {
+  const [title, setTitle] = useState()
+  const [description, setDescription] = useState()
+  const [streetName, setStreetName] = useState()
+  const [streetNumber, setStreetNumber] = useState()
+  const [zipCode, setZipcode] = useState()
+  const [cityName, setCityName] = useState()
+  const [pricePerMonth, setPricePerMonth] = useState()
+  const [perfectFlatmateDescription, setPerfectFlatmateDescription] = useState()
+
   const saveListing = async (e) => {
     let token = localStorage.getItem("authtoken");
     const decoded = decodeToken(token);
     const userId = decoded.userId;
 
     const requestBody = JSON.stringify({
-      title: "Wonderful Listing",
-      description: "This is a wonderfu listing located in Zurich",
-      streetName: "teststreet",
-      streetNumber: "10b",
-      zipCode: 8000,
-      cityName: "Zurich",
-      pricePerMonth: 620,
-      perfectFlatmateDescription: "My perfect flatmate is black",
+      title,
+      description,
+      streetName,
+      streetNumber:"14",
+      zipCode:"8000",
+      cityName:"Zürich",
+      pricePerMonth,
+      perfectFlatmateDescription,
       listerId: userId,
     });
 
@@ -78,12 +88,14 @@ export default function CreateListing() {
           <div className="mb-2 block">
             <Label htmlFor="small" value="Title" />
           </div>
-          <TextInput id="small" type="text" className="text-sm" />
+          <TextInput id="small" type="text" className="text-sm" 
+          value={title}
+          onChange={(e) => {setTitle(e.target.value)}}/>
         </div>
 
         <div>
           <div className="mb-2 block">
-            <Label htmlFor="small" value="Description" className="text-sm" />
+            <Label htmlFor="small" value="Description" className="text-sm"/>
           </div>
           <Textarea
             className="text-sm"
@@ -91,7 +103,8 @@ export default function CreateListing() {
             placeholder="Describe your listing..."
             required={true}
             rows={4}
-          />
+            value={description}
+            onChange={(e) => {setDescription(e.target.value)}}/>
         </div>
 
         <div>
@@ -104,6 +117,8 @@ export default function CreateListing() {
             addon="CHF"
             required={true}
             className="text-sm"
+            value={pricePerMonth}
+            onChange={(e) => {setPricePerMonth(e.target.value)}}
           />
         </div>
 
@@ -111,7 +126,9 @@ export default function CreateListing() {
           <div className="mb-2 block">
             <Label htmlFor="small" value="Address" />
           </div>
-          <TextInput id="small" type="text" className="text-sm" />
+          <TextInput id="small" type="text" className="text-sm"
+            value={streetName}
+            onChange={(e) => {setStreetName(e.target.value)}}/>
         </div>
 
         <div>
@@ -128,6 +145,8 @@ export default function CreateListing() {
             placeholder="Leave a comment..."
             required={true}
             rows={4}
+            value={perfectFlatmateDescription}
+            onChange={(e) => {setPerfectFlatmateDescription(e.target.value)}}
           />
         </div>
 
