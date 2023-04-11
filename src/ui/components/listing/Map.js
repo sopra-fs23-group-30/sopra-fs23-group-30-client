@@ -3,7 +3,7 @@ import { MarkerF } from "@react-google-maps/api";
 
 function Map({ coords }) {
   return (
-    <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
+    <LoadScript googleMapsApiKey="AIzaSyA8-VAvkCJKmqcVGUrtzr3VkKnHtt7SfN0">
       <div className="rounded-xl overflow-hidden">
         <GoogleMap
           mapContainerStyle={{

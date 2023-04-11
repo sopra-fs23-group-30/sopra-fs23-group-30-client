@@ -5,11 +5,12 @@ import SignIn from "ui/views/Authentication/SignIn";
 import SignUp from "ui/views/Authentication/SignUp";
 import Search from "ui/views/Listing/Search";
 import NotFound from "ui/views/NotFound";
-import ProfilePage from "ui/views/Profile/ProfilePage";
+import Profile from "ui/views/Profile/Profile";
 import { decodeToken } from "react-jwt";
 import MyApplications from "ui/views/Application/MyApplications";
 import MyListings from "ui/views/Listing/MyListings";
 import CreateListing from "ui/views/Listing/CreateListing";
+import ListingDetail from "ui/views/Listing/ListingDetail";
 
 const AppRouter = () => {
   let token = localStorage.getItem("authtoken");
@@ -42,7 +43,8 @@ const AppRouter = () => {
           <Routes>
             <Route path="/" element={<Search />} exact />
             <Route path="/search" element={<Search />} exact />
-            <Route path="/profile/:id" element={<ProfilePage />} exact />
+            <Route path="/profile/:id" element={<Profile />} exact />
+            <Route path="/listings/:id" element={<ListingDetail />} exact />
             <Route path="/applications" element={<MyApplications />} exact />
             <Route path="*" element={<NotFound />} exact />
           </Routes>
@@ -56,7 +58,8 @@ const AppRouter = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<MyListings />} exact />
-            <Route path="/profile/:id" element={<ProfilePage />} exact />
+            <Route path="/profile/:id" element={<Profile />} exact />
+            <Route path="/listings/:id" element={<ListingDetail />} exact />
             <Route path="/listings" element={<MyListings />} exact />
             <Route path="/createlisting" element={<CreateListing />} exact />
             <Route path="*" element={<NotFound />} exact />

@@ -28,7 +28,6 @@ export default function MyListings() {
       });
     }
     setListings(response.data);
-    console.log(response.data);
   };
 
   return (

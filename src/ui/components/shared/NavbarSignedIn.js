@@ -15,7 +15,6 @@ function NavbarSignedIn() {
     const token = localStorage.getItem("authtoken");
     const claims = jwt_decode(token);
     setIsSearcher(claims.isSearcher);
-    console.log(claims);
     setGoToProfileLink("/profile/" + claims.userId);
   }, []);
 

@@ -1,10 +1,10 @@
 import { api } from "helpers/api";
 import { useEffect, useState } from "react";
-import { decodeToken } from "react-jwt";
-import EditableString from "ui/components/general/EditableString";
 import toast from "react-hot-toast";
-import EditableTextarea from "ui/components/general/EditableTextarea";
+import { decodeToken } from "react-jwt";
 import { useParams } from "react-router-dom";
+import EditableString from "ui/components/general/EditableString";
+import EditableTextarea from "ui/components/general/EditableTextarea";
 
 export default function ProfilePage() {
   const [profileData, setProfileData] = useState(null);
