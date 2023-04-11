@@ -1,6 +1,10 @@
 import axios from "axios";
 import { getDomain } from "helpers/getDomain";
 
+axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+  "authtoken"
+)}`;
+
 export const api = axios.create({
   baseURL: getDomain(),
   headers: {

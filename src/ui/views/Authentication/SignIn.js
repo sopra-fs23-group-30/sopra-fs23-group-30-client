@@ -16,9 +16,12 @@ const Login = () => {
   const handleSubmit = async (e) => {
     setIsSigningIn(true);
     e.preventDefault();
+    const config = {
+      headers: { Authorization: `Bearer ` },
+    };
     const requestBody = JSON.stringify({ email, password });
     let response = await api
-      .post("/login", requestBody)
+      .post("/login", requestBody, config)
       .catch(function (error) {
         setErrorMsg("Login failed, please try again");
         setIsSigningIn(false);

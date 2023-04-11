@@ -4,9 +4,13 @@ import { decodeToken } from "react-jwt";
 import EditableString from "ui/components/general/EditableString";
 import toast from "react-hot-toast";
 import EditableTextarea from "ui/components/general/EditableTextarea";
+import { useParams } from "react-router-dom";
 
 export default function ProfilePage() {
   const [profileData, setProfileData] = useState(null);
+  const [canEdit, setCanEdit] = useState(false);
+
+  let params = useParams();
 
   useEffect(() => {
     loadProfile().catch(console.error);
@@ -17,11 +21,13 @@ export default function ProfilePage() {
     const decoded = decodeToken(token);
     const userId = decoded.userId;
 
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
+    let profileId = params.id;
 
-    let response = await api.get("/profiles/" + userId, config);
+    if (userId === profileId) {
+      setCanEdit(true);
+    }
+
+    let response = await api.get("/profiles/" + profileId);
 
     if (response.status !== 200) {
       toast("Fetch unsuccessful", {
@@ -87,12 +93,8 @@ export default function ProfilePage() {
     const decoded = decodeToken(token);
     const userId = decoded.userId;
 
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-
     try {
-      let response = await api.put("/profiles/" + userId, profileData, config);
+      let response = await api.put("/profiles/" + userId, profileData);
       if (response.status === 204) {
         toast("Save successful", {
           duration: 4000,
@@ -153,7 +155,7 @@ export default function ProfilePage() {
                 ></path>
               </svg>
               <a
-                href="/profile"
+                href="#"
                 className="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white"
               >
                 Profile Page {profileData?.firstname} {profileData?.lastname}
@@ -168,41 +170,48 @@ export default function ProfilePage() {
           label="Firstname"
           content={profileData?.firstname}
           onSave={handleFirstnameChange}
+          canEdit={canEdit}
         />
         <EditableString
           label="Lastname"
           content={profileData?.lastname}
           onSave={handleLastnameChange}
+          canEdit={canEdit}
         />
 
         <EditableString
           label="Birthdate"
           content={profileData?.birthday}
           onSave={handleBirthdateChange}
+          canEdit={canEdit}
         />
 
         <EditableString
           label="Phone"
           content={profileData?.phoneNumber}
           onSave={handlePhonenumber}
+          canEdit={canEdit}
         />
 
         <EditableString
           label="Gender"
           content={profileData?.gender}
           onSave={handleGender}
+          canEdit={canEdit}
         />
 
         <EditableTextarea
           label="About Me"
           content={profileData?.biography}
           onSave={handleBiography}
+          canEdit={canEdit}
         />
 
         <EditableTextarea
           label="I am looking for"
           content={profileData?.futureFlatmatesDescription}
           onSave={handleFlatemateDescription}
+          canEdit={canEdit}
         />
       </div>
     </div>

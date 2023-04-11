@@ -69,46 +69,48 @@ function EditableString(props) {
           />
         )}
 
-        <div
-          id="actionsContainer"
-          className="flex flex-row justify-center ml-1"
-        >
-          <span className="inline-block align-middle">
-            {editable && (
-              <CheckIcon
-                height={18}
-                onClick={() => {
-                  save();
-                }}
-                className="inline-block align-middle text-blue-500"
-              />
-            )}
-            {!editable && (
-              <PencilSquareIcon
-                height={18}
-                color="blue"
-                onClick={() => {
-                  setEditable(true);
-                  setTimeout(() => {
-                    inputRef.current.focus();
-                  }, 0);
-                }}
-                className="inline-block align-middle text-blue-500"
-              />
-            )}
-          </span>
-
-          {editable && (
-            <span className="inline-block align-middle ...">
-              <XMarkIcon
-                height={18}
-                color="blue"
-                onClick={() => cancel()}
-                className="inline-block align-middle text-blue-500"
-              />
+        {props.canEdit && (
+          <div
+            id="actionsContainer"
+            className="flex flex-row justify-center ml-1"
+          >
+            <span className="inline-block align-middle">
+              {editable && (
+                <CheckIcon
+                  height={18}
+                  onClick={() => {
+                    save();
+                  }}
+                  className="inline-block align-middle text-blue-500"
+                />
+              )}
+              {!editable && (
+                <PencilSquareIcon
+                  height={18}
+                  color="blue"
+                  onClick={() => {
+                    setEditable(true);
+                    setTimeout(() => {
+                      inputRef.current.focus();
+                    }, 0);
+                  }}
+                  className="inline-block align-middle text-blue-500"
+                />
+              )}
             </span>
-          )}
-        </div>
+
+            {editable && (
+              <span className="inline-block align-middle ...">
+                <XMarkIcon
+                  height={18}
+                  color="blue"
+                  onClick={() => cancel()}
+                  className="inline-block align-middle text-blue-500"
+                />
+              </span>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

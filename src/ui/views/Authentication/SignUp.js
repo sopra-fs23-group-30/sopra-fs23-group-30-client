@@ -47,8 +47,12 @@ export default function Signup() {
       isSearcher,
     });
 
+    const config = {
+      headers: { Authorization: `Bearer ` },
+    };
+
     let response = await api
-      .post("/registration", requestBody)
+      .post("/registration", requestBody, config)
       .catch(function (error) {
         setErrorMsg("Registration failed, please try again");
         setAccountTypeSuccessful(false);

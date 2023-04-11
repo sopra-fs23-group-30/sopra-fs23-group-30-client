@@ -1,7 +1,6 @@
-import { Avatar, Dropdown } from "flowbite-react";
-import React, { useEffect, useState } from "react";
-import { Navbar } from "flowbite-react";
+import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import jwt_decode from "jwt-decode";
+import { useEffect, useState } from "react";
 
 const handleLogout = () => {
   localStorage.removeItem("authtoken");
@@ -10,11 +9,13 @@ const handleLogout = () => {
 
 function NavbarSignedIn() {
   const [isSearcher, setIsSearcher] = useState();
+  const [goToProfileLink, setGoToProfileLink] = useState();
 
   useEffect(() => {
     const token = localStorage.getItem("authtoken");
     const claims = jwt_decode(token);
     setIsSearcher(claims.isSearcher);
+    setGoToProfileLink("/profile/" + claims.userId);
   }, []);
 
   return (
@@ -63,7 +64,7 @@ function NavbarSignedIn() {
           </>
         ) : (
           <>
-            <Navbar.Link className="font-bold text-sm" href="/listings">
+            <Navbar.Link className="font-bold text-sm" href="/createlisting">
               Create Listing
             </Navbar.Link>
             <Navbar.Link className="text-sm" href="/listings">
@@ -71,7 +72,7 @@ function NavbarSignedIn() {
             </Navbar.Link>
           </>
         )}
-        <Navbar.Link className="text-sm" href="/profile">
+        <Navbar.Link className="text-sm" href={goToProfileLink}>
           My Profile
         </Navbar.Link>
       </Navbar.Collapse>
