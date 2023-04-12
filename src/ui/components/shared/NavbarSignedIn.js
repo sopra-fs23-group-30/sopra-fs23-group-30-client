@@ -9,6 +9,7 @@ const handleLogout = () => {
 
 function NavbarSignedIn() {
   const [isSearcher, setIsSearcher] = useState();
+  const [firstname, setFirstname] = useState();
   const [goToProfileLink, setGoToProfileLink] = useState();
 
   useEffect(() => {
@@ -16,6 +17,7 @@ function NavbarSignedIn() {
     const claims = jwt_decode(token);
     setIsSearcher(claims.isSearcher);
     setGoToProfileLink("/profile/" + claims.userId);
+    setFirstname(claims.firstname);
   }, []);
 
   return (
@@ -32,7 +34,7 @@ function NavbarSignedIn() {
           </span>
         </Navbar.Brand>
         <div className="flex md:order-2">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center">
             <Dropdown
               label={
                 <div className="flex flex-row">
@@ -40,7 +42,14 @@ function NavbarSignedIn() {
                     alt="User settings"
                     img="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg"
                     rounded={true}
-                  />
+                    className="m-0 md:mr-4"
+                  >
+                    <div className="space-y-1">
+                      <div className="hidden md:block text-sm text-black-500 float-left">
+                        Hello, {firstname}
+                      </div>
+                    </div>
+                  </Avatar>
                 </div>
               }
               arrowIcon={false}
