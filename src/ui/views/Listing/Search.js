@@ -1,6 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
   ChevronDownIcon,
   FunnelIcon,
@@ -8,10 +6,12 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
-import { Button, Label, TextInput } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { Label, TextInput } from "flowbite-react";
 import { api } from "helpers/api";
+import { Fragment, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { decodeToken } from "react-jwt";
 
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
@@ -57,18 +57,6 @@ export default function Search() {
   useEffect(() => {
     setListings([]);
     loadListings();
-    // let token = localStorage.getItem("jwtToken");
-    // fetch("https://localhost:7135/api/listings", {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-type": "application/json",
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // }).then((response) =>
-    //   response.json().then((loadedListings) => {
-    //     setListings(loadedListings);
-    //   })
-    // );
   }, []);
 
   const loadListings = async () => {
@@ -82,6 +70,36 @@ export default function Search() {
       });
     }
     setListings(response.data);
+  };
+
+  const handleApply = async (listingId) => {
+    console.log(listingId);
+    let token = localStorage.getItem("authtoken");
+    const decoded = decodeToken(token);
+    const userId = decoded.userId;
+
+    let body = {
+      listingId: listingId,
+      applicantId: userId,
+    };
+
+    try {
+      let response = await api.post("/applications", body);
+      if (response.status === 201) {
+        toast("Application successful", {
+          duration: 4000,
+          position: "top-right",
+          icon: "✅",
+        });
+        return;
+      }
+    } catch (ex) {
+      toast("Application unsuccessful - you've already applied", {
+        duration: 4000,
+        position: "top-right",
+        icon: "❌",
+      });
+    }
   };
 
   const listingItem = (listing) => {
@@ -105,12 +123,14 @@ export default function Search() {
             </p>
           </div>
           <div className="col-span-1 flex flex-col justify-center justify-items-center lg:justify-items-start gap-2 xl:gap-4">
-            <a
-              onClick={() => {}}
-              className="text-white text-center bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
+            <button
+              onClick={() => {
+                handleApply(listing.id);
+              }}
+              className="text-white text-center bg-secondary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
             >
-              Apply now
-            </a>
+              Apply
+            </button>
             <a
               href={"/listings/" + listing.id}
               className="text-sm text-primary text-center items-center hover:underline"
@@ -285,7 +305,7 @@ export default function Search() {
                 <input
                   type="search"
                   id="default-search"
-                  className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 d"
                   placeholder="Search Rooms, Places, ..."
                   onChange={(e) => {
                     setSearchText(e.target.value);
@@ -293,7 +313,7 @@ export default function Search() {
                 />
                 <button
                   type="submit"
-                  className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  className="text-white absolute right-2.5 bottom-2.5 bg-primary hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   Search
                 </button>

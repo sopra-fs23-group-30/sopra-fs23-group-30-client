@@ -13,15 +13,13 @@ export default function ProfilePage() {
   let params = useParams();
 
   useEffect(() => {
-    loadProfile().catch(console.error);
-  }, []);
+    loadProfile(params.id).catch(console.error);
+  }, [params.id]);
 
-  const loadProfile = async () => {
+  const loadProfile = async (profileId) => {
     let token = localStorage.getItem("authtoken");
     const decoded = decodeToken(token);
     const userId = decoded.userId;
-
-    let profileId = params.id;
 
     if (userId === profileId) {
       setCanEdit(true);
@@ -35,6 +33,7 @@ export default function ProfilePage() {
         position: "top-right",
         icon: "❌",
       });
+      loadProfile(params.id);
     }
     setProfileData(response.data);
   };
@@ -155,7 +154,7 @@ export default function ProfilePage() {
                 ></path>
               </svg>
               <a
-                href="#"
+                href={"/profile/" + params.id}
                 className="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white"
               >
                 Profile Page {profileData?.firstname} {profileData?.lastname}

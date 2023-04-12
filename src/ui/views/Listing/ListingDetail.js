@@ -8,19 +8,49 @@ import Map from "ui/components/listing/Map";
 export default function ListingDetail() {
   const [listingData, setListingData] = useState(null);
   const [canEdit, setCanEdit] = useState(false);
+  const [hasApplied, setHasApplied] = useState(false);
 
   let params = useParams();
 
   useEffect(() => {
-    loadListing().catch(console.error);
-  }, []);
+    loadListing(params.id).catch(console.error);
+  }, [params.id]);
 
-  const loadListing = async () => {
+  const handleApply = async () => {
     let token = localStorage.getItem("authtoken");
     const decoded = decodeToken(token);
     const userId = decoded.userId;
 
-    let listingId = params.id;
+    let body = {
+      listingId: params.id,
+      applicantId: userId,
+    };
+
+    try {
+      let response = await api.post("/applications", body);
+      if (response.status === 201) {
+        setHasApplied(true);
+        toast("Application successful", {
+          duration: 4000,
+          position: "top-right",
+          icon: "✅",
+        });
+        return;
+      }
+    } catch (ex) {
+      toast("Application unsuccessful - you've already applied", {
+        duration: 4000,
+        position: "top-right",
+        icon: "❌",
+      });
+    }
+  };
+
+  const loadListing = async (listingId) => {
+    let token = localStorage.getItem("authtoken");
+    const decoded = decodeToken(token);
+    const userId = decoded.userId;
+
     let response = await api.get("/listings/" + listingId);
 
     if (response.status !== 200) {
@@ -85,10 +115,11 @@ export default function ListingDetail() {
           </p>
         </div>
         <div className="flex flex-row justify-end">
-          {!canEdit && (
+          {!canEdit && !hasApplied && (
             <button
+              onClick={() => handleApply()}
               type="button"
-              class="w-full font-bold md:w-1/4 text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none dark:focus:ring-blue-800"
+              class="w-full font-bold md:w-1/4 text-white bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none dark:focus:ring-blue-800"
             >
               Apply
             </button>
@@ -128,7 +159,7 @@ export default function ListingDetail() {
           </p>
 
           <a
-            // href={"/profile/" + listingData.listerId}
+            href={"/profile/" + listingData?.listerId}
             className="text-white text-center bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
           >
             See Profile

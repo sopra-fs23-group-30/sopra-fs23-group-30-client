@@ -70,14 +70,14 @@ export default function MyApplications() {
           </div>
           {getStateBadge(application.state)}
           <div class="flex flex-row items-center gap-4">
-            <a
+            <div
               onClick={() => {
                 setShowInquiry(true);
               }}
               class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-red-700 focus:outline-none"
             >
               take back
-            </a>
+            </div>
             <a
               href={"/listings/" + application.listingId}
               class="text-sm text-primary hover:underline"
@@ -140,7 +140,7 @@ export default function MyApplications() {
       <div class="mb-20 ml-6">
         <h2 class="font-bold mb-4">Pending</h2>
         {applications
-          .filter((application) => application.state == "PENDING")
+          .filter((application) => application.state === "PENDING")
           .map((application) => applicationItem(application))}
       </div>
       <div class="mt-20 ml-6">
