@@ -1,3 +1,4 @@
+import { Select } from "flowbite-react";
 import { api } from "helpers/api";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -5,6 +6,7 @@ import { decodeToken } from "react-jwt";
 import { useParams } from "react-router-dom";
 import EditableString from "ui/components/general/EditableString";
 import EditableTextarea from "ui/components/general/EditableTextarea";
+import InputSelector from "ui/components/general/EditableInputSelector";
 
 export default function ProfilePage() {
   const [profileData, setProfileData] = useState(null);
@@ -163,55 +165,101 @@ export default function ProfilePage() {
           </li>
         </ol>
       </nav>
-
-      <div className="flex flex-col">
-        <EditableString
-          label="Firstname"
-          content={profileData?.firstname}
-          onSave={handleFirstnameChange}
-          canEdit={canEdit}
-        />
-        <EditableString
-          label="Lastname"
-          content={profileData?.lastname}
-          onSave={handleLastnameChange}
-          canEdit={canEdit}
-        />
-
-        <EditableString
-          label="Birthdate"
-          content={profileData?.birthday}
-          onSave={handleBirthdateChange}
-          canEdit={canEdit}
-        />
-
-        <EditableString
-          label="Phone"
-          content={profileData?.phoneNumber}
-          onSave={handlePhonenumber}
-          canEdit={canEdit}
-        />
-
-        <EditableString
-          label="Gender"
-          content={profileData?.gender}
-          onSave={handleGender}
-          canEdit={canEdit}
-        />
-
-        <EditableTextarea
-          label="About Me"
-          content={profileData?.biography}
-          onSave={handleBiography}
-          canEdit={canEdit}
-        />
-
-        <EditableTextarea
-          label="I am looking for"
-          content={profileData?.futureFlatmatesDescription}
-          onSave={handleFlatemateDescription}
-          canEdit={canEdit}
-        />
+      <h1 className="mt-8 ml-4 text-lg font-medium text-gray-900">
+        My Profile
+      </h1>
+      <div className="grid grid-cols-5 grid-rows-3 ml-4 flex flex-col mt-4">
+        <div className="col-span-1 row-span-1 h-full flex flex-col items-center w-full">
+          <h2 className="font-sm">Profile Pic</h2>
+          <div className="rounded-full bg-gray-900 w-36 aspect-square text-white flex items-center justify-center">
+            Image
+          </div>
+          <div className="flex flex-col justify-center justify-items-start gap-2 p-4">
+            <button
+              onClick={() => {}}
+              className="text-white text-center bg-secondary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
+            >
+              Change Photo
+            </button>
+            <button
+              onClick={() => {}}
+              className="text-sm text-primary text-center items-center hover:underline"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+        <div className="col-start-2 col-span-4 row-span-1 flex flex-row lg:flex-row gap-2">
+          <div className="flex flex-col gap-2 w-1/5">
+            <div className="grid grid-cols-2 grid-rows-2 gap-2 w-full">
+              <EditableString
+                className="col-span-1"
+                label="Firstname"
+                content={profileData?.firstname}
+                onSave={handleFirstnameChange}
+                canEdit={canEdit}
+              />
+              <EditableString
+                className="col-span-1"
+                label="Lastname"
+                content={profileData?.lastname}
+                onSave={handleLastnameChange}
+                canEdit={canEdit}
+              />
+              <div className="col-span-2 w-full">
+                <EditableString
+                  label="Phone"
+                  content={profileData?.phoneNumber}
+                  onSave={handlePhonenumber}
+                  canEdit={canEdit}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-start-2 col-span-4 row-span-2 flex flex-row justify-between gap-4">
+          <div className="w-1/2">
+            <EditableString
+              label="Birthdate"
+              content={profileData?.birthday}
+              onSave={handleBirthdateChange}
+              canEdit={canEdit}
+            />
+            <InputSelector
+              label="Gender"
+              content={profileData?.gender}
+              options={["Male", "Female", "Other"]}
+              onSave={handleGender}
+              canEdit={canEdit}
+            />
+            <EditableTextarea
+              label="About Me"
+              content={profileData?.biography}
+              onSave={handleBiography}
+              canEdit={canEdit}
+            />
+            <EditableTextarea
+              label="I am looking for"
+              content={profileData?.futureFlatmatesDescription}
+              onSave={handleFlatemateDescription}
+              canEdit={canEdit}
+            />
+          </div>
+          <div className="w-1/2 flex flex-col">
+            <EditableTextarea
+              label="Education"
+              // content={}
+              // onSave={}
+              canEdit={canEdit}
+            />
+            <EditableTextarea
+              label="Experience"
+              // content={}
+              // onSave={}
+              canEdit={canEdit}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
