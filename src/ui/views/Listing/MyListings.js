@@ -1,10 +1,8 @@
-import { Accordion } from "flowbite-react";
 import { api } from "helpers/api";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
-import { Link } from "react-router-dom";
-import Label from "ui/components/general/Label";
+import ExpandableListingCard from "ui/components/listing/ExpandableListingCard";
 
 export default function MyListings() {
   const [listings, setListings] = useState(null);
@@ -31,8 +29,8 @@ export default function MyListings() {
   };
 
   return (
-    <div className="px-2 py-2.5 sm:px-4 rounded px-4 md:mx-48">
-      <nav className="flex" aria-label="Breadcrumb">
+    <div className="px-2 py-2.5 sm:px-4 rounded px-4 md:mx-48 flex flex-col gap-4">
+      <nav className="flex mt-6" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
           <li className="inline-flex items-center">
             <a
@@ -76,22 +74,12 @@ export default function MyListings() {
           </li>
         </ol>
       </nav>
-      <Accordion alwaysOpen={false} className="mt-6">
+
+      <div className="flex flex-col gap-4">
         {listings?.map((listing) => (
-          <Accordion.Panel key={listing.listingId}>
-            <Accordion.Title>{listing.listingTitle}</Accordion.Title>
-            <Accordion.Content>
-              {listing?.applicants?.map((applicant) => (
-                <Link to={`/profile/${applicant.applicantId}`}>
-                  <p>
-                    {applicant.firstname} {applicant.lastname}
-                  </p>
-                </Link>
-              ))}
-            </Accordion.Content>
-          </Accordion.Panel>
+          <ExpandableListingCard listing={listing} />
         ))}
-      </Accordion>
+      </div>
     </div>
   );
 }
