@@ -88,13 +88,13 @@ export default function Search() {
     return (
       <div className="grid grid-cols-2 xl:grid-cols-5 gap-6 rounded-lg p-4 mt-4 bg-white">
         <div
-          className="col-span-3 text-white rounded bg-gray-900 flex items-center justify-center"
+          className="col-span-3 xl:col-span-3 text-white rounded bg-gray-900 flex items-center justify-center"
           style={{ minHeight: "200px" }}
         >
           Images
         </div>
-        <div className="col-span-2 xl:col-span-2 flex flex-row justify-between my-2">
-          <div className="flex flex-col justify-center">
+        <div className="col-span-2 xl:col-span-2 grid grid-rows-1 lg:grid-cols-2 my-2">
+          <div className="col-span-1 flex flex-col justify-center mb-4 lg:mb-0">
             <p className="font-bold text-lg text-secondary">{listing.title}</p>
             <p className="font-extralight text-sm text-gray-900">
               {listing.streetName} {listing.streetNumber}, {listing.zipCode}{" "}
@@ -104,7 +104,7 @@ export default function Search() {
               {listing.pricePerMonth} CHF / month
             </p>
           </div>
-          <div className="flex flex-col justify-center xl:gap-4">
+          <div className="col-span-1 flex flex-col justify-center justify-items-center lg:justify-items-start gap-2 xl:gap-4">
             <a
               onClick={() => {}}
               className="text-white text-center bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
@@ -112,7 +112,7 @@ export default function Search() {
               Apply now
             </a>
             <a
-              href="#"
+              href={"/listings/" + listing.id}
               className="text-sm text-primary text-center items-center hover:underline"
             >
               Details
@@ -366,104 +366,106 @@ export default function Search() {
           <section aria-labelledby="products-heading" className="pt-6 pb-24">
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
-              <form className="hidden lg:block bg-white rounded-lg p-4 h-min">
-                <h3 className="sr-only">Categories</h3>
-                <ul className="space-y-4 pb-6 text-sm font-medium text-gray-900">
-                  <label
-                    htmlFor="default-range"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Maximum rent per month: {rentPerMonth} CHF
-                  </label>
-                  <input
-                    id="default-range"
-                    type="range"
-                    min="0"
-                    max="3000"
-                    value={rentPerMonth}
-                    onChange={({ target: { value: radius } }) => {
-                      setRentPerMonth(radius);
-                    }}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-                  />
-                </ul>
+              <form className="hidden lg:block">
+                <div className="bg-white rounded-lg p-4 h-min sticky top-4">
+                  <h3 className="sr-only">Categories</h3>
+                  <ul className="space-y-4 pb-6 text-sm font-medium text-gray-900">
+                    <label
+                      htmlFor="default-range"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Maximum rent per month: {rentPerMonth} CHF
+                    </label>
+                    <input
+                      id="default-range"
+                      type="range"
+                      min="0"
+                      max="3000"
+                      value={rentPerMonth}
+                      onChange={({ target: { value: radius } }) => {
+                        setRentPerMonth(radius);
+                      }}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                    />
+                  </ul>
 
-                <ul>
-                  <div>
-                    <div className="mb-2 block">
-                      <Label
-                        htmlFor="email1"
-                        value="Maximum number of roommates"
+                  <ul>
+                    <div>
+                      <div className="mb-2 block">
+                        <Label
+                          htmlFor="email1"
+                          value="Maximum number of roommates"
+                        />
+                      </div>
+                      <TextInput
+                        type="number"
+                        value={maxNumberRoommates}
+                        onChange={({ target: { value: nmb } }) => {
+                          setMaxNumberRoommates(nmb);
+                        }}
+                        required={true}
                       />
                     </div>
-                    <TextInput
-                      type="number"
-                      value={maxNumberRoommates}
-                      onChange={({ target: { value: nmb } }) => {
-                        setMaxNumberRoommates(nmb);
-                      }}
-                      required={true}
-                    />
-                  </div>
-                </ul>
+                  </ul>
 
-                {filters.map((section) => (
-                  <Disclosure
-                    as="div"
-                    key={section.id}
-                    className="border-b border-gray-200 py-6"
-                  >
-                    {({ open }) => (
-                      <>
-                        <h3 className="-my-3 flow-root">
-                          <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                            <span className="font-medium text-gray-900">
-                              {section.name}
-                            </span>
-                            <span className="ml-6 flex items-center">
-                              {open ? (
-                                <MinusIcon
-                                  className="h-5 w-5"
-                                  aria-hidden="true"
-                                />
-                              ) : (
-                                <PlusIcon
-                                  className="h-5 w-5"
-                                  aria-hidden="true"
-                                />
-                              )}
-                            </span>
-                          </Disclosure.Button>
-                        </h3>
-                        <Disclosure.Panel className="pt-6">
-                          <div className="space-y-4">
-                            {section.options.map((option, optionIdx) => (
-                              <div
-                                key={option.value}
-                                className="flex items-center"
-                              >
-                                <input
-                                  id={`filter-${section.id}-${optionIdx}`}
-                                  name={`${section.id}[]`}
-                                  defaultValue={option.value}
-                                  type="checkbox"
-                                  defaultChecked={option.checked}
-                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                />
-                                <label
-                                  htmlFor={`filter-${section.id}-${optionIdx}`}
-                                  className="ml-3 text-sm text-gray-600"
+                  {filters.map((section) => (
+                    <Disclosure
+                      as="div"
+                      key={section.id}
+                      className="border-b border-gray-200 py-6"
+                    >
+                      {({ open }) => (
+                        <>
+                          <h3 className="-my-3 flow-root">
+                            <Disclosure.Button className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                              <span className="font-medium text-gray-900">
+                                {section.name}
+                              </span>
+                              <span className="ml-6 flex items-center">
+                                {open ? (
+                                  <MinusIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                ) : (
+                                  <PlusIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                )}
+                              </span>
+                            </Disclosure.Button>
+                          </h3>
+                          <Disclosure.Panel className="pt-6">
+                            <div className="space-y-4">
+                              {section.options.map((option, optionIdx) => (
+                                <div
+                                  key={option.value}
+                                  className="flex items-center"
                                 >
-                                  {option.label}
-                                </label>
-                              </div>
-                            ))}
-                          </div>
-                        </Disclosure.Panel>
-                      </>
-                    )}
-                  </Disclosure>
-                ))}
+                                  <input
+                                    id={`filter-${section.id}-${optionIdx}`}
+                                    name={`${section.id}[]`}
+                                    defaultValue={option.value}
+                                    type="checkbox"
+                                    defaultChecked={option.checked}
+                                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                  />
+                                  <label
+                                    htmlFor={`filter-${section.id}-${optionIdx}`}
+                                    className="ml-3 text-sm text-gray-600"
+                                  >
+                                    {option.label}
+                                  </label>
+                                </div>
+                              ))}
+                            </div>
+                          </Disclosure.Panel>
+                        </>
+                      )}
+                    </Disclosure>
+                  ))}
+                </div>
               </form>
               {/* Listings grid */}
               <div className="lg:col-span-3">
