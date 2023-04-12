@@ -54,12 +54,14 @@ export default function MyApplications() {
         <div class="flex flex-row items-center justify-between p-4">
           <div>
             <p class="text-sm">
-              {format(new Date(application.creationDate), "dd.mm.yyyy")}
+              {format(new Date(application.creationDate), "dd.MM.yyyy")}
             </p>
-            <div class="flex flex-row gap-4">
-              <p class="font-bold text-secondary">{application.listingTitle}</p>
-              <p class="font-bold">|</p>
-              <p class="text-gray-500">
+            <div class="text-sm flex flex-row gap-4">
+              <p class="text-sm font-bold text-secondary">
+                {application.listingTitle}
+              </p>
+              <p class="text-sm font-bold">|</p>
+              <p class="text-sm text-gray-500">
                 {application.listingStreetName}{" "}
                 {application.listingStreetNumber}, {application.listingZipCode}{" "}
                 {application.listingCityName}
@@ -76,7 +78,10 @@ export default function MyApplications() {
             >
               take back
             </a>
-            <a href="#" class="text-sm text-primary hover:underline">
+            <a
+              href={"/listings/" + application.listingId}
+              class="text-sm text-primary hover:underline"
+            >
               See Listing
             </a>
           </div>

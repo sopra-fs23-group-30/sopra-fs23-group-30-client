@@ -127,12 +127,12 @@ export default function ListingDetail() {
             "Ich bin Matthias und freue mich mega auf einen neuen Mitbewohner"
           </p>
 
-          <button
-            type="button"
-            class="font-bold w-1/2 md:w-1/3 text-white bg-secondary hover:bg-secondary-800 focus:ring-4 focus:ring-secondary-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none dark:focus:ring-blue-800"
+          <a
+            // href={"/profile/" + listingData.listerId}
+            className="text-white text-center bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
           >
             See Profile
-          </button>
+          </a>
 
           <div class="absolute top-2 right-2">
             <img
