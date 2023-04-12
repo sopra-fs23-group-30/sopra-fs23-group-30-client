@@ -8,8 +8,10 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
-import { Label, TextInput } from "flowbite-react";
+import { Button, Label, TextInput } from "flowbite-react";
 import { Link } from "react-router-dom";
+import { api } from "helpers/api";
+import { toast } from "react-hot-toast";
 
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
@@ -54,6 +56,7 @@ export default function Search() {
 
   useEffect(() => {
     setListings([]);
+    loadListings();
     // let token = localStorage.getItem("jwtToken");
     // fetch("https://localhost:7135/api/listings", {
     //   method: "GET",
@@ -68,8 +71,60 @@ export default function Search() {
     // );
   }, []);
 
+  const loadListings = async () => {
+    let response = await api.get("/listings");
+
+    if (response.status !== 200) {
+      toast("Fetch unsuccessful", {
+        duration: 4000,
+        position: "top-right",
+        icon: "❌",
+      });
+    }
+    setListings(response.data);
+  };
+
+  const listingItem = (listing) => {
+    return (
+      <div className="grid grid-cols-2 xl:grid-cols-5 gap-6 rounded-lg p-4 mt-4 bg-white">
+        <div
+          className="col-span-3 text-white rounded bg-gray-900 flex items-center justify-center"
+          style={{ minHeight: "200px" }}
+        >
+          Images
+        </div>
+        <div className="col-span-2 xl:col-span-2 flex flex-row justify-between my-2">
+          <div className="flex flex-col justify-center">
+            <p className="font-bold text-lg text-secondary">{listing.title}</p>
+            <p className="font-extralight text-sm text-gray-900">
+              {listing.streetName} {listing.streetNumber}, {listing.zipCode}{" "}
+              {listing.cityName}
+            </p>
+            <p className="font-bold text-lg mt-4">
+              {listing.pricePerMonth} CHF / month
+            </p>
+          </div>
+          <div className="flex flex-col justify-center xl:gap-4">
+            <a
+              onClick={() => {}}
+              className="text-white text-center bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
+            >
+              Apply now
+            </a>
+            <a
+              href="#"
+              className="text-sm text-primary text-center items-center hover:underline"
+            >
+              Details
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <div className="bg-white px-2 py-2.5  sm:px-4 rounded px-4 md:mx-48">
+    <div className="px-2 py-2.5  sm:px-4 rounded px-4 md:mx-48">
       <div>
         {/* Mobile filter dialog */}
         <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -311,7 +366,7 @@ export default function Search() {
           <section aria-labelledby="products-heading" className="pt-6 pb-24">
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
-              <form className="hidden lg:block">
+              <form className="hidden lg:block bg-white rounded-lg p-4 h-min">
                 <h3 className="sr-only">Categories</h3>
                 <ul className="space-y-4 pb-6 text-sm font-medium text-gray-900">
                   <label
@@ -410,96 +465,13 @@ export default function Search() {
                   </Disclosure>
                 ))}
               </form>
-
               {/* Listings grid */}
               <div className="lg:col-span-3">
                 <div className="h-96 lg:h-full">
-                  {filteredListings.map((listing) => (
-                    <Link to={`/listings/${listing.id}`} key={listing.id}>
-                      <div className="w-full my-1 md:lg:my-2 rounded-lg p-3 border-b border-gray-200 py-6 hover:bg-gray-100 grid grid-cols-12 gap-1 md:lg:gap-4">
-                        <div className="col-span-12 relative rounded-tr-lg">
-                          <img
-                            alt="room"
-                            className=" rounded-lg md:lg:col-span-4 object-fill w-full h-44"
-                            src="https://flatfox.ch/media/ff/2018/10/9xnect46pxgj5a7s75qrmodalxdqy2vnk1izb2bszi1hpntx9r.jpg"
-                          ></img>
-                          <div className="absolute rounded-lg bottom-0 left-0 right-0 px-4 py-2 bg-gray-800 opacity-90">
-                            <span className="text-sm text-white font-medium line-clamp-2">
-                              {listing?.title}
-                            </span>
-                          </div>
-                          <div className="absolute top-0 right-0 px-4 py-2 bg-gray-800 opacity-90">
-                            <span className="text-sm text-white font-medium line-clamp-2">
-                              {listing?.pricePerMonth} CHF / month
-                            </span>
-                          </div>
-                        </div>
-                        <div className="col-span-12 flex my-1">
-                          <div className="w-full flex items-center">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth={1}
-                              stroke="currentColor"
-                              className="w-6 h-6"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
-                              />
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
-                              />
-                            </svg>
-                            <span className="text-sm ml-1 font-semibold">
-                              {listing?.streetname} {listing?.streetnumber},{" "}
-                              {listing?.postalcode} {listing?.community}
-                            </span>
-                          </div>
-                          <span>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth={2}
-                              stroke="currentColor"
-                              className="w-6 h-6"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                              />
-                            </svg>
-                          </span>
-                        </div>
-                        <div className="col-span-12 flex items-center my-1">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1}
-                            stroke="currentColor"
-                            className="w-6 h-6"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M16.5 8.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v8.25A2.25 2.25 0 006 16.5h2.25m8.25-8.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-7.5A2.25 2.25 0 018.25 18v-1.5m8.25-8.25h-6a2.25 2.25 0 00-2.25 2.25v6"
-                            />
-                          </svg>
-
-                          <span className="text-sm ml-1 font-semibold">
-                            {listing?.livingSpace} m<sup>2</sup>
-                          </span>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
+                  <p class="text-sm text-gray-500">
+                    {filteredListings.length} results
+                  </p>
+                  {filteredListings.map((listing) => listingItem(listing))}
                 </div>
               </div>
             </div>

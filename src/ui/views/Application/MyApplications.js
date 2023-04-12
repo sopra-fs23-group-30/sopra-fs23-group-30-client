@@ -8,7 +8,7 @@ import DecisionConfirmationInquiry from "ui/components/shared/DecisionConfirmati
 
 export default function MyApplications() {
   const [applications, setApplications] = useState([]);
-  const [showInquiry, setShowInquiry] = useState(true);
+  const [showInquiry, setShowInquiry] = useState(false);
 
   useEffect(() => {
     loadApplications().catch(console.error);
