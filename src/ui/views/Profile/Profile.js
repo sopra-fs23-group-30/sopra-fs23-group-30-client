@@ -168,7 +168,7 @@ export default function ProfilePage() {
       <h1 className="mt-8 ml-4 text-lg font-medium text-gray-900">
         My Profile
       </h1>
-      <div className="grid grid-cols-5 grid-rows-3 ml-4 flex flex-col mt-4">
+      <div className="flex flex-col xl:grid grid-cols-5 grid-rows-3 ml-4 flex flex-col mt-4">
         <div className="col-span-1 row-span-1 h-full flex flex-col items-center w-full">
           <h2 className="font-sm">Profile Pic</h2>
           <div className="rounded-full bg-gray-900 w-36 aspect-square text-white flex items-center justify-center">
@@ -190,8 +190,8 @@ export default function ProfilePage() {
           </div>
         </div>
         <div className="col-start-2 col-span-4 row-span-1 flex flex-row lg:flex-row gap-2">
-          <div className="flex flex-col gap-2 w-1/5">
-            <div className="grid grid-cols-2 grid-rows-2 gap-2 w-full">
+          <div className="flex flex-col gap-2 w-full xl:w-1/3">
+            <div className="flex flex-col md:grid grid-cols-2 grid-rows-auto gap-2 w-full">
               <EditableString
                 className="col-span-1"
                 label="Firstname"
@@ -217,8 +217,8 @@ export default function ProfilePage() {
             </div>
           </div>
         </div>
-        <div className="col-start-2 col-span-4 row-span-2 flex flex-row justify-between gap-4">
-          <div className="w-1/2">
+        <div className="col-start-2 col-span-4 row-span-2 flex flex-col md:flex-row justify-between gap-4">
+          <div className="w-full md:w-1/2">
             <EditableString
               label="Birthdate"
               content={profileData?.birthday}
@@ -245,7 +245,7 @@ export default function ProfilePage() {
               canEdit={canEdit}
             />
           </div>
-          <div className="w-1/2 flex flex-col">
+          <div className="w-full md:w-1/2 flex flex-col">
             <EditableTextarea
               label="Education"
               // content={}
