@@ -1,123 +1,163 @@
 import { Card } from "flowbite-react";
+import { api } from "helpers/api";
 import { useState } from "react";
-import Divider from "../general/Divider";
+import toast from "react-hot-toast";
+import DecisionConfirmationInquiry from "../shared/DecisionConfirmationInquiry";
 
 function ExpandableListingCard(props) {
   const [isOpen, setIsOpen] = useState(false);
+  const [showInquiry, setShowInquiry] = useState(false);
+
+  const takeOffline = async () => {
+    setShowInquiry(true);
+    // let body = {
+    //   newState: "MOVEIN",
+    // };
+
+    // try {
+    //   let response = await api.put("/applications/" + props.id, body);
+    //   if (response.status === 204) {
+    //     toast("Application taken offline", {
+    //       duration: 4000,
+    //       position: "top-right",
+    //       icon: "✅",
+    //     });
+    //     return;
+    //   }
+    // } catch (ex) {
+    //   toast("Error", {
+    //     duration: 4000,
+    //     position: "top-right",
+    //     icon: "❌",
+    //   });
+    // }
+  };
 
   return (
-    <Card className="divide-y">
-      <div className="flex flex-row justify-between">
-        <p className="text-sm font-bold">{props.listing.listingTitle}</p>
-        <div className="flex flex-row gap-3">
-          <button
-            type="button"
-            class=" font-bold text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-1 focus:outline-none dark:focus:ring-blue-800"
-          >
-            Edit
-          </button>
-          <button
-            type="button"
-            class=" font-bold text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-1 hover:underline focus:outline-none dark:focus:ring-blue-800"
-          >
-            Take Offline
-          </button>
-
-          {!isOpen && (
-            <svg
-              data-accordion-icon="true"
-              class="w-6 h-6 shrink-0"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-              onClick={() => {
-                setIsOpen(true);
-              }}
+    <div>
+      <DecisionConfirmationInquiry
+        show={showInquiry}
+        title="Do you really want to take the listing offline?"
+        content="This will be permanent."
+        onClick={() => {}}
+        onClose={() => {
+          setShowInquiry(false);
+        }}
+      />
+      <Card className="divide-y">
+        <div className="flex flex-row justify-between">
+          <p className="text-sm font-bold">{props.listing.listingTitle}</p>
+          <div className="flex flex-row gap-3">
+            <button
+              type="button"
+              class=" font-bold text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-1 focus:outline-none dark:focus:ring-blue-800"
             >
-              <path
-                fill-rule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          )}
-
-          {isOpen && (
-            <svg
-              data-accordion-icon="true"
-              class="w-6 h-6 rotate-180 shrink-0"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-              onClick={() => {
-                setIsOpen(false);
-              }}
+              Edit
+            </button>
+            <button
+              onClick={() => takeOffline()}
+              type="button"
+              class=" font-bold text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-1 hover:underline focus:outline-none dark:focus:ring-blue-800"
             >
-              <path
-                fill-rule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          )}
+              Take Offline
+            </button>
+
+            {!isOpen && (
+              <svg
+                data-accordion-icon="true"
+                class="w-6 h-6 shrink-0"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+                onClick={() => {
+                  setIsOpen(true);
+                }}
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            )}
+
+            {isOpen && (
+              <svg
+                data-accordion-icon="true"
+                class="w-6 h-6 rotate-180 shrink-0"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+                onClick={() => {
+                  setIsOpen(false);
+                }}
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            )}
+          </div>
         </div>
-      </div>
-      {isOpen && (
-        <div className="flex flex-col gap-3">
-          {props.listing?.applicants?.map((applicant) => (
-            <div className="flex flex-col">
-              <div className="flex flex-row w-full justify-between">
-                <div class="flex flex-row w-2/5 grid-cols-3 my-3 content-center">
-                  <div className="w-1/3">
-                    <img
-                      class="w-10 h-10 rounded-full"
-                      src="https://img.freepik.com/free-photo/portrait-african-american-man_23-2149072214.jpg"
-                      alt="Rounded avatar"
-                    />
+        {isOpen && (
+          <div className="flex flex-col gap-3">
+            {props.listing?.applicants?.map((applicant) => (
+              <div className="flex flex-col">
+                <div className="flex flex-row w-full justify-between">
+                  <div class="flex flex-row w-2/5 grid-cols-3 my-3 content-center">
+                    <div className="w-1/3">
+                      <img
+                        class="w-10 h-10 rounded-full"
+                        src="https://img.freepik.com/free-photo/portrait-african-american-man_23-2149072214.jpg"
+                        alt="Rounded avatar"
+                      />
+                    </div>
+                    <p className="text-sm my-3 w-1/3">{applicant.firstname}</p>
+                    <p className="text-sm my-3 w-1/3">{applicant.lastname}</p>
                   </div>
-                  <p className="text-sm my-3 w-1/3">{applicant.firstname}</p>
-                  <p className="text-sm my-3 w-1/3">{applicant.lastname}</p>
+
+                  <div className="flex flex-row gap-3 my-3 content-center">
+                    <a
+                      href={"/profile/" + applicant.applicantId}
+                      class="h-6 text-center text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 my-3 hover:underline focus:outline-none dark:focus:ring-blue-800"
+                    >
+                      See Profile
+                    </a>
+
+                    <button
+                      type="button"
+                      class="h-6 text-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 my-2 focus:outline-none dark:focus:ring-blue-800"
+                    >
+                      Actions
+                    </button>
+
+                    <svg
+                      data-accordion-icon="true"
+                      class="w-6 h-6 shrink-0 collapse"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                      onClick={() => {
+                        setIsOpen(true);
+                      }}
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
                 </div>
-
-                <div className="flex flex-row gap-3 my-3 content-center">
-                  <a
-                    href={"/profile/" + applicant.applicantId}
-                    class="h-6 text-center text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 my-3 hover:underline focus:outline-none dark:focus:ring-blue-800"
-                  >
-                    See Profile
-                  </a>
-
-                  <button
-                    type="button"
-                    class="h-6 text-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 my-2 focus:outline-none dark:focus:ring-blue-800"
-                  >
-                    Actions
-                  </button>
-
-                  <svg
-                    data-accordion-icon="true"
-                    class="w-6 h-6 shrink-0 collapse"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                    onClick={() => {
-                      setIsOpen(true);
-                    }}
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg>
-                </div>
+                <hr className="w-full h-0.5 mx-auto bg-gray-100 border-0 rounded dark:bg-gray-700" />
               </div>
-              <hr className="w-full h-0.5 mx-auto bg-gray-100 border-0 rounded dark:bg-gray-700" />
-            </div>
-          ))}
-        </div>
-      )}
-    </Card>
+            ))}
+          </div>
+        )}
+      </Card>
+    </div>
   );
 }
 
