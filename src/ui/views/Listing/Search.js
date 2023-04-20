@@ -73,7 +73,6 @@ export default function Search() {
   };
 
   const handleApply = async (listingId) => {
-    console.log(listingId);
     let token = localStorage.getItem("authtoken");
     const decoded = decodeToken(token);
     const userId = decoded.userId;

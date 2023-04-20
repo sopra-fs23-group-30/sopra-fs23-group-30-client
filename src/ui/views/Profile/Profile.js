@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 import { useParams } from "react-router-dom";
+import InputSelector from "ui/components/general/EditableInputSelector";
+import EditableLifespan from "ui/components/general/EditableLifespan";
 import EditableString from "ui/components/general/EditableString";
 import EditableTextarea from "ui/components/general/EditableTextarea";
-import InputSelector from "ui/components/general/EditableInputSelector";
 
 export default function ProfilePage() {
   const [profileData, setProfileData] = useState(null);
+  const [lifespans, setLifespans] = useState([]);
   const [canEdit, setCanEdit] = useState(false);
 
   let params = useParams();
@@ -30,7 +32,6 @@ export default function ProfilePage() {
     }
 
     let response = await api.get("/profiles/" + profileId);
-
     if (response.status !== 200) {
       toast("Fetch unsuccessful", {
         duration: 4000,
@@ -39,64 +40,77 @@ export default function ProfilePage() {
       });
     }
     setProfileData(response.data);
+    setLifespans(response.data.lifespans);
   };
 
   const handleFirstnameChange = (newVal) => {
     let existingData = profileData;
     existingData.firstname = newVal;
     setProfileData(existingData);
-    updateProfile();
+    updateProfile(lifespans);
   };
 
   const handleLastnameChange = (newVal) => {
     let existingData = profileData;
     existingData.lastname = newVal;
     setProfileData(existingData);
-    updateProfile();
+    updateProfile(lifespans);
   };
 
   const handleBirthdateChange = (newVal) => {
     let existingData = profileData;
     existingData.birthday = newVal;
     setProfileData(existingData);
-    updateProfile();
+    updateProfile(lifespans);
   };
 
   const handlePhonenumber = (newVal) => {
     let existingData = profileData;
     existingData.phoneNumber = newVal;
     setProfileData(existingData);
-    updateProfile();
+    updateProfile(lifespans);
   };
 
   const handleGender = (newVal) => {
     let existingData = profileData;
     existingData.gender = newVal;
     setProfileData(existingData);
-    updateProfile();
+    updateProfile(lifespans);
   };
 
   const handleBiography = (newVal) => {
     let existingData = profileData;
     existingData.biography = newVal;
     setProfileData(existingData);
-    updateProfile();
+    updateProfile(lifespans);
   };
 
   const handleFlatemateDescription = (newVal) => {
     let existingData = profileData;
     existingData.futureFlatmatesDescription = newVal;
     setProfileData(existingData);
-    updateProfile();
+    updateProfile(lifespans);
   };
 
-  const updateProfile = async (e) => {
+  const handleLifespansChanged = (newLifespans) => {
+    const saveableArray = newLifespans.map((item) => {
+      delete item.isPersisted; // remove the "age" property from each object
+      return item;
+    });
+
+    updateProfile(saveableArray);
+  };
+
+  const updateProfile = async (updatedLifespans) => {
     let token = localStorage.getItem("authtoken");
     const decoded = decodeToken(token);
     const userId = decoded.userId;
 
+    let updateData = profileData;
+    updateData.lifespans = updatedLifespans;
+
     try {
-      let response = await api.put("/profiles/" + userId, profileData);
+      let response = await api.put("/profiles/" + userId, updateData);
       if (response.status === 204) {
         toast("Save successful", {
           duration: 4000,
@@ -117,6 +131,7 @@ export default function ProfilePage() {
         icon: "❌",
       });
     }
+
     loadProfile(params.id);
   };
 
@@ -247,17 +262,17 @@ export default function ProfilePage() {
             />
           </div>
           <div className="w-full md:w-1/2 flex flex-col">
-            <EditableTextarea
+            <EditableLifespan
               label="Education"
-              // content={}
-              // onSave={}
               canEdit={canEdit}
+              onChange={handleLifespansChanged}
+              lifespans={lifespans}
             />
-            <EditableTextarea
+            <EditableLifespan
               label="Experience"
-              // content={}
-              // onSave={}
               canEdit={canEdit}
+              onChange={handleLifespansChanged}
+              lifespans={lifespans}
             />
           </div>
         </div>

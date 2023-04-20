@@ -12,6 +12,7 @@
     "axios": "^0.24.0",
     "date-fns": "^2.29.3",
     "flowbite": "^1.6.3",
+    "flowbite-datepicker": "^1.2.2",
     "flowbite-react": "^0.3.8",
     "google-map-react": "^2.2.0",
     "heroicons-react": "^1.4.1",
@@ -25,6 +26,7 @@
     "react-router-dom": "^6.8.1",
     "react-scripts": "^5.0.1",
     "sass": "^1.60.0",
+    "tailwind-datepicker-react": "^1.2.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
