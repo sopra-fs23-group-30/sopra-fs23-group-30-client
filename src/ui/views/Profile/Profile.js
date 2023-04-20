@@ -14,8 +14,11 @@ export default function ProfilePage() {
   let params = useParams();
 
   useEffect(() => {
-    loadProfile(params.id).catch(console.error);
-  });
+    const fetchData = async () => {
+      loadProfile(params.id).catch(console.error);
+    };
+    fetchData();
+  }, [params.id]);
 
   const loadProfile = async (profileId) => {
     let token = localStorage.getItem("authtoken");
@@ -34,7 +37,6 @@ export default function ProfilePage() {
         position: "top-right",
         icon: "❌",
       });
-      loadProfile(params.id);
     }
     setProfileData(response.data);
   };
@@ -115,7 +117,7 @@ export default function ProfilePage() {
         icon: "❌",
       });
     }
-    loadProfile();
+    loadProfile(params.id);
   };
 
   return (
