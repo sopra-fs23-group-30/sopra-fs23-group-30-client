@@ -4,14 +4,15 @@ import { useState } from "react";
 import { decodeToken } from "react-jwt";
 
 export default function CreateListing() {
-  const [title, setTitle] = useState()
-  const [description, setDescription] = useState()
-  const [streetName, setStreetName] = useState()
-  const [streetNumber, setStreetNumber] = useState()
-  const [zipCode, setZipcode] = useState()
-  const [cityName, setCityName] = useState()
-  const [pricePerMonth, setPricePerMonth] = useState()
-  const [perfectFlatmateDescription, setPerfectFlatmateDescription] = useState()
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  const [streetName, setStreetName] = useState();
+  // const [streetNumber, setStreetNumber] = useState()
+  // const [zipCode, setZipcode] = useState()
+  // const [cityName, setCityName] = useState()
+  const [pricePerMonth, setPricePerMonth] = useState();
+  const [perfectFlatmateDescription, setPerfectFlatmateDescription] =
+    useState();
 
   const saveListing = async (e) => {
     let token = localStorage.getItem("authtoken");
@@ -22,9 +23,9 @@ export default function CreateListing() {
       title,
       description,
       streetName,
-      streetNumber:"14",
-      zipCode:"8000",
-      cityName:"Zürich",
+      streetNumber: "14",
+      zipCode: "8000",
+      cityName: "Zürich",
       pricePerMonth,
       perfectFlatmateDescription,
       listerId: userId,
@@ -88,14 +89,20 @@ export default function CreateListing() {
           <div className="mb-2 block">
             <Label htmlFor="small" value="Title" />
           </div>
-          <TextInput id="small" type="text" className="text-sm" 
-          value={title}
-          onChange={(e) => {setTitle(e.target.value)}}/>
+          <TextInput
+            id="small"
+            type="text"
+            className="text-sm"
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          />
         </div>
 
         <div>
           <div className="mb-2 block">
-            <Label htmlFor="small" value="Description" className="text-sm"/>
+            <Label htmlFor="small" value="Description" className="text-sm" />
           </div>
           <Textarea
             className="text-sm"
@@ -104,7 +111,10 @@ export default function CreateListing() {
             required={true}
             rows={4}
             value={description}
-            onChange={(e) => {setDescription(e.target.value)}}/>
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
+          />
         </div>
 
         <div>
@@ -118,7 +128,9 @@ export default function CreateListing() {
             required={true}
             className="text-sm"
             value={pricePerMonth}
-            onChange={(e) => {setPricePerMonth(e.target.value)}}
+            onChange={(e) => {
+              setPricePerMonth(e.target.value);
+            }}
           />
         </div>
 
@@ -126,9 +138,15 @@ export default function CreateListing() {
           <div className="mb-2 block">
             <Label htmlFor="small" value="Address" />
           </div>
-          <TextInput id="small" type="text" className="text-sm"
+          <TextInput
+            id="small"
+            type="text"
+            className="text-sm"
             value={streetName}
-            onChange={(e) => {setStreetName(e.target.value)}}/>
+            onChange={(e) => {
+              setStreetName(e.target.value);
+            }}
+          />
         </div>
 
         <div>
@@ -146,7 +164,9 @@ export default function CreateListing() {
             required={true}
             rows={4}
             value={perfectFlatmateDescription}
-            onChange={(e) => {setPerfectFlatmateDescription(e.target.value)}}
+            onChange={(e) => {
+              setPerfectFlatmateDescription(e.target.value);
+            }}
           />
         </div>
 

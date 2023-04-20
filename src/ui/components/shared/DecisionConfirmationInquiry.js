@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Modal } from "flowbite-react";
 
 function DecisionConfirmationInquiry(props) {
-  const [show, setShow] = useState(true);
+  const [, setShow] = useState(true);
 
   return (
     <Modal

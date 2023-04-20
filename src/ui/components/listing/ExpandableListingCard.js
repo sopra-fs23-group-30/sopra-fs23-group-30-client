@@ -1,7 +1,5 @@
 import { Card } from "flowbite-react";
-import { api } from "helpers/api";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import DecisionConfirmationInquiry from "../shared/DecisionConfirmationInquiry";
 
 function ExpandableListingCard(props) {
@@ -104,7 +102,7 @@ function ExpandableListingCard(props) {
         {isOpen && (
           <div className="flex flex-col gap-3">
             {props.listing?.applicants?.map((applicant) => (
-              <div className="flex flex-col">
+              <div key={applicant.id} className="flex flex-col">
                 <div className="flex flex-row w-full justify-between">
                   <div class="flex flex-row w-2/5 grid-cols-3 my-3 content-center">
                     <div className="w-1/3">

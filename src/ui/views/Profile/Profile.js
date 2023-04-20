@@ -1,4 +1,3 @@
-import { Select } from "flowbite-react";
 import { api } from "helpers/api";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -16,7 +15,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     loadProfile(params.id).catch(console.error);
-  }, [params.id]);
+  });
 
   const loadProfile = async (profileId) => {
     let token = localStorage.getItem("authtoken");

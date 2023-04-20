@@ -5,7 +5,7 @@ function InputSelector(props) {
   const [selectedOption, setSelectedOption] = useState(props.selected);
 
   const getOption = (option) => {
-    return option != props.selected ? <option>{option}</option> : <></>;
+    return option !== props.selected ? <option>{option}</option> : <></>;
   };
 
   const handleOptionChange = (event) => {
