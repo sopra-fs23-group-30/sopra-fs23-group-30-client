@@ -6,7 +6,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { useEffect, useRef, useState } from "react";
 
-function EditableString(props) {
+function EditableDate(props) {
   const [editable, setEditable] = useState(false);
   const [showSaved, setShowSaved] = useState(false);
   const [content, setContent] = useState(props.content);
@@ -61,6 +61,8 @@ function EditableString(props) {
           <input
             {...props}
             ref={inputRef}
+            type="date"
+            pattern="\d{4}\d{1,2}/\d{1,2}/"
             className="p-0 text-sm border-none bg-transparent focus:border-none focus:ring-transparent block w-full text-black-900"
             value={content ?? ""}
             onChange={({ target: { value: content } }) => {
@@ -116,8 +118,8 @@ function EditableString(props) {
   );
 }
 
-EditableString.propTypes = {
+EditableDate.propTypes = {
   content: PropTypes.string,
 };
 
-export default EditableString;
+export default EditableDate;

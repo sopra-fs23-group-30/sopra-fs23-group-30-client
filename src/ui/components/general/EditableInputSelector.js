@@ -22,9 +22,8 @@ function InputSelector(props) {
         {props.label}
       </label>
       <Select
-        id="countries"
         required={true}
-        value={selectedOption}
+        value={props.content}
         onChange={handleOptionChange}
       >
         <option value="" disabled>

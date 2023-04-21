@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 import { useParams } from "react-router-dom";
+import EditableDate from "ui/components/general/EditableDate";
 import InputSelector from "ui/components/general/EditableInputSelector";
 import EditableLifespan from "ui/components/general/EditableLifespan";
 import EditableString from "ui/components/general/EditableString";
@@ -235,7 +236,7 @@ export default function ProfilePage() {
         </div>
         <div className="col-start-2 col-span-4 row-span-2 flex flex-col md:flex-row justify-between gap-4">
           <div className="w-full md:w-1/2">
-            <EditableString
+            <EditableDate
               label="Birthdate"
               content={profileData?.birthday}
               onSave={handleBirthdateChange}
