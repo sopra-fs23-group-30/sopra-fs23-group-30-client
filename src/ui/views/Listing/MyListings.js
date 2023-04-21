@@ -77,7 +77,7 @@ export default function MyListings() {
 
       <div className="flex flex-col gap-4">
         {listings?.map((listing) => (
-          <ExpandableListingCard listing={listing} />
+          <ExpandableListingCard listing={listing} onUpdate={loadListings} />
         ))}
       </div>
     </div>

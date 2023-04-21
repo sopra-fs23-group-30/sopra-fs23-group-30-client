@@ -1,34 +1,54 @@
-import { Card } from "flowbite-react";
+import { Badge, Card, Dropdown } from "flowbite-react";
+import { api } from "helpers/api";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import DecisionConfirmationInquiry from "../shared/DecisionConfirmationInquiry";
 
 function ExpandableListingCard(props) {
+  const applicantFound = props.listing?.applicants?.some(
+    (applicant) => applicant.state === "ACCEPTED"
+  );
+
   const [isOpen, setIsOpen] = useState(false);
   const [showInquiry, setShowInquiry] = useState(false);
 
   const takeOffline = async () => {
     setShowInquiry(true);
-    // let body = {
-    //   newState: "MOVEIN",
-    // };
+  };
 
-    // try {
-    //   let response = await api.put("/applications/" + props.id, body);
-    //   if (response.status === 204) {
-    //     toast("Application taken offline", {
-    //       duration: 4000,
-    //       position: "top-right",
-    //       icon: "✅",
-    //     });
-    //     return;
-    //   }
-    // } catch (ex) {
-    //   toast("Error", {
-    //     duration: 4000,
-    //     position: "top-right",
-    //     icon: "❌",
-    //   });
-    // }
+  const action = async (applicationId, newState) => {
+    let body = {
+      newState: newState,
+    };
+    try {
+      let response = await api.put("/applications/" + applicationId, body);
+
+      if (response.status === 204) {
+        toast("Action successful", {
+          duration: 4000,
+          position: "top-right",
+          icon: "✅",
+        });
+        props.onUpdate();
+      }
+    } catch (ex) {
+      toast("Action unsuccessful", {
+        duration: 4000,
+        position: "top-right",
+        icon: "❌",
+      });
+    }
+  };
+
+  const getBadge = (state) => {
+    return (
+      <div>
+        {state === "PENDING" && <Badge color="info">{state}</Badge>}
+        {state === "ACCEPTED" && <Badge color="success">{state}</Badge>}
+        {state === "DECLINED" && <Badge color="failure">{state}</Badge>}
+        {state === "MOVEIN" && <Badge color="black">{state}</Badge>}
+      </div>
+    );
   };
 
   return (
@@ -43,7 +63,7 @@ function ExpandableListingCard(props) {
         }}
       />
       <Card className="divide-y">
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between items-center">
           <p className="text-sm font-bold">{props.listing.listingTitle}</p>
           <div className="flex flex-row gap-3">
             <button
@@ -101,57 +121,74 @@ function ExpandableListingCard(props) {
         </div>
         {isOpen && (
           <div className="flex flex-col gap-3">
-            {props.listing?.applicants?.map((applicant) => (
-              <div key={applicant.id} className="flex flex-col">
-                <div className="flex flex-row w-full justify-between">
-                  <div class="flex flex-row w-2/5 grid-cols-3 my-3 content-center">
-                    <div className="w-1/3">
-                      <img
-                        class="w-10 h-10 rounded-full"
-                        src="https://img.freepik.com/free-photo/portrait-african-american-man_23-2149072214.jpg"
-                        alt="Rounded avatar"
-                      />
-                    </div>
-                    <p className="text-sm my-3 w-1/3">{applicant.firstname}</p>
-                    <p className="text-sm my-3 w-1/3">{applicant.lastname}</p>
-                  </div>
+            {props.listing?.applicants?.length > 0 && (
+              <table class="w-full table-fixed ">
+                <thead>
+                  <tr>
+                    <th class="w-2/6 text-left text-sm px-4">Name</th>
+                    <th class="w-3/6 text-left px-4 py-2 text-sm">
+                      Application Date
+                    </th>
+                    <th class="w-1/6"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {props.listing?.applicants?.length > 0 &&
+                    props.listing?.applicants?.map((applicant) => (
+                      <tr key={applicant.id}>
+                        <td class="text-center px-4 py-2 flex flex-row items-center">
+                          <div class="bg-gray-400 rounded-full w-8 h-8"></div>
+                          <p className="ml-5 text-sm">
+                            {applicant.firstname} {applicant.lastname}
+                          </p>
+                        </td>
+                        <td class="px-4 py-2 text-sm">
+                          {applicant.applicationDate}
+                        </td>
+                        <td class="text-right px-4 py-2 text-sm">
+                          <div class="flex justify-end items-center gap-3">
+                            {applicant.state === "PENDING" && (
+                              <Dropdown
+                                class="text-center text-sm text-white bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 rounded-lg text-sm focus:outline-none dark:focus:ring-blue-800"
+                                label="Actions"
+                                dismissOnClick={false}
+                              >
+                                <Dropdown.Item
+                                  onClick={() =>
+                                    action(applicant.applicationId, "ACCEPTED")
+                                  }
+                                >
+                                  Accept
+                                </Dropdown.Item>
+                                <Dropdown.Item
+                                  onClick={() =>
+                                    action(applicant.applicationId, "DECLINED")
+                                  }
+                                >
+                                  Decline
+                                </Dropdown.Item>
+                              </Dropdown>
+                            )}
 
-                  <div className="flex flex-row gap-3 my-3 content-center">
-                    <a
-                      href={"/profile/" + applicant.applicantId}
-                      class="h-6 text-center text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 my-3 hover:underline focus:outline-none dark:focus:ring-blue-800"
-                    >
-                      See Profile
-                    </a>
+                            {getBadge(applicant.state)}
 
-                    <button
-                      type="button"
-                      class="h-6 text-center text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 my-2 focus:outline-none dark:focus:ring-blue-800"
-                    >
-                      Actions
-                    </button>
+                            <a
+                              href={"/profile/" + applicant.applicantId}
+                              class="text-center text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm  hover:underline focus:outline-none dark:focus:ring-blue-800"
+                            >
+                              See Profile
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            )}
 
-                    <svg
-                      data-accordion-icon="true"
-                      class="w-6 h-6 shrink-0 collapse"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                      onClick={() => {
-                        setIsOpen(true);
-                      }}
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  </div>
-                </div>
-                <hr className="w-full h-0.5 mx-auto bg-gray-100 border-0 rounded dark:bg-gray-700" />
-              </div>
-            ))}
+            {props.listing?.applicants?.length <= 0 && (
+              <p className="text-sm">No applications yet</p>
+            )}
           </div>
         )}
       </Card>
