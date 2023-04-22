@@ -102,6 +102,7 @@ export default function ProfilePage() {
   const handleLifespansChanged = (newLifespans) => {
     const saveableArray = newLifespans.map((item) => {
       delete item.isPersisted; // remove the "age" property from each object
+      delete item.isEditing;
       return item;
     });
 
@@ -215,7 +216,7 @@ export default function ProfilePage() {
       </h1>
       <div className="flex flex-col xl:grid grid-cols-5 grid-rows-3 ml-4 flex flex-col mt-4">
         <div className="col-span-1 row-span-1 h-full flex flex-col items-center w-full">
-          <h2 className="font-sm">Profile Pic</h2>
+          <h2 className="font-sm mb-2 text-sm">Profile Pic</h2>
           {profileData?.profilePictureURL && (
             <img
               src={profileData?.profilePictureURL}
@@ -231,33 +232,34 @@ export default function ProfilePage() {
               className="rounded-full bg-gray-900 w-36 aspect-square text-white flex items-center justify-center"
             />
           )}
+          {canEdit && (
+            <div className="flex flex-col justify-center justify-items-start gap-2 p-4">
+              <div>
+                <input
+                  type="file"
+                  name="uploadfile"
+                  id="img"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+                <label
+                  for="img"
+                  className="text-white text-center bg-secondary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
+                >
+                  Change Photo
+                </label>
+              </div>
 
-          <div className="flex flex-col justify-center justify-items-start gap-2 p-4">
-            <div>
-              <input
-                type="file"
-                name="uploadfile"
-                id="img"
-                className="hidden"
-                onChange={handleFileChange}
-              />
-              <label
-                for="img"
-                className="text-white text-center bg-secondary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
+              <button
+                onClick={() => {
+                  handleDeletePicture();
+                }}
+                className="text-sm mt-2 text-primary text-center items-center hover:underline"
               >
-                Change Photo
-              </label>
+                Delete
+              </button>
             </div>
-
-            <button
-              onClick={() => {
-                handleDeletePicture();
-              }}
-              className="text-sm mt-2 text-primary text-center items-center hover:underline"
-            >
-              Delete
-            </button>
-          </div>
+          )}
         </div>
         <div className="col-start-2 col-span-4 row-span-1 flex flex-row lg:flex-row gap-2">
           <div className="flex flex-col gap-2 w-full xl:w-1/3">

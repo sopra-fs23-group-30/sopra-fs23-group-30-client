@@ -35,7 +35,7 @@ function EditableDate(props) {
   };
 
   return (
-    <div className="my-3">
+    <div>
       <div className="flex flex-row mb-1 items-center">
         <label
           htmlFor="small-input"
