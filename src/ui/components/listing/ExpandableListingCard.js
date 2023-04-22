@@ -5,10 +5,6 @@ import toast from "react-hot-toast";
 import DecisionConfirmationInquiry from "../shared/DecisionConfirmationInquiry";
 
 function ExpandableListingCard(props) {
-  const applicantFound = props.listing?.applicants?.some(
-    (applicant) => applicant.state === "ACCEPTED"
-  );
-
   const [isOpen, setIsOpen] = useState(false);
   const [showInquiry, setShowInquiry] = useState(false);
 
@@ -66,12 +62,13 @@ function ExpandableListingCard(props) {
         <div className="flex flex-row justify-between items-center">
           <p className="text-sm font-bold">{props.listing.listingTitle}</p>
           <div className="flex flex-row gap-3">
-            <button
+            <a
+              href={"/listings/" + props.listing.listingId}
               type="button"
-              class=" font-bold text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-1 focus:outline-none dark:focus:ring-blue-800"
+              class=" font-bold text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-1 hover:underline focus:outline-none dark:focus:ring-blue-800"
             >
               Edit
-            </button>
+            </a>
             <button
               onClick={() => takeOffline()}
               type="button"
@@ -143,7 +140,9 @@ function ExpandableListingCard(props) {
                           </p>
                         </td>
                         <td class="px-4 py-2 text-sm">
-                          {applicant.applicationDate}
+                          {new Date(
+                            applicant.applicationDate
+                          ).toLocaleDateString("ch-DE")}
                         </td>
                         <td class="text-right px-4 py-2 text-sm">
                           <div class="flex justify-end items-center gap-3">

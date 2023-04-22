@@ -4,6 +4,8 @@ import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 import { useParams } from "react-router-dom";
 import Map from "ui/components/listing/Map";
+import TransparendEditableString from "ui/components/listing/TransparentEditableString";
+import TransparentEditableTextArea from "ui/components/listing/TransparentEditableTextArea";
 
 export default function ListingDetail() {
   const [listingData, setListingData] = useState(null);
@@ -39,6 +41,66 @@ export default function ListingDetail() {
       }
     } catch (ex) {
       toast("Application unsuccessful - you've already applied", {
+        duration: 4000,
+        position: "top-right",
+        icon: "❌",
+      });
+    }
+  };
+
+  const handleTitleChange = (newVal) => {
+    let existingData = listingData;
+    existingData.title = newVal;
+    setListingData(existingData);
+    updateListing();
+  };
+
+  const handleAddressChange = (newVal) => {
+    let existingData = listingData;
+    existingData.streetName = newVal;
+    setListingData(existingData);
+    updateListing();
+  };
+
+  const handlePricePerMonthChange = (newVal) => {
+    let existingData = listingData;
+    existingData.pricePerMonth = newVal;
+    setListingData(existingData);
+    updateListing();
+  };
+
+  const handleDescriptionChange = (newVal) => {
+    let existingData = listingData;
+    existingData.description = newVal;
+    setListingData(existingData);
+    updateListing();
+  };
+
+  const handleFutureFlatmateDescriptionChange = (newVal) => {
+    let existingData = listingData;
+    existingData.perfectFlatmateDescription = newVal;
+    setListingData(existingData);
+    updateListing();
+  };
+
+  const updateListing = async () => {
+    try {
+      let response = await api.put("/listings/" + params.id, listingData);
+      if (response.status === 204) {
+        toast("Save successful", {
+          duration: 4000,
+          position: "top-right",
+          icon: "✅",
+        });
+      } else {
+        toast("Save unsuccessful", {
+          duration: 4000,
+          position: "top-right",
+          icon: "❌",
+        });
+      }
+    } catch (ex) {
+      toast("Save unsuccessful", {
         duration: 4000,
         position: "top-right",
         icon: "❌",
@@ -98,28 +160,43 @@ export default function ListingDetail() {
 
   const titleInformationRow = () => {
     return (
-      <div class="grid md:grid-cols-2 gap-4 grid-cols-1">
+      <div className="grid md:grid-cols-2 gap-4 grid-cols-1">
         <div className="flex flex-row justify-between">
-          <div className="flex flex-col">
-            <p className="font-extrabold text-primary text-md">
-              {listingData?.title}
-            </p>
+          <div className="flex flex-col w-1/2">
+            <TransparendEditableString
+              className="font-extrabold text-primary text-md bg-transparent"
+              content={listingData?.title}
+              canEdit={canEdit}
+              onSave={handleTitleChange}
+              inputType="text"
+            />
+
             <p className="text-black text-sm">
-              {listingData?.streetName} {listingData?.streetNumber},{" "}
-              {listingData?.zipCode} {listingData?.cityName}
+              <TransparendEditableString
+                className="text-black text-sm bg-transparent"
+                content={listingData?.streetName}
+                canEdit={canEdit}
+                onSave={handleAddressChange}
+              />
             </p>
           </div>
 
-          <p className="font-extrabold text-primary text-md">
-            {listingData?.pricePerMonth} CHF / month
-          </p>
+          <div className="flex flex-row font-extrabold text-primary text-md">
+            <TransparendEditableString
+              className="font-extrabold text-primary text-md bg-transparent mr-2"
+              content={listingData?.pricePerMonth.toString()}
+              canEdit={canEdit}
+              onSave={handlePricePerMonthChange}
+            />
+            CHF / month
+          </div>
         </div>
         <div className="flex flex-row justify-end">
           {!canEdit && !hasApplied && (
             <button
               onClick={() => handleApply()}
               type="button"
-              class="w-full font-bold md:w-1/4 text-white bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none dark:focus:ring-blue-800"
+              className="w-full font-bold md:w-1/4 text-white bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none dark:focus:ring-blue-800"
             >
               Apply
             </button>
@@ -131,30 +208,32 @@ export default function ListingDetail() {
 
   const descriptionSection = () => {
     return (
-      <div class="block w-full md:w-1/2 p-2 pt-4 pr-4 pb-4 bg-white border border-gray-200 rounded-lg shadow">
-        <h5 class="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white">
-          Description
-        </h5>
-        <p class="text-sm font-normal text-gray-700 dark:text-gray-400">
-          {listingData?.description}
-        </p>
+      <div className="block w-full md:w-1/2 p-2 pt-1 pr-4 pb-4 bg-white border border-gray-200 rounded-lg shadow">
+        <TransparentEditableTextArea
+          label="Description"
+          className="text-sm font-normal text-gray-700 dark:text-gray-400 bg-transparent"
+          content={listingData?.description}
+          canEdit={canEdit}
+          onSave={handleDescriptionChange}
+          isCardContent={true}
+        />
       </div>
     );
   };
 
   const listerSection = () => {
     return (
-      <div class="relative block w-full md:w-1/2 p-2 pt-4 pr-4 pb-4 bg-white border border-gray-200 rounded-lg shadow">
-        <h5 class="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white">
+      <div className="relative block w-full md:w-1/2 p-5 bg-white border border-gray-200 rounded-lg shadow">
+        <h5 className="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white">
           About the lister
         </h5>
         <div className="flex flex-col gap-4">
-          <p class="text-sm font-bold text-gray-700 dark:text-gray-400">
+          <p className="text-sm font-bold text-gray-700 dark:text-gray-400">
             {listingData?.listerFirstname} {listingData?.listerLastname} (24
             years old)
           </p>
 
-          <p class="w-2/3 md:w-3/4 text-sm font-normal text-gray-700 dark:text-gray-400">
+          <p className="w-2/3 md:w-3/4 text-sm font-normal text-gray-700 dark:text-gray-400">
             "Ich bin Matthias und freue mich mega auf einen neuen Mitbewohner"
           </p>
 
@@ -165,9 +244,9 @@ export default function ListingDetail() {
             See Profile
           </a>
 
-          <div class="absolute top-2 right-2">
+          <div className="absolute top-2 right-2">
             <img
-              class="object-fill w-24 h-24"
+              className="object-fill w-24 h-24"
               alt="profilePicture"
               src="https://img.freepik.com/free-photo/portrait-african-american-man_23-2149072214.jpg"
             />
@@ -179,14 +258,16 @@ export default function ListingDetail() {
 
   const lookingForSection = () => {
     return (
-      <div class="relative block w-full md:w-1/2 p-2 pt-4 pr-4 pb-4">
-        <h5 class="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white">
-          What we're looking for
-        </h5>
+      <div className="relative block w-full md:w-1/2 p-2 pt-4 pr-4 pb-4">
         <div className="flex flex-col gap-4">
-          <p class="w-2/3 md:w-3/4 text-sm font-normal text-gray-700 dark:text-gray-400">
-            {listingData?.perfectFlatmateDescription}
-          </p>
+          <TransparentEditableTextArea
+            label="What we're looking for"
+            className="text-sm font-normal text-gray-700 dark:text-gray-400 bg-transparent"
+            content={listingData?.perfectFlatmateDescription}
+            canEdit={canEdit}
+            onSave={handleFutureFlatmateDescriptionChange}
+            isCardContent={false}
+          />
         </div>
       </div>
     );
@@ -194,8 +275,8 @@ export default function ListingDetail() {
 
   const mapsSection = () => {
     return (
-      <div class=" w-full md:w-1/2 p-2 pt-4 pr-4 pb-4">
-        <h5 class="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white">
+      <div className=" w-full md:w-1/2 p-2 pt-4 pr-4 pb-4">
+        <h5 className="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white">
           Where we live
         </h5>
         <Map
@@ -254,17 +335,11 @@ export default function ListingDetail() {
           </li>
         </ol>
       </nav>
-
       {imageGrid()}
-
       {titleInformationRow()}
-
       {descriptionSection()}
-
       {listerSection()}
-
       {lookingForSection()}
-
       {mapsSection()}
     </div>
   );

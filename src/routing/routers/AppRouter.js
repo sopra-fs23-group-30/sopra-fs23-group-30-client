@@ -1,16 +1,16 @@
+import { decodeToken } from "react-jwt";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavbarSignedIn from "ui/components/shared/NavbarSignedIn";
 import NavbarSignedOut from "ui/components/shared/NavbarSignedOut";
+import MyApplications from "ui/views/Application/MyApplications";
 import SignIn from "ui/views/Authentication/SignIn";
 import SignUp from "ui/views/Authentication/SignUp";
+import CreateListing from "ui/views/Listing/CreateListing";
+import ListingDetail from "ui/views/Listing/ListingDetail";
+import MyListings from "ui/views/Listing/MyListings";
 import Search from "ui/views/Listing/Search";
 import NotFound from "ui/views/NotFound";
 import Profile from "ui/views/Profile/Profile";
-import { decodeToken } from "react-jwt";
-import MyApplications from "ui/views/Application/MyApplications";
-import MyListings from "ui/views/Listing/MyListings";
-import CreateListing from "ui/views/Listing/CreateListing";
-import ListingDetail from "ui/views/Listing/ListingDetail";
 
 const AppRouter = () => {
   let token = localStorage.getItem("authtoken");

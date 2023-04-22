@@ -208,7 +208,7 @@ function EditableLifespan(props) {
             </div>
           )}
 
-          {!lifespan.isEditing && (
+          {!lifespan.isEditing && props.canEdit && (
             <div className="flex flex-col justify-center">
               <TrashIcon
                 height={18}

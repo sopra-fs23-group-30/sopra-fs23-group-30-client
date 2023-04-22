@@ -6,9 +6,8 @@ import {
 } from "@heroicons/react/20/solid";
 import { useEffect, useRef, useState } from "react";
 
-function EditableString(props) {
+function TransparentEditableTextArea(props) {
   const [editable, setEditable] = useState(false);
-  const [showSaved, setShowSaved] = useState(false);
   const [content, setContent] = useState(props.content);
   const [initialContent, setInitialContent] = useState(props.content);
   const inputRef = useRef(null);
@@ -21,10 +20,6 @@ function EditableString(props) {
   const save = () => {
     setInitialContent(content);
     setEditable(false);
-    setShowSaved(true);
-    setTimeout(() => {
-      setShowSaved(false);
-    }, 3000);
 
     props.onSave(content);
   };
@@ -36,45 +31,19 @@ function EditableString(props) {
 
   return (
     <div className="my-3">
-      {props.label && (
-        <div className="flex flex-row mb-1 items-center">
-          <label
-            htmlFor="small-input"
-            className="block text-sm font-medium text-gray-900 dark:text-white"
-          >
-            {props.label}
-          </label>
-
-          {showSaved && (
-            <label
-              htmlFor="small-input"
-              className="block ml-1 text-xs text-blue-500 animate-in fade-in-50 animate-out fade-out-50"
-            >
-              saved!
-            </label>
-          )}
-        </div>
-      )}
-
-      <div className="px-2 py-1 mx-0 flex justify-between items-center border border-gray-300 rounded-lg bg-gray-50">
-        {!editable && <p className="text-sm text-gray-400">{content}</p>}
-
-        {editable && (
-          <input
-            {...props}
-            ref={inputRef}
-            className="p-0 text-sm border-none bg-transparent focus:border-none focus:ring-transparent block w-full text-black-900"
-            value={content ?? ""}
-            onChange={({ target: { value: content } }) => {
-              setContent(content);
-            }}
-          />
-        )}
+      <div className="flex flex-row mb-1 items-center justify-between">
+        <h5
+          className={` text-md font-bold tracking-tight text-gray-900 dark:text-white ${
+            props.isCardContent ? "p-2.5" : "p-0"
+          }`}
+        >
+          {props.label}
+        </h5>
 
         {props.canEdit && (
           <div
             id="actionsContainer"
-            className="flex flex-row justify-center ml-1"
+            className="flex flex-row justify-center ml-1 px-2"
           >
             <span className="inline-block align-middle">
               {editable && (
@@ -92,9 +61,6 @@ function EditableString(props) {
                   color="blue"
                   onClick={() => {
                     setEditable(true);
-                    setTimeout(() => {
-                      inputRef.current.focus();
-                    }, 0);
                   }}
                   className="inline-block align-middle text-blue-500"
                 />
@@ -114,12 +80,47 @@ function EditableString(props) {
           </div>
         )}
       </div>
+
+      <div className="my-1 mx-0 flex justify-between">
+        {!editable && (
+          <textarea
+            disabled={true}
+            id="message"
+            rows="4"
+            value={content ?? ""}
+            onChange={({ target: { value: content } }) => {
+              setContent(content);
+            }}
+            className={`border-none bg-transparent block  pt-0 w-full text-sm text-gray-400 ${
+              props.isCardContent ? "p-2.5" : "p-0"
+            }`}
+            placeholder="Leave a comment..."
+          />
+        )}
+
+        {editable && (
+          <textarea
+            disabled={false}
+            id="message"
+            rows="4"
+            ref={inputRef}
+            value={content ?? ""}
+            onChange={({ target: { value: content } }) => {
+              setContent(content);
+            }}
+            className={`border-none bg-transparent block pt-0 w-full text-sm text-black-900 ${
+              props.isCardContent ? "p-2.5" : "p-0"
+            }`}
+            placeholder="Leave a comment..."
+          />
+        )}
+      </div>
     </div>
   );
 }
 
-EditableString.propTypes = {
+TransparentEditableTextArea.propTypes = {
   content: PropTypes.string,
 };
 
-export default EditableString;
+export default TransparentEditableTextArea;

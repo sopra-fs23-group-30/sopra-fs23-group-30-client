@@ -74,9 +74,6 @@ function NavbarSignedIn() {
             </>
           ) : (
             <>
-              <Navbar.Link className="font-bold text-sm" href="/createlisting">
-                Create Listing
-              </Navbar.Link>
               <Navbar.Link className="text-sm" href="/listings">
                 My Listings
               </Navbar.Link>

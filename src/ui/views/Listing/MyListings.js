@@ -1,3 +1,4 @@
+import { Button } from "flowbite-react";
 import { api } from "helpers/api";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -75,6 +76,16 @@ export default function MyListings() {
         </ol>
       </nav>
 
+      <div className="flex flex-row justify-end">
+        <Button
+          href={"/createlisting"}
+          size={"small"}
+          color="dark"
+          className="text-sm p-2 bg-secondary"
+        >
+          Create Listing
+        </Button>
+      </div>
       <div className="flex flex-col gap-4">
         {listings?.map((listing) => (
           <ExpandableListingCard listing={listing} onUpdate={loadListings} />
