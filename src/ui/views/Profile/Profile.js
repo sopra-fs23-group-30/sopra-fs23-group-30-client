@@ -44,53 +44,59 @@ export default function ProfilePage() {
     setLifespans(response.data.lifespans);
   };
 
+  const getUnchangedFileBlob = () => {
+    let blob = new Blob();
+    blob.name = "unchanged";
+    return blob;
+  };
+
   const handleFirstnameChange = (newVal) => {
     let existingData = profileData;
     existingData.firstname = newVal;
     setProfileData(existingData);
-    updateProfile(lifespans);
+    updateProfile(lifespans, getUnchangedFileBlob());
   };
 
   const handleLastnameChange = (newVal) => {
     let existingData = profileData;
     existingData.lastname = newVal;
     setProfileData(existingData);
-    updateProfile(lifespans);
+    updateProfile(lifespans, getUnchangedFileBlob());
   };
 
   const handleBirthdateChange = (newVal) => {
     let existingData = profileData;
     existingData.birthday = newVal;
     setProfileData(existingData);
-    updateProfile(lifespans);
+    updateProfile(lifespans, getUnchangedFileBlob());
   };
 
   const handlePhonenumber = (newVal) => {
     let existingData = profileData;
     existingData.phoneNumber = newVal;
     setProfileData(existingData);
-    updateProfile(lifespans);
+    updateProfile(lifespans, getUnchangedFileBlob());
   };
 
   const handleGender = (newVal) => {
     let existingData = profileData;
     existingData.gender = newVal;
     setProfileData(existingData);
-    updateProfile(lifespans);
+    updateProfile(lifespans, getUnchangedFileBlob());
   };
 
   const handleBiography = (newVal) => {
     let existingData = profileData;
     existingData.biography = newVal;
     setProfileData(existingData);
-    updateProfile(lifespans);
+    updateProfile(lifespans, getUnchangedFileBlob());
   };
 
   const handleFlatemateDescription = (newVal) => {
     let existingData = profileData;
     existingData.futureFlatmatesDescription = newVal;
     setProfileData(existingData);
-    updateProfile(lifespans);
+    updateProfile(lifespans, getUnchangedFileBlob());
   };
 
   const handleLifespansChanged = (newLifespans) => {
@@ -99,10 +105,21 @@ export default function ProfilePage() {
       return item;
     });
 
-    updateProfile(saveableArray);
+    updateProfile(saveableArray, getUnchangedFileBlob());
   };
 
-  const updateProfile = async (updatedLifespans) => {
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    updateProfile(lifespans, file);
+  };
+
+  const handleDeletePicture = () => {
+    let blob = new Blob();
+    blob.name = "deleted";
+    updateProfile(lifespans, blob);
+  };
+
+  const updateProfile = async (updatedLifespans, file) => {
     let token = localStorage.getItem("authtoken");
     const decoded = decodeToken(token);
     const userId = decoded.userId;
@@ -110,8 +127,19 @@ export default function ProfilePage() {
     let updateData = profileData;
     updateData.lifespans = updatedLifespans;
 
+    const { profilePictureURL, email, ...newObj } = updateData;
+
+    const formData = new FormData();
+    formData.append("body", JSON.stringify(newObj));
+    formData.append("file", file, file.name);
+
     try {
-      let response = await api.put("/profiles/" + userId, updateData);
+      let response = await api.put("/profiles/" + userId, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       if (response.status === 204) {
         toast("Save successful", {
           duration: 4000,
@@ -188,19 +216,44 @@ export default function ProfilePage() {
       <div className="flex flex-col xl:grid grid-cols-5 grid-rows-3 ml-4 flex flex-col mt-4">
         <div className="col-span-1 row-span-1 h-full flex flex-col items-center w-full">
           <h2 className="font-sm">Profile Pic</h2>
-          <div className="rounded-full bg-gray-900 w-36 aspect-square text-white flex items-center justify-center">
-            Image
-          </div>
+          {profileData?.profilePictureURL && (
+            <img
+              src={profileData?.profilePictureURL}
+              alt="face of lister / searcher"
+              className="rounded-full bg-gray-900 w-36 aspect-square text-white flex items-center justify-center"
+            />
+          )}
+
+          {!profileData?.profilePictureURL && (
+            <img
+              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+              alt="face of lister / searcher"
+              className="rounded-full bg-gray-900 w-36 aspect-square text-white flex items-center justify-center"
+            />
+          )}
+
           <div className="flex flex-col justify-center justify-items-start gap-2 p-4">
+            <div>
+              <input
+                type="file"
+                name="uploadfile"
+                id="img"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+              <label
+                for="img"
+                className="text-white text-center bg-secondary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
+              >
+                Change Photo
+              </label>
+            </div>
+
             <button
-              onClick={() => {}}
-              className="text-white text-center bg-secondary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
-            >
-              Change Photo
-            </button>
-            <button
-              onClick={() => {}}
-              className="text-sm text-primary text-center items-center hover:underline"
+              onClick={() => {
+                handleDeletePicture();
+              }}
+              className="text-sm mt-2 text-primary text-center items-center hover:underline"
             >
               Delete
             </button>
