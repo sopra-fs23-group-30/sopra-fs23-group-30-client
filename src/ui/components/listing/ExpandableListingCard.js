@@ -65,14 +65,14 @@ function ExpandableListingCard(props) {
             <a
               href={"/listings/" + props.listing.listingId}
               type="button"
-              class=" font-bold text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-1 hover:underline focus:outline-none dark:focus:ring-blue-800"
+              class="text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-1 hover:underline focus:outline-none dark:focus:ring-blue-800"
             >
               Edit
             </a>
             <button
               onClick={() => takeOffline()}
               type="button"
-              class=" font-bold text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-1 hover:underline focus:outline-none dark:focus:ring-blue-800"
+              class="text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-1 hover:underline focus:outline-none dark:focus:ring-blue-800"
             >
               Take Offline
             </button>
@@ -134,7 +134,22 @@ function ExpandableListingCard(props) {
                     props.listing?.applicants?.map((applicant) => (
                       <tr key={applicant.id}>
                         <td class="text-center px-4 py-2 flex flex-row items-center">
-                          <div class="bg-gray-400 rounded-full w-8 h-8"></div>
+                          {applicant?.profilePictureURL && (
+                            <img
+                              src={applicant?.profilePictureURL}
+                              alt="face of lister / searcher"
+                              class="bg-gray-400 rounded-full w-8 h-8"
+                            />
+                          )}
+
+                          {!applicant?.profilePictureURL && (
+                            <img
+                              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                              alt="face of lister / searcher"
+                              className="bg-gray-400 rounded-full w-8 h-8"
+                            />
+                          )}
+
                           <p className="ml-5 text-sm">
                             {applicant.firstname} {applicant.lastname}
                           </p>
@@ -148,7 +163,7 @@ function ExpandableListingCard(props) {
                           <div class="flex justify-end items-center gap-3">
                             {applicant.state === "PENDING" && (
                               <Dropdown
-                                class="text-center text-sm text-white bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 rounded-lg text-sm focus:outline-none dark:focus:ring-blue-800"
+                                class="text-center text-white bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 rounded-lg text-sm focus:outline-none dark:focus:ring-blue-800"
                                 label="Actions"
                                 dismissOnClick={false}
                               >

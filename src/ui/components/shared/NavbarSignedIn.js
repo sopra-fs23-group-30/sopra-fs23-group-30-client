@@ -9,6 +9,7 @@ const handleLogout = () => {
 
 function NavbarSignedIn() {
   const [isSearcher, setIsSearcher] = useState();
+  const [profilePictureURL, setProfilePictureURL] = useState();
   const [firstname, setFirstname] = useState();
   const [goToProfileLink, setGoToProfileLink] = useState();
 
@@ -17,8 +18,14 @@ function NavbarSignedIn() {
     const claims = jwt_decode(token);
     setIsSearcher(claims.isSearcher);
     setGoToProfileLink("/profile/" + claims.userId);
+    setProfilePictureURL(claims.profilePictureURL)
     setFirstname(claims.firstname);
   }, []);
+
+  const update = async () => {
+    alert('im in navbar')
+  };
+
 
   return (
     <div class="bg-white w-full">
@@ -40,7 +47,7 @@ function NavbarSignedIn() {
                 <div className="flex flex-row">
                   <Avatar
                     alt="User settings"
-                    img="https://pbs.twimg.com/media/FjU2lkcWYAgNG6d.jpg"
+                    img={profilePictureURL}
                     rounded={true}
                     className="m-0 md:mr-4"
                   >

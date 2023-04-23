@@ -9,7 +9,7 @@ import EditableLifespan from "ui/components/general/EditableLifespan";
 import EditableString from "ui/components/general/EditableString";
 import EditableTextarea from "ui/components/general/EditableTextarea";
 
-export default function ProfilePage() {
+export default function ProfilePage(props) {
   const [profileData, setProfileData] = useState(null);
   const [lifespans, setLifespans] = useState([]);
   const [canEdit, setCanEdit] = useState(false);
@@ -128,7 +128,7 @@ export default function ProfilePage() {
     let updateData = profileData;
     updateData.lifespans = updatedLifespans;
 
-    const { profilePictureURL, email, ...newObj } = updateData;
+    const { email, ...newObj } = updateData;
 
     const formData = new FormData();
     formData.append("body", JSON.stringify(newObj));
@@ -163,10 +163,11 @@ export default function ProfilePage() {
     }
 
     loadProfile(params.id);
+    props.updateNavbar();
   };
 
   return (
-    <div className="px-2 py-2.5 sm:px-4 rounded px-4 md:mx-48">
+    <div className="py-2.5 sm:px-4 rounded px-4 md:mx-48">
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
           <li className="inline-flex items-center">
@@ -214,7 +215,7 @@ export default function ProfilePage() {
       <h1 className="mt-8 ml-4 text-lg font-medium text-gray-900">
         My Profile
       </h1>
-      <div className="flex flex-col xl:grid grid-cols-5 grid-rows-3 ml-4 flex flex-col mt-4">
+      <div className="flex flex-col xl:grid grid-cols-5 grid-rows-3 ml-4 mt-4">
         <div className="col-span-1 row-span-1 h-full flex flex-col items-center w-full">
           <h2 className="font-sm mb-2 text-sm">Profile Pic</h2>
           {profileData?.profilePictureURL && (
@@ -244,7 +245,7 @@ export default function ProfilePage() {
                 />
                 <label
                   for="img"
-                  className="text-white text-center bg-secondary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
+                  className="text-white text-center focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
                 >
                   Change Photo
                 </label>

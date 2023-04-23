@@ -108,6 +108,12 @@ export default function ListingDetail() {
     }
   };
 
+  function calculateAge(birthday) {
+  const ageDifMs = Date.now() - birthday.getTime();
+  const ageDate = new Date(ageDifMs);
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+
   const loadListing = async (listingId) => {
     let token = localStorage.getItem("authtoken");
     const decoded = decodeToken(token);
@@ -196,7 +202,7 @@ export default function ListingDetail() {
             <button
               onClick={() => handleApply()}
               type="button"
-              className="w-full font-bold md:w-1/4 text-white bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none dark:focus:ring-blue-800"
+              className="w-full font-bold md:w-1/4 text-white bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none dark:focus:ring-blue-800"
             >
               Apply
             </button>
@@ -229,27 +235,38 @@ export default function ListingDetail() {
         </h5>
         <div className="flex flex-col gap-4">
           <p className="text-sm font-bold text-gray-700 dark:text-gray-400">
-            {listingData?.listerFirstname} {listingData?.listerLastname} (24
-            years old)
+            {listingData?.listerFirstname} {listingData?.listerLastname} ({calculateAge(new Date(listingData?.listerBirthdate))} years old)
+            
           </p>
 
           <p className="w-2/3 md:w-3/4 text-sm font-normal text-gray-700 dark:text-gray-400">
-            "Ich bin Matthias und freue mich mega auf einen neuen Mitbewohner"
+            "{listingData?.listerDescription}"
           </p>
 
           <a
             href={"/profile/" + listingData?.listerId}
-            className="text-white text-center bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
+            className="text-white text-center focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
           >
             See Profile
           </a>
 
           <div className="absolute top-2 right-2">
+          {listingData?.profilePictureURL && (
             <img
+              src={listingData?.profilePictureURL}
+              alt="face of lister / searcher"
               className="object-fill w-24 h-24"
-              alt="profilePicture"
-              src="https://img.freepik.com/free-photo/portrait-african-american-man_23-2149072214.jpg"
             />
+          )}
+
+          {!listingData?.profilePictureURL && (
+            <img
+              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+              className="object-fill w-24 h-24"
+              alt="face of lister / searcher (unknown)"
+            />
+          )}
+          
           </div>
         </div>
       </div>
@@ -290,7 +307,7 @@ export default function ListingDetail() {
   };
 
   return (
-    <div className="px-2 py-2.5 sm:px-4 rounded px-4 md:mx-48 flex flex-col gap-4 mt-8">
+    <div className="py-2.5 sm:px-4 rounded px-4 md:mx-48 flex flex-col gap-4 mt-8">
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
           <li className="inline-flex items-center">
