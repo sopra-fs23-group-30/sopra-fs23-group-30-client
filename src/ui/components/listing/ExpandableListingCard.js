@@ -1,4 +1,4 @@
-import { Badge, Card, Dropdown } from "flowbite-react";
+import { Badge, Button, Card, Dropdown } from "flowbite-react";
 import { api } from "helpers/api";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -37,14 +37,18 @@ function ExpandableListingCard(props) {
   };
 
   const getBadge = (state) => {
-    return (
-      <div>
-        {state === "PENDING" && <Badge color="info">{state}</Badge>}
-        {state === "ACCEPTED" && <Badge color="success">{state}</Badge>}
-        {state === "DECLINED" && <Badge color="failure">{state}</Badge>}
-        {state === "MOVEIN" && <Badge color="black">{state}</Badge>}
-      </div>
-    );
+    if (state === "PENDING") {
+      return <Badge color="dark">{state}</Badge>;
+    }
+    if (state === "ACCEPTED") {
+      return <Badge>{state}</Badge>;
+    }
+    if (state === "DECLINED") {
+      return <Badge color="failure">{state}</Badge>;
+    }
+    if (state === "MOVEIN") {
+      return <Badge color="success">{state}</Badge>;
+    }
   };
 
   return (
@@ -122,11 +126,11 @@ function ExpandableListingCard(props) {
               <table class="w-full table-fixed ">
                 <thead>
                   <tr>
-                    <th class="w-2/6 text-left text-sm px-4">Name</th>
-                    <th class="w-3/6 text-left px-4 py-2 text-sm">
+                    <th class="w-3/12 text-left text-sm px-4">Name</th>
+                    <th class="w-6/12 text-left px-4 py-2 text-sm">
                       Application Date
                     </th>
-                    <th class="w-1/6"></th>
+                    <th class="w-3/12"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -182,6 +186,12 @@ function ExpandableListingCard(props) {
                                   Decline
                                 </Dropdown.Item>
                               </Dropdown>
+                            )}
+
+                            {applicant.state === "MOVEIN" && (
+                              <Button size="xs" className="mb-2 bg-primary">
+                                Edit Inventory List{" "}
+                              </Button>
                             )}
 
                             {getBadge(applicant.state)}

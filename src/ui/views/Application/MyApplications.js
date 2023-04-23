@@ -1,14 +1,16 @@
+import { format } from "date-fns";
+import { Badge, Button, Dropdown } from "flowbite-react";
 import { api } from "helpers/api";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
-import { format } from "date-fns";
-import { Badge } from "flowbite-react";
 import DecisionConfirmationInquiry from "ui/components/shared/DecisionConfirmationInquiry";
 
 export default function MyApplications() {
   const [applications, setApplications] = useState([]);
   const [showInquiry, setShowInquiry] = useState(false);
+
+  const hasActiveItem = applications.some((item) => item.state === "MOVEIN");
 
   useEffect(() => {
     loadApplications().catch(console.error);
@@ -31,12 +33,44 @@ export default function MyApplications() {
     setApplications(response.data);
   };
 
+  const action = async (applicationId, newState) => {
+    let body = {
+      newState: newState,
+    };
+    try {
+      let response = await api.put("/applications/" + applicationId, body);
+
+      if (response.status === 204) {
+        toast("Action successful", {
+          duration: 4000,
+          position: "top-right",
+          icon: "✅",
+        });
+      }
+    } catch (ex) {
+      toast("Action unsuccessful", {
+        duration: 4000,
+        position: "top-right",
+        icon: "❌",
+      });
+    }
+
+    loadApplications();
+  };
+
   const getStateBadge = (state) => {
-    return (
-      <Badge color="success" size="sm">
-        {state}
-      </Badge>
-    );
+    if (state === "PENDING") {
+      return <Badge color="dark">{state}</Badge>;
+    }
+    if (state === "ACCEPTED") {
+      return <Badge>{state}</Badge>;
+    }
+    if (state === "DECLINED") {
+      return <Badge color="failure">{state}</Badge>;
+    }
+    if (state === "MOVEIN") {
+      return <Badge color="success">{state}</Badge>;
+    }
   };
 
   const applicationItem = (application) => {
@@ -70,14 +104,24 @@ export default function MyApplications() {
           </div>
           {getStateBadge(application.state)}
           <div class="flex flex-row items-center gap-4">
-            <div
-              onClick={() => {
-                setShowInquiry(true);
-              }}
-              class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-red-700 focus:outline-none"
+            <Dropdown
+              class="text-center text-white bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 rounded-lg text-sm focus:outline-none dark:focus:ring-blue-800"
+              label="Actions"
+              dismissOnClick={false}
             >
-              take back
-            </div>
+              <Dropdown.Item
+                onClick={() => action(application.applicationId, "DECLINE")}
+              >
+                Take Back
+              </Dropdown.Item>
+              {application.state === "ACCEPTED" && (
+                <Dropdown.Item
+                  onClick={() => action(application.applicationId, "MOVEIN")}
+                >
+                  Move-In
+                </Dropdown.Item>
+              )}
+            </Dropdown>
             <a
               href={"/listings/" + application.listingId}
               class="text-sm text-primary hover:underline"
@@ -136,19 +180,40 @@ export default function MyApplications() {
           </li>
         </ol>
       </nav>
-      <h1 class="mt-4 mb-4 font-bold">My Applications</h1>
-      <div class="mb-20 ml-6">
-        <h2 class="font-bold mb-4">Pending</h2>
-        {applications
-          .filter((application) => application.state === "PENDING")
-          .map((application) => applicationItem(application))}
-      </div>
-      <div class="mt-20 ml-6">
-        <h2 class="font-bold mb-4">Accepted</h2>
-      </div>
-      <div class="mt-20 ml-6">
-        <h2 class="font-bold mb-4">Rejected</h2>
-      </div>
+
+      {!hasActiveItem && (
+        <div>
+          <h1 class="mt-4 mb-4 font-bold">My Applications</h1>
+          <div class="mb-20 ml-6">
+            <h2 class="font-bold mb-4">Pending</h2>
+            {applications
+              .filter((application) => application.state === "PENDING")
+              .map((application) => applicationItem(application))}
+          </div>
+          <div class="mt-20 ml-6">
+            <h2 class="font-bold mb-4">Accepted</h2>
+            {applications
+              .filter((application) => application.state === "ACCEPTED")
+              .map((application) => applicationItem(application))}
+          </div>
+          <div class="mt-20 ml-6">
+            <h2 class="font-bold mb-4">Rejected</h2>
+            {applications
+              .filter((application) => application.state === "DECLINED")
+              .map((application) => applicationItem(application))}
+          </div>
+        </div>
+      )}
+
+      {hasActiveItem && (
+        <div class="mt-20 ml-6">
+          <h2 class="font-bold mb-4">Your new home:</h2>
+          <Button size="xs" className="mb-2 bg-primary">Edit Inventory List </Button>
+          {applications
+            .filter((application) => application.state === "MOVEIN")
+            .map((application) => applicationItem(application))}
+        </div>
+      )}
     </div>
   );
 }
