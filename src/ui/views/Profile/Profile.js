@@ -271,6 +271,7 @@ export default function ProfilePage(props) {
                 content={profileData?.firstname}
                 onSave={handleFirstnameChange}
                 canEdit={canEdit}
+                regex="^[A-Za-z]+$"
               />
               <EditableString
                 className="col-span-1"
@@ -278,6 +279,7 @@ export default function ProfilePage(props) {
                 content={profileData?.lastname}
                 onSave={handleLastnameChange}
                 canEdit={canEdit}
+                regex="^[A-Za-z]+$"
               />
               <div className="col-span-2 w-full">
                 <EditableString
@@ -285,6 +287,7 @@ export default function ProfilePage(props) {
                   content={profileData?.phoneNumber}
                   onSave={handlePhonenumber}
                   canEdit={canEdit}
+                  regex="^[0-9+]+$"
                 />
               </div>
             </div>
