@@ -11,6 +11,8 @@ function EditableString(props) {
   const [showSaved, setShowSaved] = useState(false);
   const [content, setContent] = useState(props.content);
   const [initialContent, setInitialContent] = useState(props.content);
+  const [isValid, setIsValid] = useState(true);
+
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -32,6 +34,7 @@ function EditableString(props) {
   const cancel = () => {
     setEditable(false);
     setContent(initialContent);
+    setIsValid(true);
   };
 
   return (
@@ -56,7 +59,11 @@ function EditableString(props) {
         </div>
       )}
 
-      <div className="px-2 py-1 mx-0 flex justify-between items-center border border-gray-300 rounded-lg bg-gray-50">
+      <div
+        className={`px-2 py-1 mx-0 flex justify-between items-center border border-gray-300 rounded-lg bg-gray-50 ${
+          !isValid ? "border-red-500" : ""
+        }`}
+      >
         {!editable && <p className="text-sm text-gray-400">{content}</p>}
 
         {editable && (
@@ -67,6 +74,13 @@ function EditableString(props) {
             value={content ?? ""}
             onChange={({ target: { value: content } }) => {
               setContent(content);
+
+              const reg = new RegExp(props.regex);
+              if (!reg.test(content)) {
+                setIsValid(false);
+              } else {
+                setIsValid(true);
+              }
             }}
           />
         )}
@@ -77,7 +91,7 @@ function EditableString(props) {
             className="flex flex-row justify-center ml-1"
           >
             <span className="inline-block align-middle">
-              {editable && (
+              {editable && isValid && (
                 <CheckIcon
                   height={18}
                   onClick={() => {
