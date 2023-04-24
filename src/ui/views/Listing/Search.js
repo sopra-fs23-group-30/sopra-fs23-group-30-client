@@ -46,21 +46,28 @@ function classNames(...classes) {
 
 export default function Search() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const [rentPerMonth, setRentPerMonth] = useState(500);
-  const [maxNumberRoommates, setMaxNumberRoommates] = useState(2);
+  const [maxRentPerMonth, setMaxRentPerMonth] = useState(500);
+  const [flatmateCapacity, setFlatmateCapacity] = useState(2);
   const [listings, setListings] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const filteredListings = listings.filter((listing) => {
-    return listing.title.toLowerCase().includes(searchText);
-  });
+  // const filteredListings = listings.filter((listing) => {
+  //   return listing.title.toLowerCase().includes(searchText);
+  // });
 
   useEffect(() => {
-    setListings([]);
-    loadListings();
+    // setListings([]);
+    // loadListings();
   }, []);
 
   const loadListings = async () => {
-    let response = await api.get("/listings");
+    const listingFilterGetDTO = {
+      searchText: searchText,
+      maxRentPerMonth: maxRentPerMonth,
+      flatmateCapacity: flatmateCapacity,
+    };
+    let response = await api.get("/listings", {
+      params: listingFilterGetDTO,
+    });
 
     if (response.status !== 200) {
       toast("Fetch unsuccessful", {
@@ -197,15 +204,15 @@ export default function Search() {
                         htmlFor="default-range"
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                       >
-                        Maximum rent per month: {rentPerMonth} CHF
+                        Maximum rent per month: {maxRentPerMonth} CHF
                       </label>
                       <input
                         id="default-range"
                         type="range"
                         min="0"
                         max="3000"
-                        value={rentPerMonth}
-                        onChange={(newval) => setRentPerMonth(newval)}
+                        value={maxRentPerMonth}
+                        onChange={(newval) => setMaxRentPerMonth(newval)}
                         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                       />
                     </ul>
@@ -276,7 +283,7 @@ export default function Search() {
 
         <main className="mt-8 mx-auto max-w-7xl px-4 md:lg:mt-24">
           <div className="w-full flex flex-col md:lg:flex-row justify-between">
-            <form className="w-full md:lg:mr-6">
+            <div className="w-full md:lg:mr-6">
               <label
                 htmlFor="default-search"
                 className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -311,13 +318,15 @@ export default function Search() {
                   }}
                 />
                 <button
-                  type="submit"
+                  onClick={() => {
+                    loadListings();
+                  }}
                   className="text-white absolute right-2.5 bottom-2.5 bg-primary hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   Search
                 </button>
               </div>
-            </form>
+            </div>
             <div className="flex items-center justify-end order-first mb-3 md:lg:order-last">
               <Menu as="div" className="relative inline-block text-left">
                 <div>
@@ -393,16 +402,16 @@ export default function Search() {
                       htmlFor="default-range"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      Maximum rent per month: {rentPerMonth} CHF
+                      Maximum rent per month: {maxRentPerMonth} CHF
                     </label>
                     <input
                       id="default-range"
                       type="range"
                       min="0"
                       max="3000"
-                      value={rentPerMonth}
+                      value={maxRentPerMonth}
                       onChange={({ target: { value: radius } }) => {
-                        setRentPerMonth(radius);
+                        setMaxRentPerMonth(radius);
                       }}
                       className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                     />
@@ -418,9 +427,9 @@ export default function Search() {
                       </div>
                       <TextInput
                         type="number"
-                        value={maxNumberRoommates}
+                        value={flatmateCapacity}
                         onChange={({ target: { value: nmb } }) => {
-                          setMaxNumberRoommates(nmb);
+                          setFlatmateCapacity(nmb);
                         }}
                         required={true}
                       />
@@ -489,10 +498,8 @@ export default function Search() {
               {/* Listings grid */}
               <div className="lg:col-span-3">
                 <div className="h-96 lg:h-full">
-                  <p class="text-sm text-gray-500">
-                    {filteredListings.length} results
-                  </p>
-                  {filteredListings.map((listing) => listingItem(listing))}
+                  <p class="text-sm text-gray-500">{listings.length} results</p>
+                  {listings.map((listing) => listingItem(listing))}
                 </div>
               </div>
             </div>
