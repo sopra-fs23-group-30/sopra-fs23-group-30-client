@@ -11,6 +11,7 @@ export default function ListingDetail() {
   const [listingData, setListingData] = useState(null);
   const [canEdit, setCanEdit] = useState(false);
   const [hasApplied, setHasApplied] = useState(false);
+  const [imageUrls, setImageUrls] = useState([]);
 
   let params = useParams();
 
@@ -84,6 +85,11 @@ export default function ListingDetail() {
   };
 
   const updateListing = async () => {
+    console.log(listingData);
+    const formData = new FormData();
+    formData.append("body", JSON.stringify(listingData));
+    formData.append("files", []);
+
     try {
       let response = await api.put("/listings/" + params.id, listingData);
       if (response.status === 204) {
@@ -109,10 +115,10 @@ export default function ListingDetail() {
   };
 
   function calculateAge(birthday) {
-  const ageDifMs = Date.now() - birthday.getTime();
-  const ageDate = new Date(ageDifMs);
-  return Math.abs(ageDate.getUTCFullYear() - 1970);
-}
+    const ageDifMs = Date.now() - birthday.getTime();
+    const ageDate = new Date(ageDifMs);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
 
   const loadListing = async (listingId) => {
     let token = localStorage.getItem("authtoken");
@@ -129,6 +135,8 @@ export default function ListingDetail() {
       });
     }
     setListingData(response.data);
+    setImageUrls(JSON.parse(response.data.imagesJson));
+    console.log(JSON.parse(response.data.imagesJson));
     setCanEdit(response.data.listerId === userId);
   };
 
@@ -136,29 +144,29 @@ export default function ListingDetail() {
     return (
       <div className="container grid grid-cols-2 gap-4 lg:grid-cols-4">
         <img
-          src="https://cdn.pixabay.com/photo/2018/06/23/21/00/balance-3493487__340.jpg"
+          src="https://flatfox.ch/media/ff/2023/04/ir5yyrqtqotgpgm6jdveamn79gckqd6v7ntvseub8119i18bo6.jpg"
           alt="test"
           className="w-full h-full col-span-2 row-span-2 rounded shadow-sm lg:col-start-3 lg:row-start-1"
         />
         <img
           className="w-full h-full"
           alt="test"
-          src="https://cdn.pixabay.com/photo/2017/11/09/10/57/light-weight-aggregates-2933073__340.jpg"
+          src="https://flatfox.ch/media/ff/2023/04/ir5yyrqtqotgpgm6jdveamn79gckqd6v7ntvseub8119i18bo6.jpg"
         />
         <img
           className="w-full h-full"
           alt="test"
-          src="https://cdn.pixabay.com/photo/2017/11/09/10/57/light-weight-aggregates-2933073__340.jpg"
+          src="https://flatfox.ch/media/ff/2023/04/9dftx6b6atv4ep0g6h7bt0qumsclfh4fgh3e6rv41dcet262a3.jpg"
         />
         <img
           className="w-full h-full"
           alt="test"
-          src="https://cdn.pixabay.com/photo/2017/11/09/10/57/light-weight-aggregates-2933073__340.jpg"
+          src="https://flatfox.ch/media/ff/2023/04/aelnq8mpfp4shjsi9z6qjxm2brdopwbmci3st3n36o984yfrzj.jpg"
         />
         <img
           className="w-full h-full"
           alt="test"
-          src="https://cdn.pixabay.com/photo/2017/11/09/10/57/light-weight-aggregates-2933073__340.jpg"
+          src="https://flatfox.ch/media/ff/2023/04/27mo6afz7atla00ztilasqq7uzx1dhxif49sz9oabs5zjtwyu3.jpg"
         />
       </div>
     );
@@ -235,8 +243,8 @@ export default function ListingDetail() {
         </h5>
         <div className="flex flex-col gap-4">
           <p className="text-sm font-bold text-gray-700 dark:text-gray-400">
-            {listingData?.listerFirstname} {listingData?.listerLastname} ({calculateAge(new Date(listingData?.listerBirthdate))} years old)
-            
+            {listingData?.listerFirstname} {listingData?.listerLastname} (
+            {calculateAge(new Date(listingData?.listerBirthdate))} years old)
           </p>
 
           <p className="w-2/3 md:w-3/4 text-sm font-normal text-gray-700 dark:text-gray-400">
@@ -251,22 +259,21 @@ export default function ListingDetail() {
           </a>
 
           <div className="absolute top-2 right-2">
-          {listingData?.profilePictureURL && (
-            <img
-              src={listingData?.profilePictureURL}
-              alt="face of lister / searcher"
-              className="object-fill w-24 h-24"
-            />
-          )}
+            {listingData?.profilePictureURL && (
+              <img
+                src={listingData?.profilePictureURL}
+                alt="face of lister / searcher"
+                className="object-fill w-24 h-24"
+              />
+            )}
 
-          {!listingData?.profilePictureURL && (
-            <img
-              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-              className="object-fill w-24 h-24"
-              alt="face of lister / searcher (unknown)"
-            />
-          )}
-          
+            {!listingData?.profilePictureURL && (
+              <img
+                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                className="object-fill w-24 h-24"
+                alt="face of lister / searcher (unknown)"
+              />
+            )}
           </div>
         </div>
       </div>
