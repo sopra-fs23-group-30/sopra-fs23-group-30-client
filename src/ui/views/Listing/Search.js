@@ -108,14 +108,46 @@ export default function Search() {
     }
   };
 
+  const imageGrid = () => {
+    return (
+      <div className="container grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <img
+          src="https://flatfox.ch/media/ff/2023/04/ir5yyrqtqotgpgm6jdveamn79gckqd6v7ntvseub8119i18bo6.jpg"
+          alt="test"
+          className="w-full h-full col-span-2 row-span-2 rounded shadow-sm"
+        />
+        <img
+          className="w-full h-full"
+          alt="test"
+          src="https://flatfox.ch/media/ff/2023/04/ir5yyrqtqotgpgm6jdveamn79gckqd6v7ntvseub8119i18bo6.jpg"
+        />
+        <img
+          className="w-full h-full"
+          alt="test"
+          src="https://flatfox.ch/media/ff/2023/04/9dftx6b6atv4ep0g6h7bt0qumsclfh4fgh3e6rv41dcet262a3.jpg"
+        />
+        <img
+          className="w-full h-full"
+          alt="test"
+          src="https://flatfox.ch/media/ff/2023/04/aelnq8mpfp4shjsi9z6qjxm2brdopwbmci3st3n36o984yfrzj.jpg"
+        />
+        <img
+          className="w-full h-full"
+          alt="test"
+          src="https://flatfox.ch/media/ff/2023/04/27mo6afz7atla00ztilasqq7uzx1dhxif49sz9oabs5zjtwyu3.jpg"
+        />
+      </div>
+    );
+  };
+
   const listingItem = (listing) => {
     return (
       <div className="grid grid-cols-2 xl:grid-cols-5 gap-6 rounded-lg p-4 mt-4 bg-white">
         <div
-          className="col-span-3 xl:col-span-3 text-white rounded bg-gray-900 flex items-center justify-center"
+          className="col-span-3 xl:col-span-3 text-white rounded flex items-center justify-center"
           style={{ minHeight: "200px" }}
         >
-          Images
+          {imageGrid()}
         </div>
         <div className="col-span-2 xl:col-span-2 grid grid-rows-1 lg:grid-cols-2 my-2">
           <div className="col-span-1 flex flex-col justify-center mb-4 lg:mb-0">
