@@ -44,7 +44,6 @@ function EditableTextarea(props) {
           >
             {props.label}
           </label>
-
           {showSaved && (
             <label
               htmlFor="small-input"
