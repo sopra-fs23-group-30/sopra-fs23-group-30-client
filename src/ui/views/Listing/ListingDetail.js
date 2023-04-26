@@ -11,7 +11,7 @@ export default function ListingDetail() {
   const [listingData, setListingData] = useState(null);
   const [canEdit, setCanEdit] = useState(false);
   const [hasApplied, setHasApplied] = useState(false);
-  const [imageUrls, setImageUrls] = useState([]);
+  const [, setImageUrls] = useState([]);
 
   let params = useParams();
 

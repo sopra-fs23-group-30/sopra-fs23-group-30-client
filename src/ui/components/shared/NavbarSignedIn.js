@@ -18,14 +18,9 @@ function NavbarSignedIn() {
     const claims = jwt_decode(token);
     setIsSearcher(claims.isSearcher);
     setGoToProfileLink("/profile/" + claims.userId);
-    setProfilePictureURL(claims.profilePictureURL)
+    setProfilePictureURL(claims.profilePictureURL);
     setFirstname(claims.firstname);
   }, []);
-
-  const update = async () => {
-    alert('im in navbar')
-  };
-
 
   return (
     <div class="bg-white w-full">
