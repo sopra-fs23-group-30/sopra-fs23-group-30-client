@@ -28,6 +28,7 @@ export default function CreateListing() {
       cityName: "Zürich",
       pricePerMonth,
       perfectFlatmateDescription,
+      imagesJson: "[{}]",
       listerId: userId,
     });
 
