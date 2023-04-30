@@ -85,7 +85,6 @@ export default function ListingDetail() {
   };
 
   const updateListing = async () => {
-    console.log(listingData);
     const formData = new FormData();
     formData.append("body", JSON.stringify(listingData));
     formData.append("files", []);
@@ -136,7 +135,6 @@ export default function ListingDetail() {
     }
     setListingData(response.data);
     setImageUrls(JSON.parse(response.data.imagesJson));
-    console.log(JSON.parse(response.data.imagesJson));
     setCanEdit(response.data.listerId === userId);
   };
 
