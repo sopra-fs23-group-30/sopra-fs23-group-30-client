@@ -135,7 +135,7 @@ export default function MyApplications() {
   };
 
   return (
-    <div className="px-2 py-2.5 sm:px-4 rounded px-4 md:mx-48">
+    <div className="py-2.5 sm:px-4 rounded px-4 md:mx-48">
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
           <li className="inline-flex items-center">

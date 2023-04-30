@@ -41,21 +41,26 @@ export const openSocket = () => {
   return stompClient;
 };
 
-let stompClientInvitations;
+let stompClientInventoryItems;
 
-export const connectInventoryItems = (inventoryId, changeCallback) => {
+export const connectInventoryItems = (inventoryId, changeCallback, deletedCallback) => {
   let stompClient = openSocket();
-  stompClientInvitations = stompClient;
+  stompClientInventoryItems = stompClient;
   stompClient.connect({ inventoryId: inventoryId }, () => {
     stompClient.subscribe(`/inventories/` + inventoryId, (message) => {
+      console.log(`Received changed message: ${message.body}`);
       changeCallback(message.body);
-      console.log(`Received message: ${message.body}`);
     });
+
+    stompClient.subscribe(`/inventories/` + inventoryId + "/deletedItem", (message) => {    
+        console.log(`Received delete message: ${message.body}`);
+        deletedCallback(message.body);
+      });
   });
 };
 
 export const disconnectInventoryItems = () => {
-  stompClientInvitations.disconnect(() => {
+    stompClientInventoryItems.disconnect(() => {
     console.log("disconnected inventory items!");
   });
 };
