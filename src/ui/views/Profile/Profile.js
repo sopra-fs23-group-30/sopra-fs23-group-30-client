@@ -1,5 +1,7 @@
+import { Button } from "flowbite-react";
 import { api } from "helpers/api";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 import { useParams } from "react-router-dom";
@@ -13,6 +15,32 @@ export default function ProfilePage(props) {
   const [profileData, setProfileData] = useState(null);
   const [lifespans, setLifespans] = useState([]);
   const [canEdit, setCanEdit] = useState(false);
+  const [currentDocument, setCurrentDocument] = useState(null);
+
+  const onDrop = useCallback((acceptedDocument) => {
+    const formData = new FormData();
+    formData.append("document", acceptedDocument[0]);
+    setCurrentDocument(acceptedDocument[0]);
+    console.log(acceptedDocument[0]);
+    console.log(formData);
+  }, []);
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: "application/pdf",
+    minSize: 0,
+  });
+
+  const handleRemoveFile = () => {
+    let blob = new Blob();
+    blob.name = "deleted";
+    setCurrentDocument(null);
+    updateProfile(lifespans, getUnchangedFileBlob(), blob);
+  };
+
+  const handlePDFUpload = () => {
+    updateProfile(lifespans, getUnchangedFileBlob(), currentDocument);
+  };
 
   let params = useParams();
 
@@ -50,53 +78,87 @@ export default function ProfilePage(props) {
     return blob;
   };
 
+  const getUnchangedDocumentBlob = () => {
+    let blob = new Blob();
+    blob.name = "unchanged";
+    return blob;
+  };
+
   const handleFirstnameChange = (newVal) => {
     let existingData = profileData;
     existingData.firstname = newVal;
     setProfileData(existingData);
-    updateProfile(lifespans, getUnchangedFileBlob());
+    updateProfile(
+      lifespans,
+      getUnchangedFileBlob(),
+      getUnchangedDocumentBlob()
+    );
   };
 
   const handleLastnameChange = (newVal) => {
     let existingData = profileData;
     existingData.lastname = newVal;
     setProfileData(existingData);
-    updateProfile(lifespans, getUnchangedFileBlob());
+    updateProfile(
+      lifespans,
+      getUnchangedFileBlob(),
+      getUnchangedDocumentBlob()
+    );
   };
 
   const handleBirthdateChange = (newVal) => {
     let existingData = profileData;
     existingData.birthday = newVal;
     setProfileData(existingData);
-    updateProfile(lifespans, getUnchangedFileBlob());
+    updateProfile(
+      lifespans,
+      getUnchangedFileBlob(),
+      getUnchangedDocumentBlob()
+    );
   };
 
   const handlePhonenumber = (newVal) => {
     let existingData = profileData;
     existingData.phoneNumber = newVal;
     setProfileData(existingData);
-    updateProfile(lifespans, getUnchangedFileBlob());
+    updateProfile(
+      lifespans,
+      getUnchangedFileBlob(),
+      getUnchangedDocumentBlob()
+    );
   };
 
   const handleGender = (newVal) => {
     let existingData = profileData;
     existingData.gender = newVal;
     setProfileData(existingData);
-    updateProfile(lifespans, getUnchangedFileBlob());
+    updateProfile(
+      lifespans,
+      getUnchangedFileBlob(),
+      getUnchangedDocumentBlob()
+    );
   };
 
   const handleBiography = (newVal) => {
     let existingData = profileData;
     existingData.biography = newVal;
     setProfileData(existingData);
-    updateProfile(lifespans, getUnchangedFileBlob());
+    updateProfile(
+      lifespans,
+      getUnchangedFileBlob(),
+      getUnchangedDocumentBlob()
+    );
   };
 
   const handleFlatemateDescription = (newVal) => {
     let existingData = profileData;
     existingData.futureFlatmatesDescription = newVal;
     setProfileData(existingData);
-    updateProfile(lifespans, getUnchangedFileBlob());
+    updateProfile(
+      lifespans,
+      getUnchangedFileBlob(),
+      getUnchangedDocumentBlob()
+    );
   };
 
   const handleLifespansChanged = (newLifespans) => {
@@ -106,21 +168,25 @@ export default function ProfilePage(props) {
       return item;
     });
 
-    updateProfile(saveableArray, getUnchangedFileBlob());
+    updateProfile(
+      saveableArray,
+      getUnchangedFileBlob(),
+      getUnchangedDocumentBlob()
+    );
   };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    updateProfile(lifespans, file);
+    updateProfile(lifespans, file, getUnchangedDocumentBlob());
   };
 
   const handleDeletePicture = () => {
     let blob = new Blob();
     blob.name = "deleted";
-    updateProfile(lifespans, blob);
+    updateProfile(lifespans, blob, getUnchangedDocumentBlob());
   };
 
-  const updateProfile = async (updatedLifespans, file) => {
+  const updateProfile = async (updatedLifespans, file, document) => {
     let token = localStorage.getItem("authtoken");
     const decoded = decodeToken(token);
     const userId = decoded.userId;
@@ -133,6 +199,7 @@ export default function ProfilePage(props) {
     const formData = new FormData();
     formData.append("body", JSON.stringify(newObj));
     formData.append("file", file, file.name);
+    formData.append("document", document, document.name);
 
     try {
       let response = await api.put("/profiles/" + userId, formData, {
@@ -320,6 +387,76 @@ export default function ProfilePage(props) {
               onSave={handleFlatemateDescription}
               canEdit={canEdit}
             />
+            <label
+              htmlFor="small-input"
+              className="block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Debt collection register extract
+            </label>
+            {profileData?.documentURL ? (
+              <a
+                href={profileData.documentURL}
+                class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+              >
+                Your current debt collection register extract
+              </a>
+            ) : (
+              <p class="text-sm text-gray-900 dark:text-gray-100">
+                No debt collection register extract uploaded
+              </p>
+            )}
+            {canEdit && (
+              <>
+                <div className="container text-center mt-1">
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <div class="flex items-center justify-center w-full">
+                      <label
+                        for="dropzone-file"
+                        class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                      >
+                        {currentDocument ? (
+                          <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            {currentDocument.name}
+                          </div>
+                        ) : (
+                          <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <svg
+                              aria-hidden="true"
+                              class="w-10 h-10 mb-3 text-gray-400"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                              ></path>
+                            </svg>
+                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                              <span class="font-semibold">Click to upload</span>{" "}
+                              or drag and drop
+                            </p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">
+                              PDF Document
+                            </p>
+                          </div>
+                        )}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex gap-2 mt-2">
+                  <Button onClick={handlePDFUpload}>Upload</Button>
+                  <Button className="bg-red-700" onClick={handleRemoveFile}>
+                    Remove
+                  </Button>
+                </div>
+              </>
+            )}
           </div>
           <div className="w-full md:w-1/2 flex flex-col">
             <EditableLifespan
