@@ -206,7 +206,14 @@ export default function MyApplications() {
       {hasActiveItem && (
         <div class="mt-20 ml-6">
           <h2 class="font-bold mb-4">Your new home:</h2>
-          <Button size="xs" className="mb-2 bg-primary">
+          <Button
+            size="xs"
+            className="mb-2 bg-primary w-40"
+            href={
+              "/inventories/" +
+              applications.find((x) => x.state === "MOVEIN").inventoryId
+            }
+          >
             Edit Inventory List{" "}
           </Button>
           {applications

@@ -189,8 +189,12 @@ function ExpandableListingCard(props) {
                             )}
 
                             {applicant.state === "MOVEIN" && (
-                              <Button size="xs" className="mb-2 bg-primary">
-                                Edit Inventory List{" "}
+                              <Button
+                                size="xs"
+                                className="mb-2 bg-primary"
+                                href={"/inventories/" + applicant.inventoryId}
+                              >
+                                Edit Inventory List
                               </Button>
                             )}
 
