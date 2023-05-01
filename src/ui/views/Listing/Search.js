@@ -46,7 +46,7 @@ function classNames(...classes) {
 
 export default function Search() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const [maxRentPerMonth, setMaxRentPerMonth] = useState(500);
+  const [maxRentPerMonth, setMaxRentPerMonth] = useState(1000);
   const [flatmateCapacity, setFlatmateCapacity] = useState(2);
   const [listings, setListings] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -55,8 +55,7 @@ export default function Search() {
   // });
 
   useEffect(() => {
-    // setListings([]);
-    // loadListings();
+    loadListings();
   }, []);
 
   const loadListings = async () => {
