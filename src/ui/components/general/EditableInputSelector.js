@@ -40,10 +40,11 @@ function InputSelector(props) {
       >
         {props.label}
       </label>
-      <Select disabled id="countries" required={true} value={selectedOption}>
+      <Select disabled id="countries" required={true} value={props.content}>
         <option value="" disabled>
           Select an option
         </option>
+        {props.options.map((option) => getOption(option))}
       </Select>
     </>
   );

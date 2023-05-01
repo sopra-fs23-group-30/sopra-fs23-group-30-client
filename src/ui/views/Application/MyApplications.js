@@ -97,8 +97,6 @@ export default function MyApplications() {
               <p class="text-sm font-bold">|</p>
               <p class="text-sm text-gray-500">
                 {application.listingStreetName}{" "}
-                {application.listingStreetNumber}, {application.listingZipCode}{" "}
-                {application.listingCityName}
               </p>
             </div>
           </div>
@@ -208,7 +206,9 @@ export default function MyApplications() {
       {hasActiveItem && (
         <div class="mt-20 ml-6">
           <h2 class="font-bold mb-4">Your new home:</h2>
-          <Button size="xs" className="mb-2 bg-primary">Edit Inventory List </Button>
+          <Button size="xs" className="mb-2 bg-primary">
+            Edit Inventory List{" "}
+          </Button>
           {applications
             .filter((application) => application.state === "MOVEIN")
             .map((application) => applicationItem(application))}
