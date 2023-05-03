@@ -96,9 +96,7 @@ export default function MyApplications() {
               </p>
               <p class="text-sm font-bold">|</p>
               <p class="text-sm text-gray-500">
-                {application.listingStreetName}{" "}
-                {application.listingStreetNumber}, {application.listingZipCode}{" "}
-                {application.listingCityName}
+                {application.listingAddress}{" "}
               </p>
             </div>
           </div>
@@ -135,7 +133,7 @@ export default function MyApplications() {
   };
 
   return (
-    <div className="px-2 py-2.5 sm:px-4 rounded px-4 md:mx-48">
+    <div className="py-2.5 sm:px-4 rounded px-4 md:mx-48">
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
           <li className="inline-flex items-center">
@@ -208,7 +206,16 @@ export default function MyApplications() {
       {hasActiveItem && (
         <div class="mt-20 ml-6">
           <h2 class="font-bold mb-4">Your new home:</h2>
-          <Button size="xs" className="mb-2 bg-primary">Edit Inventory List </Button>
+          <Button
+            size="xs"
+            className="mb-2 bg-primary w-40"
+            href={
+              "/inventories/" +
+              applications.find((x) => x.state === "MOVEIN").inventoryId
+            }
+          >
+            Edit Inventory List{" "}
+          </Button>
           {applications
             .filter((application) => application.state === "MOVEIN")
             .map((application) => applicationItem(application))}

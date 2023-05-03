@@ -152,8 +152,7 @@ export default function Search() {
           <div className="col-span-1 flex flex-col justify-center mb-4 lg:mb-0">
             <p className="font-bold text-lg text-secondary">{listing.title}</p>
             <p className="font-extralight text-sm text-gray-900">
-              {listing.streetName} {listing.streetNumber}, {listing.zipCode}{" "}
-              {listing.cityName}
+              {listing.address}
             </p>
             <p className="font-bold text-lg mt-4">
               {listing.pricePerMonth} CHF / month
@@ -164,7 +163,7 @@ export default function Search() {
               onClick={() => {
                 handleApply(listing.id);
               }}
-              className="text-white text-center bg-secondary hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
+              className="text-white text-center focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
             >
               Apply
             </button>
@@ -181,7 +180,7 @@ export default function Search() {
   };
 
   return (
-    <div className="px-2 py-2.5  sm:px-4 rounded px-4 md:mx-48">
+    <div className="py-2.5  sm:px-4 rounded px-4 md:mx-48">
       <div>
         {/* Mobile filter dialog */}
         <Transition.Root show={mobileFiltersOpen} as={Fragment}>

@@ -3,7 +3,7 @@ import React from "react";
 
 function NavbarSignedOut() {
   return (
-    <div class="bg-white w-full">
+    <div className="bg-white w-full">
       <Navbar fluid={true} rounded={true} className="md:mx-48">
         <Navbar.Brand href="/">
           <img

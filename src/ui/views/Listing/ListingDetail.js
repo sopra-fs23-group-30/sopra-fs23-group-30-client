@@ -1,9 +1,11 @@
+import { data } from "autoprefixer";
 import { api } from "helpers/api";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 import { useParams } from "react-router-dom";
 import Map from "ui/components/listing/Map";
+import TransparentEditableAddress from "ui/components/listing/TransparentEditableAddress";
 import TransparendEditableString from "ui/components/listing/TransparentEditableString";
 import TransparentEditableTextArea from "ui/components/listing/TransparentEditableTextArea";
 
@@ -58,7 +60,9 @@ export default function ListingDetail() {
 
   const handleAddressChange = (newVal) => {
     let existingData = listingData;
-    existingData.streetName = newVal;
+    existingData.address = newVal.address;
+    existingData.lattitude = newVal.lattitude;
+    existingData.longitude = newVal.longitude;
     setListingData(existingData);
     updateListing();
   };
@@ -85,7 +89,6 @@ export default function ListingDetail() {
   };
 
   const updateListing = async () => {
-    console.log(listingData);
     const formData = new FormData();
     formData.append("body", JSON.stringify(listingData));
     formData.append("files", []);
@@ -136,8 +139,10 @@ export default function ListingDetail() {
     }
     setListingData(response.data);
     setImageUrls(JSON.parse(response.data.imagesJson));
-    console.log(JSON.parse(response.data.imagesJson));
     setCanEdit(response.data.listerId === userId);
+
+    alert("Data:");
+    alert(data.address);
   };
 
   const imageGrid = () => {
@@ -186,7 +191,7 @@ export default function ListingDetail() {
             />
 
             <p className="text-black text-sm">
-              <TransparendEditableString
+              <TransparentEditableAddress
                 className="text-black text-sm bg-transparent"
                 content={listingData?.streetName}
                 canEdit={canEdit}

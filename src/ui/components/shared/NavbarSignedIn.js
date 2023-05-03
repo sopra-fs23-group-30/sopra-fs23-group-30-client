@@ -23,7 +23,7 @@ function NavbarSignedIn() {
   }, []);
 
   return (
-    <div class="bg-white w-full">
+    <div className="bg-white w-full">
       <Navbar fluid={true} rounded={true} className="px-4 md:mx-48">
         <Navbar.Brand href="/">
           <img

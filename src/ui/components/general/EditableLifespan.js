@@ -98,7 +98,6 @@ function EditableLifespan(props) {
       isExperience: props.label === "Experience" ? true : false,
       isEditing: true,
     };
-    console.log(emptyLifespanObj);
     const updatedItems = lifespans;
     updatedItems.splice(0, 0, emptyLifespanObj);
     setLifespans(updatedItems);

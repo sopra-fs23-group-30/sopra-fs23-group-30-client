@@ -2,14 +2,18 @@ import { Button, Label, Textarea, TextInput } from "flowbite-react";
 import { api } from "helpers/api";
 import { useState } from "react";
 import { decodeToken } from "react-jwt";
+import EditableAddress from "ui/components/general/EditableAddress";
 
 export default function CreateListing() {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
-  const [streetName, setStreetName] = useState();
-  // const [streetNumber, setStreetNumber] = useState()
-  // const [zipCode, setZipcode] = useState()
-  // const [cityName, setCityName] = useState()
+  const [googleMapsData, setGoogleMapsData] = useState({
+    address:"",
+    coordinates:{
+      lat:null,
+      lng:null
+    }
+  })
   const [pricePerMonth, setPricePerMonth] = useState();
   const [perfectFlatmateDescription, setPerfectFlatmateDescription] =
     useState();
@@ -22,10 +26,9 @@ export default function CreateListing() {
     const requestBody = JSON.stringify({
       title,
       description,
-      streetName,
-      streetNumber: "14",
-      zipCode: "8000",
-      cityName: "Zürich",
+      address:googleMapsData.address,
+      lat:googleMapsData.lat,
+      lng:googleMapsData.lng,
       pricePerMonth,
       perfectFlatmateDescription,
       imagesJson: "[{}]",
@@ -139,13 +142,10 @@ export default function CreateListing() {
           <div className="mb-2 block">
             <Label htmlFor="small" value="Address" />
           </div>
-          <TextInput
-            id="small"
-            type="text"
-            className="text-sm"
-            value={streetName}
+          <EditableAddress
+            value={googleMapsData.address}
             onChange={(e) => {
-              setStreetName(e.target.value);
+              setGoogleMapsData(e);
             }}
           />
         </div>
