@@ -21,7 +21,6 @@ function TransparentEditableAddress(props) {
   const save = () => {
     setInitialContent(content);
     setEditable(false);
-
     props.onSave(content);
   };
 
@@ -33,13 +32,13 @@ function TransparentEditableAddress(props) {
   return (
     <div>
       <div className="mx-0 flex justify-between items-center">
-        {!editable && <p {...props}>{content}</p>}
+        {!editable && <p {...props}>{content.address}</p>}
 
         {editable && (
           <EditableAddress
-            value={content.address ?? ""}
-            onChange={({ target: { value: content } }) => {
-              setContent(content);
+            value={content ?? ""}
+            onChange={(updatedContent) => {
+              setContent(updatedContent);
             }}
           />
         )}
@@ -66,7 +65,7 @@ function TransparentEditableAddress(props) {
                   onClick={() => {
                     setEditable(true);
                     setTimeout(() => {
-                      inputRef.current.focus();
+                      inputRef.current?.focus();
                     }, 0);
                   }}
                   className="inline-block align-middle text-blue-500"

@@ -61,8 +61,8 @@ export default function ListingDetail() {
   const handleAddressChange = (newVal) => {
     let existingData = listingData;
     existingData.address = newVal.address;
-    existingData.lattitude = newVal.lattitude;
-    existingData.longitude = newVal.longitude;
+    existingData.lattitude = newVal.coordinates.lat;
+    existingData.longitude = newVal.coordinates.lng;
     setListingData(existingData);
     updateListing();
   };
@@ -140,9 +140,6 @@ export default function ListingDetail() {
     setListingData(response.data);
     setImageUrls(JSON.parse(response.data.imagesJson));
     setCanEdit(response.data.listerId === userId);
-
-    alert("Data:");
-    alert(data.address);
   };
 
   const imageGrid = () => {
@@ -193,7 +190,12 @@ export default function ListingDetail() {
             <p className="text-black text-sm">
               <TransparentEditableAddress
                 className="text-black text-sm bg-transparent"
-                content={listingData?.streetName}
+                content={{
+                  address:listingData?.address, 
+                  coordinates:{
+                    lat:listingData?.lattitude,
+                    lng:listingData?.longitude}
+                }}
                 canEdit={canEdit}
                 onSave={handleAddressChange}
               />
