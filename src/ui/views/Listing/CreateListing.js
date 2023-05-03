@@ -2,11 +2,19 @@ import { Button, Label, Textarea, TextInput } from "flowbite-react";
 import { api } from "helpers/api";
 import { useState } from "react";
 import { decodeToken } from "react-jwt";
+import EditableAddress from "ui/components/general/EditableAddress";
 
 export default function CreateListing() {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [streetName, setStreetName] = useState();
+  const [googleMapsData, setGoogleMapsData] = useState({
+    address:"",
+    coordinates:{
+      lat:null,
+      lng:null
+    }
+  })
   // const [streetNumber, setStreetNumber] = useState()
   // const [zipCode, setZipcode] = useState()
   // const [cityName, setCityName] = useState()
@@ -139,13 +147,10 @@ export default function CreateListing() {
           <div className="mb-2 block">
             <Label htmlFor="small" value="Address" />
           </div>
-          <TextInput
-            id="small"
-            type="text"
-            className="text-sm"
+          <EditableAddress
             value={streetName}
             onChange={(e) => {
-              setStreetName(e.target.value);
+              setGoogleMapsData(e);
             }}
           />
         </div>
