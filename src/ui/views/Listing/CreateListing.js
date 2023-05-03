@@ -7,7 +7,6 @@ import EditableAddress from "ui/components/general/EditableAddress";
 export default function CreateListing() {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
-  const [streetName, setStreetName] = useState();
   const [googleMapsData, setGoogleMapsData] = useState({
     address:"",
     coordinates:{
@@ -15,9 +14,6 @@ export default function CreateListing() {
       lng:null
     }
   })
-  // const [streetNumber, setStreetNumber] = useState()
-  // const [zipCode, setZipcode] = useState()
-  // const [cityName, setCityName] = useState()
   const [pricePerMonth, setPricePerMonth] = useState();
   const [perfectFlatmateDescription, setPerfectFlatmateDescription] =
     useState();
@@ -30,10 +26,9 @@ export default function CreateListing() {
     const requestBody = JSON.stringify({
       title,
       description,
-      streetName,
-      streetNumber: "14",
-      zipCode: "8000",
-      cityName: "Zürich",
+      address:googleMapsData.address,
+      lat:googleMapsData.lat,
+      lng:googleMapsData.lng,
       pricePerMonth,
       perfectFlatmateDescription,
       imagesJson: "[{}]",
@@ -148,7 +143,7 @@ export default function CreateListing() {
             <Label htmlFor="small" value="Address" />
           </div>
           <EditableAddress
-            value={streetName}
+            value={googleMapsData.address}
             onChange={(e) => {
               setGoogleMapsData(e);
             }}

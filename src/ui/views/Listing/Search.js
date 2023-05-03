@@ -153,8 +153,7 @@ export default function Search() {
           <div className="col-span-1 flex flex-col justify-center mb-4 lg:mb-0">
             <p className="font-bold text-lg text-secondary">{listing.title}</p>
             <p className="font-extralight text-sm text-gray-900">
-              {listing.streetName} {listing.streetNumber}, {listing.zipCode}{" "}
-              {listing.cityName}
+              {listing.address}
             </p>
             <p className="font-bold text-lg mt-4">
               {listing.pricePerMonth} CHF / month

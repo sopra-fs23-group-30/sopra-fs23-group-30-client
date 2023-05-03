@@ -96,7 +96,7 @@ export default function MyApplications() {
               </p>
               <p class="text-sm font-bold">|</p>
               <p class="text-sm text-gray-500">
-                {application.listingStreetName}{" "}
+                {application.listingAddress}{" "}
               </p>
             </div>
           </div>
