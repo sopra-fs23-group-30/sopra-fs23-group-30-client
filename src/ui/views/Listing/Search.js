@@ -14,10 +14,10 @@ import { toast } from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 
 const sortOptions = [
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
-  { name: "Most Viewed At ", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
+  { name: "Price: Low to High", value: "PRICE_ASCENDING", href: "#", current: false },
+  { name: "Price: High to Low", value: "PRICE_DESCENDING", href: "#", current: false },
+  { name: "Most Viewed At ", value: "VIEWS", href: "#", current: false },
+  { name: "Newest", value: "NEWEST", href: "#", current: false },
 ];
 const filters = [
   {
@@ -48,6 +48,7 @@ export default function Search() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [maxRentPerMonth, setMaxRentPerMonth] = useState(1000);
   const [flatmateCapacity, setFlatmateCapacity] = useState(2);
+  const [sortBy, setSortBy] = useState("PRICE_ASCENDING");
   const [listings, setListings] = useState([]);
   const [searchText, setSearchText] = useState("");
   // const filteredListings = listings.filter((listing) => {
@@ -63,6 +64,7 @@ export default function Search() {
       searchText: searchText,
       maxRentPerMonth: maxRentPerMonth,
       flatmateCapacity: flatmateCapacity,
+      sortBy: sortBy
     };
     let response = await api.get("/listings", {
       params: listingFilterGetDTO,
@@ -386,6 +388,10 @@ export default function Search() {
                           {({ active }) => (
                             <a
                               href={option.href}
+                              onClick={() => {
+                                setSortBy(option.value);
+                                loadListings();
+                              }}
                               className={classNames(
                                 option.current
                                   ? "font-medium text-gray-900"
