@@ -14,10 +14,20 @@ import { toast } from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 
 const sortOptions = [
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
-  { name: "Most Viewed At ", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
+  {
+    name: "Price: Low to High",
+    value: "PRICE_ASCENDING",
+    href: "#",
+    current: false,
+  },
+  {
+    name: "Price: High to Low",
+    value: "PRICE_DESCENDING",
+    href: "#",
+    current: false,
+  },
+  { name: "Most Viewed At ", value: "VIEWS", href: "#", current: false },
+  { name: "Newest", value: "NEWEST", href: "#", current: false },
 ];
 const filters = [
   {
@@ -50,9 +60,9 @@ export default function Search() {
   const [flatmateCapacity, setFlatmateCapacity] = useState(3);
   const [listings, setListings] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [petsAllowed, ] = useState(false);
-  const [dishwasher, ] = useState(false);
-  const [elevator, ] = useState(false);
+  const [petsAllowed] = useState(false);
+  const [dishwasher] = useState(false);
+  const [elevator] = useState(false);
   // const filteredListings = listings.filter((listing) => {
   //   return listing.title.toLowerCase().includes(searchText);
   // });
@@ -72,7 +82,8 @@ export default function Search() {
       flatmateCapacity: flatmateCapacity,
       petsAllowed: petsAllowed,
       dishwasher: dishwasher,
-      elevator: elevator
+      elevator: elevator,
+      sortBy: sortBy,
     };
     let response = await api.get("/listings", {
       params: listingFilterGetDTO,
@@ -395,6 +406,10 @@ export default function Search() {
                           {({ active }) => (
                             <a
                               href={option.href}
+                              onClick={() => {
+                                setSortBy(option.value);
+                                loadListings();
+                              }}
                               className={classNames(
                                 option.current
                                   ? "font-medium text-gray-900"
