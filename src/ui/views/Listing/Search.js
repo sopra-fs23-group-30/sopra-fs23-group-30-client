@@ -31,21 +31,12 @@ const sortOptions = [
 ];
 const filters = [
   {
-    id: "domicileType",
-    name: "Search Type",
-    options: [
-      { value: "singleroom", label: "single room", checked: false },
-      { value: "apartment", label: "apartment", checked: false },
-    ],
-  },
-  {
     id: "properties",
     name: "Properties",
     options: [
-      { value: "washingmachine", label: "washing machine", checked: false },
+      { value: "dishwasher", label: "dishwasher", checked: false },
       { value: "elevator", label: "elevator", checked: false },
-      { value: "balcony", label: "balcony", checked: true },
-      { value: "petsallowed", label: "pets allowed", checked: false },
+      { value: "petsAllowed", label: "pets allowed", checked: false },
     ],
   },
 ];
@@ -86,6 +77,9 @@ export default function Search() {
       elevator: elevator,
       sortBy: sortBy,
     };
+    filters[0].options.map((option) => {
+      listingFilterGetDTO[option.value] = option.checked;
+    });
     let response = await api.get("/listings", {
       params: listingFilterGetDTO,
     });
@@ -199,6 +193,11 @@ export default function Search() {
         </div>
       </div>
     );
+  };
+
+  const handleFilterChange = (optionIdx, checked) => {
+    const updatedFilters = [...filters]; // make a copy of filters array
+    updatedFilters[0].options[optionIdx].checked = checked;
   };
 
   return (
@@ -533,6 +532,12 @@ export default function Search() {
                                     defaultValue={option.value}
                                     type="checkbox"
                                     defaultChecked={option.checked}
+                                    onChange={(e) =>
+                                      handleFilterChange(
+                                        optionIdx,
+                                        e.target.checked
+                                      )
+                                    }
                                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                   />
                                   <label
