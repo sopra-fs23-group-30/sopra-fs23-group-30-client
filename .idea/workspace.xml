@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3824ceef-0392-4436-8ec1-6a3e36b2f585" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/ui/components/general/EditableDate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/components/general/EditableDate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/components/general/EditableInputSelector.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/components/general/EditableInputSelector.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/components/general/EditableLifespan.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/components/general/EditableLifespan.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/components/general/EditableString.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/components/general/EditableString.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/views/Listing/CreateListing.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/views/Listing/CreateListing.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/views/Profile/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/views/Profile/Profile.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2P03FQawoTobsoHv6kE161NIt0L" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration default="true" type="AZURE_FUNCTION_SUPPORT" factoryName="Run Functions">
+      <option name="appName" />
+      <option name="appServicePlanName" />
+      <option name="appServicePlanResourceGroup" />
+      <option name="appSettingsKey" value="1b6446aa-53ec-4513-816e-51d8251ed2d5" />
+      <option name="artifact" />
+      <option name="debugOptions" />
+      <option name="deployment" />
+      <option name="deploymentStagingDirectoryPath" />
+      <option name="funcPath" />
+      <option name="functionHostArguments" />
+      <option name="hostJsonPath" />
+      <option name="insightsName" />
+      <option name="instrumentationKey" />
+      <option name="javaVersion" />
+      <option name="localSettingsJsonPath" />
+      <option name="moduleName" />
+      <option name="os" />
+      <option name="pricingTier" />
+      <option name="providerMap">
+        <map />
+      </option>
+      <option name="region" />
+      <option name="resourceGroup" />
+      <option name="stagingFolder" />
+      <option name="subscription" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="sopra-fs23-group-30-client" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="sopra-fs23-group-30-client" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3824ceef-0392-4436-8ec1-6a3e36b2f585" name="Changes" comment="" />
+      <created>1682580072061</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1682580072061</updated>
+      <workItem from="1682580080024" duration="4308000" />
+      <workItem from="1683481591317" duration="180000" />
+      <workItem from="1683481840012" duration="318000" />
+      <workItem from="1683482177707" duration="11419000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

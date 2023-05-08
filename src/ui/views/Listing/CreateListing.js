@@ -92,9 +92,9 @@ export default function CreateListing() {
         </ol>
       </nav>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2 pt-4">
         <div>
-          <div className="mb-2 block">
+          <div className="mb-1 block">
             <Label htmlFor="small" value="Title" />
           </div>
           <TextInput
@@ -109,7 +109,7 @@ export default function CreateListing() {
         </div>
 
         <div>
-          <div className="mb-2 block">
+          <div className="mb-1 block">
             <Label htmlFor="small" value="Description" className="text-sm" />
           </div>
           <Textarea
@@ -126,7 +126,7 @@ export default function CreateListing() {
         </div>
 
         <div>
-          <div className="mb-2 block">
+          <div className="mb-1 block">
             <Label htmlFor="small" value="Price per Month" />
           </div>
           <TextInput
@@ -143,7 +143,7 @@ export default function CreateListing() {
         </div>
 
         <div>
-          <div className="mb-2 block">
+          <div className="mb-1 block">
             <Label htmlFor="small" value="Address" />
           </div>
           <EditableAddress
@@ -155,7 +155,7 @@ export default function CreateListing() {
         </div>
 
         <div>
-          <div className="mb-2 block">
+          <div className="mb-1 block">
             <Label
               htmlFor="small"
               value="The Flatmate we search for:"
@@ -175,15 +175,15 @@ export default function CreateListing() {
           />
         </div>
 
-        <div className="flex flex-row gap-3">
-          <Button type="submit" onClick={() => saveListing()}>
+        <div className="flex flex-row gap-3 pt-2">
+          <Button className="bg-secondary hover:bg-primary"type="submit" onClick={() => saveListing()}>
             Create Listing
           </Button>
 
           <button
             onClick={() => (window.location.href = "/")}
             type="button"
-            class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+            className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-red-700 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
           >
             Cancel
           </button>

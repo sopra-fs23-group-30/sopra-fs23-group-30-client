@@ -17,7 +17,7 @@ function InputSelector(props) {
     <>
       <label
         htmlFor="small-input"
-        className="block text-sm font-medium text-gray-900 dark:text-white"
+        className="block text-sm font-medium text-gray-900 dark:text-white pt-4"
       >
         {props.label}
       </label>

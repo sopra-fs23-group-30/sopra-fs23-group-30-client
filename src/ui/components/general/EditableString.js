@@ -38,7 +38,7 @@ function EditableString(props) {
   };
 
   return (
-    <div className="my-3">
+    <div className="my-2">
       {props.label && (
         <div className="flex flex-row mb-1 items-center">
           <label

@@ -234,7 +234,7 @@ export default function ProfilePage(props) {
   };
 
   return (
-    <div className="py-2.5 sm:px-4 rounded px-4 md:mx-48">
+    <div className="py-2.5 sm:px-4 rounded px-4 md:mx-48 pb-4">
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
           <li className="inline-flex items-center">
@@ -284,7 +284,7 @@ export default function ProfilePage(props) {
       </h1>
       <div className="flex flex-col xl:grid grid-cols-5 grid-rows-3 ml-4 mt-4">
         <div className="col-span-1 row-span-1 h-full flex flex-col items-center w-full">
-          <h2 className="font-sm mb-2 text-sm">Profile Pic</h2>
+          <h2 className="font-sm mb-2 text-sm">Photo</h2>
           {profileData?.profilePictureURL && (
             <img
               src={profileData?.profilePictureURL}
@@ -312,7 +312,7 @@ export default function ProfilePage(props) {
                 />
                 <label
                   for="img"
-                  className="text-white text-center focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
+                  className="text-white text-center focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-secondary hover:bg-primary focus:outline-none"
                 >
                   Change Photo
                 </label>
@@ -322,16 +322,16 @@ export default function ProfilePage(props) {
                 onClick={() => {
                   handleDeletePicture();
                 }}
-                className="text-sm mt-2 text-primary text-center items-center hover:underline"
+                className="text-sm mt-2 text-red-700 text-center items-center hover:underline"
               >
                 Delete
               </button>
             </div>
           )}
         </div>
-        <div className="col-start-2 col-span-4 row-span-1 flex flex-row lg:flex-row gap-2">
+        <div className="col-start-2 col-span-4 flex flex-row lg:flex-row gap-4 pb-4">
           <div className="flex flex-col gap-2 w-full xl:w-1/3">
-            <div className="flex flex-col md:grid grid-cols-2 grid-rows-auto gap-2 w-full">
+            <div className="flex flex-col md:grid grid-cols-2 grid-rows-1 gap-2 gap-y-0 w-full pt-4 ">
               <EditableString
                 className="col-span-1"
                 label="Firstname"
@@ -360,7 +360,7 @@ export default function ProfilePage(props) {
             </div>
           </div>
         </div>
-        <div className="col-start-2 col-span-4 row-span-2 flex flex-col md:flex-row justify-between gap-4">
+        <div className="col-start-2 col-span-4 row-span-2 flex flex-col md:flex-row justify-between gap-4 ">
           <div className="w-full md:w-1/2">
             <EditableDate
               label="Birthdate"
@@ -450,8 +450,8 @@ export default function ProfilePage(props) {
                   </div>
                 </div>
                 <div className="flex gap-2 mt-2">
-                  <Button onClick={handlePDFUpload}>Upload</Button>
-                  <Button className="bg-red-700" onClick={handleRemoveFile}>
+                  <Button className="bg-secondary hover:bg-primary" onClick={handlePDFUpload}>Upload</Button>
+                  <Button className="bg-red-700 hover:bg-primary" onClick={handleRemoveFile}>
                     Remove
                   </Button>
                 </div>
