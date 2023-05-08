@@ -57,7 +57,7 @@ function ExpandableListingCard(props) {
         show={showInquiry}
         title="Do you really want to take the listing offline?"
         content="This will be permanent."
-        onClick={() => {}}
+        onClick={() => { }}
         onClose={() => {
           setShowInquiry(false);
         }}
@@ -76,10 +76,12 @@ function ExpandableListingCard(props) {
             <button
               onClick={() => takeOffline()}
               type="button"
-              class="text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-1 hover:underline focus:outline-none dark:focus:ring-blue-800"
+              class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1 focus:outline-none"
             >
               Take Offline
             </button>
+
+
 
             {!isOpen && (
               <svg
