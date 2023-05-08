@@ -51,9 +51,6 @@ export default function Search() {
   const [listings, setListings] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [sortBy, setSortBy] = useState(sortOptions[0]);
-  const [petsAllowed] = useState(false);
-  const [dishwasher] = useState(false);
-  const [elevator] = useState(false);
   // const filteredListings = listings.filter((listing) => {
   //   return listing.title.toLowerCase().includes(searchText);
   // });
@@ -70,9 +67,6 @@ export default function Search() {
       searchText: searchText,
       maxRentPerMonth: maxRentPerMonth,
       flatmateCapacity: flatmateCapacity,
-      petsAllowed: petsAllowed,
-      dishwasher: dishwasher,
-      elevator: elevator,
       sortBy: sortBy.value,
     };
     filters[0].options.map((option) => {
@@ -261,7 +255,9 @@ export default function Search() {
                         min="0"
                         max="3000"
                         value={maxRentPerMonth}
-                        onChange={(newval) => setMaxRentPerMonth(newval)}
+                        onChange={({ target: { value: radius } }) => {
+                          setMaxRentPerMonth(radius);
+                        }}
                         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                       />
                     </ul>
@@ -307,6 +303,12 @@ export default function Search() {
                                       defaultValue={option.value}
                                       type="checkbox"
                                       defaultChecked={option.checked}
+                                      onChange={(e) =>
+                                        handleFilterChange(
+                                          optionIdx,
+                                          e.target.checked
+                                        )
+                                      }
                                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                     />
                                     <label
@@ -376,7 +378,7 @@ export default function Search() {
                 </button>
               </div>
             </div>
-            <div className="flex items-center justify-end order-first mb-3 md:lg:order-last">
+            <div className="flex items-center justify-between md:justify-end order-first mx-3 mb-3 md:lg:order-last">
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <Menu.Button className="group flex flex-col items-center text-sm font-medium text-gray-700 hover:text-gray-900">
@@ -400,7 +402,7 @@ export default function Search() {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Items className="absolute left-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {sortOptions.map((option) => (
                         <Menu.Item key={option.name}>
@@ -429,13 +431,6 @@ export default function Search() {
                 </Transition>
               </Menu>
 
-              <button
-                type="button"
-                className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
-              >
-                <span className="sr-only">View grid</span>
-                <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-              </button>
               <button
                 type="button"
                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
