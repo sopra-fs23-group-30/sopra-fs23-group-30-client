@@ -9,7 +9,7 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Label, TextInput } from "flowbite-react";
 import { api } from "helpers/api";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 
@@ -26,7 +26,6 @@ const sortOptions = [
     href: "#",
     current: false,
   },
-  { name: "Most Viewed At ", value: "VIEWS", href: "#", current: false },
   { name: "Newest", value: "NEWEST", href: "#", current: false },
 ];
 const filters = [
@@ -51,7 +50,7 @@ export default function Search() {
   const [flatmateCapacity, setFlatmateCapacity] = useState(3);
   const [listings, setListings] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [sortBy, setSortBy] = useState(sortOptions[0].value);
+  const [sortBy, setSortBy] = useState(sortOptions[0]);
   const [petsAllowed] = useState(false);
   const [dishwasher] = useState(false);
   const [elevator] = useState(false);
@@ -59,13 +58,12 @@ export default function Search() {
   //   return listing.title.toLowerCase().includes(searchText);
   // });
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     loadListings().catch(console.error);
-  //   };
-
-  //   fetchData();
-  // }, [loadListings]);
+  useEffect(() => {
+    const fetchData = async () => {
+      loadListings().catch(console.error);
+    };
+    fetchData();
+  }, [loadListings]);
 
   const loadListings = async () => {
     const listingFilterGetDTO = {
@@ -75,7 +73,7 @@ export default function Search() {
       petsAllowed: petsAllowed,
       dishwasher: dishwasher,
       elevator: elevator,
-      sortBy: sortBy,
+      sortBy: sortBy.value,
     };
     filters[0].options.map((option) => {
       listingFilterGetDTO[option.value] = option.checked;
@@ -381,12 +379,15 @@ export default function Search() {
             <div className="flex items-center justify-end order-first mb-3 md:lg:order-last">
               <Menu as="div" className="relative inline-block text-left">
                 <div>
-                  <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                    Sort
-                    <ChevronDownIcon
-                      className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                      aria-hidden="true"
-                    />
+                  <Menu.Button className="group flex flex-col items-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                    <div className="inline-flex justify-center">
+                      Sort By
+                      <ChevronDownIcon
+                        className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <div className="w-20">{sortBy.name}</div>
                   </Menu.Button>
                 </div>
 
@@ -407,7 +408,7 @@ export default function Search() {
                             <a
                               href={option.href}
                               onClick={() => {
-                                setSortBy(option.value);
+                                setSortBy(option);
                                 loadListings();
                               }}
                               className={classNames(
