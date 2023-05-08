@@ -57,9 +57,13 @@ export default function Search() {
   //   return listing.title.toLowerCase().includes(searchText);
   // });
 
-  useEffect(() => {
-    loadListings();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     loadListings().catch(console.error);
+  //   };
+
+  //   fetchData();
+  // }, [loadListings]);
 
   const loadListings = async () => {
     const listingFilterGetDTO = {
