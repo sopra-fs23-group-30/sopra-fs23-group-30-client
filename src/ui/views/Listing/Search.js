@@ -9,33 +9,34 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Label, TextInput } from "flowbite-react";
 import { api } from "helpers/api";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { toast } from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 
 const sortOptions = [
-  { name: "Price: Low to High", href: "#", current: false },
-  { name: "Price: High to Low", href: "#", current: false },
-  { name: "Most Viewed At ", href: "#", current: false },
-  { name: "Newest", href: "#", current: false },
+  {
+    name: "Price: Low to High",
+    value: "PRICE_ASCENDING",
+    href: "#",
+    current: false,
+  },
+  {
+    name: "Price: High to Low",
+    value: "PRICE_DESCENDING",
+    href: "#",
+    current: false,
+  },
+  { name: "Most Viewed At ", value: "VIEWS", href: "#", current: false },
+  { name: "Newest", value: "NEWEST", href: "#", current: false },
 ];
 const filters = [
-  {
-    id: "domicileType",
-    name: "Search Type",
-    options: [
-      { value: "singleroom", label: "single room", checked: false },
-      { value: "apartment", label: "apartment", checked: false },
-    ],
-  },
   {
     id: "properties",
     name: "Properties",
     options: [
-      { value: "washingmachine", label: "washing machine", checked: false },
+      { value: "dishwasher", label: "dishwasher", checked: false },
       { value: "elevator", label: "elevator", checked: false },
-      { value: "balcony", label: "balcony", checked: true },
-      { value: "petsallowed", label: "pets allowed", checked: false },
+      { value: "petsAllowed", label: "pets allowed", checked: false },
     ],
   },
 ];
@@ -47,23 +48,38 @@ function classNames(...classes) {
 export default function Search() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [maxRentPerMonth, setMaxRentPerMonth] = useState(1000);
-  const [flatmateCapacity, setFlatmateCapacity] = useState(2);
+  const [flatmateCapacity, setFlatmateCapacity] = useState(3);
   const [listings, setListings] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [sortBy, setSortBy] = useState(sortOptions[0].value);
+  const [petsAllowed] = useState(false);
+  const [dishwasher] = useState(false);
+  const [elevator] = useState(false);
   // const filteredListings = listings.filter((listing) => {
   //   return listing.title.toLowerCase().includes(searchText);
   // });
 
-  useEffect(() => {
-    loadListings();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     loadListings().catch(console.error);
+  //   };
+
+  //   fetchData();
+  // }, [loadListings]);
 
   const loadListings = async () => {
     const listingFilterGetDTO = {
       searchText: searchText,
       maxRentPerMonth: maxRentPerMonth,
       flatmateCapacity: flatmateCapacity,
+      petsAllowed: petsAllowed,
+      dishwasher: dishwasher,
+      elevator: elevator,
+      sortBy: sortBy,
     };
+    filters[0].options.map((option) => {
+      listingFilterGetDTO[option.value] = option.checked;
+    });
     let response = await api.get("/listings", {
       params: listingFilterGetDTO,
     });
@@ -177,6 +193,11 @@ export default function Search() {
         </div>
       </div>
     );
+  };
+
+  const handleFilterChange = (optionIdx, checked) => {
+    const updatedFilters = [...filters]; // make a copy of filters array
+    updatedFilters[0].options[optionIdx].checked = checked;
   };
 
   return (
@@ -385,6 +406,10 @@ export default function Search() {
                           {({ active }) => (
                             <a
                               href={option.href}
+                              onClick={() => {
+                                setSortBy(option.value);
+                                loadListings();
+                              }}
                               className={classNames(
                                 option.current
                                   ? "font-medium text-gray-900"
@@ -507,6 +532,12 @@ export default function Search() {
                                     defaultValue={option.value}
                                     type="checkbox"
                                     defaultChecked={option.checked}
+                                    onChange={(e) =>
+                                      handleFilterChange(
+                                        optionIdx,
+                                        e.target.checked
+                                      )
+                                    }
                                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                   />
                                   <label

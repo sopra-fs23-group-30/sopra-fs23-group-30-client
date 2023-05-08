@@ -27,16 +27,20 @@ export default function CreateListing() {
       title,
       description,
       address:googleMapsData.address,
-      lat:googleMapsData.lat,
-      lng:googleMapsData.lng,
+      lattitude:googleMapsData.coordinates.lat,
+      longitude:googleMapsData.coordinates.lng,
       pricePerMonth,
       perfectFlatmateDescription,
-      imagesJson: "[{}]",
       listerId: userId,
+      imagesJson: "[{}]",
+      rooms: 4,
+      petsAllowed: true,
+      elevator: true,
+      dishwasher: true
     });
 
     let response = await api
-      .post("/listings/", requestBody)
+      .post("/listings", requestBody)
       .catch(function (error) {
         //display error
         return;

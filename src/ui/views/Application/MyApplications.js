@@ -73,64 +73,66 @@ export default function MyApplications() {
     }
   };
 
-  const applicationItem = (application) => {
-    return (
-      <div class="rounded-lg overflow-hidden shadow-lg bg-white mb-4">
-        <DecisionConfirmationInquiry
-          show={showInquiry}
-          title="Do you really want to take back the application?"
-          content="This will be permanent."
-          onClick={() => {}}
-          onClose={() => {
-            setShowInquiry(false);
-          }}
-        />
-        <div class="flex flex-row items-center justify-between p-4">
-          <div>
-            <p class="text-sm">
-              {format(new Date(application.creationDate), "dd.MM.yyyy")}
+const applicationItem = (application) => {
+  return (
+    <div className="rounded-lg overflow-hidden shadow-lg bg-white mb-4">
+      <DecisionConfirmationInquiry
+        show={showInquiry}
+        title="Do you really want to take back the application?"
+        content="This will be permanent."
+        onClick={() => {}}
+        onClose={() => {
+          setShowInquiry(false);
+        }}
+      />
+      <div className="flex flex-col sm:flex-row items-center justify-between p-4">
+        <div className="flex flex-col">
+          <p className="text-sm">
+            {format(new Date(application.creationDate), "dd.MM.yyyy")}
+          </p>
+          <div className="text-sm flex flex-row gap-4">
+            <p className="text-sm font-bold text-secondary">
+              {application.listingTitle}
             </p>
-            <div class="text-sm flex flex-row gap-4">
-              <p class="text-sm font-bold text-secondary">
-                {application.listingTitle}
-              </p>
-              <p class="text-sm font-bold">|</p>
-              <p class="text-sm text-gray-500">
-                {application.listingAddress}{" "}
-              </p>
-            </div>
-          </div>
-          {getStateBadge(application.state)}
-          <div class="flex flex-row items-center gap-4">
-            <Dropdown
-              class="text-center text-white bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 rounded-lg text-sm focus:outline-none dark:focus:ring-blue-800"
-              label="Actions"
-              dismissOnClick={false}
-            >
-              <Dropdown.Item
-                onClick={() => action(application.applicationId, "DECLINE")}
-              >
-                Take Back
-              </Dropdown.Item>
-              {application.state === "ACCEPTED" && (
-                <Dropdown.Item
-                  onClick={() => action(application.applicationId, "MOVEIN")}
-                >
-                  Move-In
-                </Dropdown.Item>
-              )}
-            </Dropdown>
-            <a
-              href={"/listings/" + application.listingId}
-              class="text-sm text-primary hover:underline"
-            >
-              See Listing
-            </a>
+            <p className="text-sm font-bold">|</p>
+            <p className="text-sm text-gray-500">
+              {application.listingAddress}{" "}
+            </p>
           </div>
         </div>
+
+        <div className="flex flex-row items-center gap-4">
+          {getStateBadge(application.state)}
+          <Dropdown
+            className="text-center text-white bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 rounded-lg text-sm focus:outline-none dark:focus:ring-blue-800"
+            label="Actions"
+            dismissOnClick={false}
+          >
+            <Dropdown.Item
+              onClick={() => action(application.applicationId, "DECLINE")}
+            >
+              Take Back
+            </Dropdown.Item>
+            {application.state === "ACCEPTED" && (
+              <Dropdown.Item
+                onClick={() => action(application.applicationId, "MOVEIN")}
+              >
+                Move-In
+              </Dropdown.Item>
+            )}
+          </Dropdown>
+          <a
+            href={"/listings/" + application.listingId}
+            className="text-sm text-primary hover:underline"
+          >
+            See Listing
+          </a>
+        </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
+
 
   return (
     <div className="py-2.5 sm:px-4 rounded px-4 md:mx-48">
