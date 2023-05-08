@@ -9,7 +9,7 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Label, TextInput } from "flowbite-react";
 import { api } from "helpers/api";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { toast } from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 
@@ -50,16 +50,20 @@ export default function Search() {
   const [flatmateCapacity, setFlatmateCapacity] = useState(3);
   const [listings, setListings] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [petsAllowed, setPetsAllowed] = useState(false);
-  const [dishwasher, setDishwasher] = useState(false);
-  const [elevator, setElevator] = useState(false);
+  const [petsAllowed, ] = useState(false);
+  const [dishwasher, ] = useState(false);
+  const [elevator, ] = useState(false);
   // const filteredListings = listings.filter((listing) => {
   //   return listing.title.toLowerCase().includes(searchText);
   // });
 
-  useEffect(() => {
-    loadListings();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     loadListings().catch(console.error);
+  //   };
+
+  //   fetchData();
+  // }, [loadListings]);
 
   const loadListings = async () => {
     const listingFilterGetDTO = {
