@@ -60,6 +60,7 @@ export default function Search() {
   const [flatmateCapacity, setFlatmateCapacity] = useState(3);
   const [listings, setListings] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [sortBy, setSortBy] = useState(sortOptions[0].value);
   const [petsAllowed] = useState(false);
   const [dishwasher] = useState(false);
   const [elevator] = useState(false);
