@@ -47,9 +47,12 @@ function classNames(...classes) {
 export default function Search() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [maxRentPerMonth, setMaxRentPerMonth] = useState(1000);
-  const [flatmateCapacity, setFlatmateCapacity] = useState(2);
+  const [flatmateCapacity, setFlatmateCapacity] = useState(3);
   const [listings, setListings] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [petsAllowed, setPetsAllowed] = useState(false);
+  const [dishwasher, setDishwasher] = useState(false);
+  const [elevator, setElevator] = useState(false);
   // const filteredListings = listings.filter((listing) => {
   //   return listing.title.toLowerCase().includes(searchText);
   // });
@@ -63,6 +66,9 @@ export default function Search() {
       searchText: searchText,
       maxRentPerMonth: maxRentPerMonth,
       flatmateCapacity: flatmateCapacity,
+      petsAllowed: petsAllowed,
+      dishwasher: dishwasher,
+      elevator: elevator
     };
     let response = await api.get("/listings", {
       params: listingFilterGetDTO,
