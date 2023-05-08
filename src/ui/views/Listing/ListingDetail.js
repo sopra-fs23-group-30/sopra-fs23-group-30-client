@@ -1,4 +1,3 @@
-import { data } from "autoprefixer";
 import { api } from "helpers/api";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";

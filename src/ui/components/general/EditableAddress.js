@@ -7,7 +7,7 @@ import PlacesAutocomplete, {
 
 function EditableAddress(props) {
   const [address, setAddress] = useState(props.address);
-  const [coordinates, setCoordinates] = useState(props.coordinates);
+  const [, setCoordinates] = useState(props.coordinates);
   
   const handleSelect = async value => {
     const results = await geocodeByAddress(value);

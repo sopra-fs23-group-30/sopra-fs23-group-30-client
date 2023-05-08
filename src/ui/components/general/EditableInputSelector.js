@@ -2,7 +2,7 @@ import { Select } from "flowbite-react";
 import React, { useState } from "react";
 
 function InputSelector(props) {
-  const [selectedOption, setSelectedOption] = useState(props.selected);
+  const [, setSelectedOption] = useState(props.selected);
 
   const getOption = (option) => {
     return option !== props.selected ? <option>{option}</option> : <></>;

@@ -50,9 +50,9 @@ export default function Search() {
   const [flatmateCapacity, setFlatmateCapacity] = useState(3);
   const [listings, setListings] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [petsAllowed, setPetsAllowed] = useState(false);
-  const [dishwasher, setDishwasher] = useState(false);
-  const [elevator, setElevator] = useState(false);
+  const [petsAllowed, ] = useState(false);
+  const [dishwasher, ] = useState(false);
+  const [elevator, ] = useState(false);
   // const filteredListings = listings.filter((listing) => {
   //   return listing.title.toLowerCase().includes(searchText);
   // });
