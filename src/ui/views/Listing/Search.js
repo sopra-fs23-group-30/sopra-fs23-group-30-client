@@ -8,7 +8,7 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Label, TextInput } from "flowbite-react";
 import { api } from "helpers/api";
-import { Fragment, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 
@@ -50,18 +50,8 @@ export default function Search() {
   const [listings, setListings] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [sortBy, setSortBy] = useState(sortOptions[0]);
-  // const filteredListings = listings.filter((listing) => {
-  //   return listing.title.toLowerCase().includes(searchText);
-  // });
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     loadListings().catch(console.error);
-  //   };
-  //   fetchData();
-  // }, [loadListings]);
-
-  const loadListings = async () => {
+  const loadListings = useCallback(async () => {
     const listingFilterGetDTO = {
       searchText: searchText,
       maxRentPerMonth: maxRentPerMonth,
@@ -69,7 +59,9 @@ export default function Search() {
       sortBy: sortBy.value,
     };
 
-    filters[0].options.map((option) => ( listingFilterGetDTO[option.value] = option.checked))
+    filters[0].options.map(
+      (option) => (listingFilterGetDTO[option.value] = option.checked)
+    );
 
     let response = await api.get("/listings", {
       params: listingFilterGetDTO,
@@ -83,7 +75,11 @@ export default function Search() {
       });
     }
     setListings(response.data);
-  };
+  }, [searchText, maxRentPerMonth, flatmateCapacity, sortBy]);
+
+  useEffect(() => {
+    loadListings();
+  }, [loadListings]);
 
   const handleApply = async (listingId) => {
     let token = localStorage.getItem("authtoken");
