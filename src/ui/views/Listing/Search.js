@@ -6,7 +6,6 @@ import {
   PlusIcon,
 } from "@heroicons/react/20/solid";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { Label, TextInput } from "flowbite-react";
 import { api } from "helpers/api";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -46,7 +45,6 @@ function classNames(...classes) {
 export default function Search() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [maxRentPerMonth, setMaxRentPerMonth] = useState(1000);
-  const [flatmateCapacity, setFlatmateCapacity] = useState(3);
   const [listings, setListings] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [sortBy, setSortBy] = useState(sortOptions[0]);
@@ -55,7 +53,7 @@ export default function Search() {
     const listingFilterGetDTO = {
       searchText: searchText,
       maxRentPerMonth: maxRentPerMonth,
-      flatmateCapacity: flatmateCapacity,
+      flatmateCapacity: 100,
       sortBy: sortBy.value,
     };
 
@@ -75,7 +73,7 @@ export default function Search() {
       });
     }
     setListings(response.data);
-  }, [searchText, maxRentPerMonth, flatmateCapacity, sortBy]);
+  }, [searchText, maxRentPerMonth, sortBy]);
 
   useEffect(() => {
     loadListings();

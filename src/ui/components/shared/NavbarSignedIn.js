@@ -1,7 +1,7 @@
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import { connectApplications, disconnectApplications } from "helpers/WebSocketFactory";
 import jwt_decode from "jwt-decode";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
 const handleLogout = () => {
@@ -16,7 +16,8 @@ function NavbarSignedIn() {
   const [firstname, setFirstname] = useState();
   const [goToProfileLink, setGoToProfileLink] = useState();
 
-  const handleChangedItems = async (msg) => {
+
+  const handleChangedItems = useCallback((msg) => {
     let updatedItem = JSON.parse(msg);
 
     toast("New Application State: " + updatedItem.state, {
@@ -24,12 +25,12 @@ function NavbarSignedIn() {
       position: "top-right",
     });
 
-    
-
     if(updatedItem.state === "MOVEIN"){
      navigateToInventory(updatedItem.inventoryId);
     }
-  };
+  }, []);
+
+
 
   const navigateToInventory = async (inventoryId) => {
     toast("You got automatically redirected to fill out the inventory", {
@@ -51,7 +52,7 @@ function NavbarSignedIn() {
     return () => {    
       disconnectApplications();
     };
-  }, []);
+  }, [handleChangedItems]);
 
   return (
     <div className="bg-white w-full">
