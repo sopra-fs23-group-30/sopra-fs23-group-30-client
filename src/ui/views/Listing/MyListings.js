@@ -30,8 +30,8 @@ export default function MyListings() {
   };
 
   return (
-    <div className="py-2.5 sm:px-4 rounded px-4 md:mx-48 flex flex-col gap-4">
-      <nav className="flex mt-6" aria-label="Breadcrumb">
+    <div className="py-2.5 sm:px-4 rounded px-4 md:mx-48 flex flex-col">
+      <nav className="flex " aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
           <li className="inline-flex items-center">
             <a
@@ -73,7 +73,8 @@ export default function MyListings() {
           </li>
         </ol>
       </nav>
-  
+
+      <h1 class="mt-3 font-bold">My Listings</h1>
       <div className="flex flex-row justify-end">
         <Button
           href="/createlisting"
@@ -85,6 +86,7 @@ export default function MyListings() {
         </Button>
       </div>
   
+      <h1 class="text-sm pl-6 mb-1">Title</h1>
       <div className="flex flex-col gap-4">
         {listings?.map((listing) => (
           <ExpandableListingCard

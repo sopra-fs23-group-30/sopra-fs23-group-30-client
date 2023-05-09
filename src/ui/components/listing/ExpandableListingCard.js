@@ -86,7 +86,7 @@ function ExpandableListingCard(props) {
             {!isOpen && (
               <svg
                 data-accordion-icon="true"
-                class="w-6 h-6 shrink-0"
+                class="w-6 h-6 shrink-0 cursor-pointer"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +105,7 @@ function ExpandableListingCard(props) {
             {isOpen && (
               <svg
                 data-accordion-icon="true"
-                class="w-6 h-6 rotate-180 shrink-0"
+                class="w-6 h-6 rotate-180 shrink-0 cursor-pointer"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -169,7 +169,7 @@ function ExpandableListingCard(props) {
                           <div class="flex justify-end items-center gap-3">
                             {applicant.state === "PENDING" && (
                               <Dropdown
-                                class="text-center text-white bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 rounded-lg text-sm focus:outline-none dark:focus:ring-blue-800"
+                                class="text-center text-white bg-secondary hover:bg-primary focus:ring-4 focus:ring-primary-300 rounded-lg text-sm focus:outline-none dark:focus:ring-blue-800"
                                 label="Actions"
                                 dismissOnClick={false}
                               >
@@ -193,10 +193,11 @@ function ExpandableListingCard(props) {
                             {applicant.state === "MOVEIN" && (
                               <Button
                                 size="xs"
-                                className="mb-2 bg-primary"
+                                className="bg-primary "
                                 href={"/inventories/" + applicant.inventoryId}
+                                style={{ whiteSpace: 'nowrap' }}
                               >
-                                Edit Inventory List
+                                Inventory List
                               </Button>
                             )}
 
@@ -205,6 +206,7 @@ function ExpandableListingCard(props) {
                             <a
                               href={"/profile/" + applicant.applicantId}
                               class="text-center text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm  hover:underline focus:outline-none dark:focus:ring-blue-800"
+                              style={{ whiteSpace: 'nowrap' }}
                             >
                               See Profile
                             </a>
