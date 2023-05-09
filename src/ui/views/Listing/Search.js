@@ -54,13 +54,6 @@ export default function Search() {
   //   return listing.title.toLowerCase().includes(searchText);
   // });
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     loadListings().catch(console.error);
-  //   };
-  //   fetchData();
-  // }, [loadListings]);
-
   const loadListings = async () => {
     const listingFilterGetDTO = {
       searchText: searchText,
@@ -69,7 +62,9 @@ export default function Search() {
       sortBy: sortBy.value,
     };
 
-    filters[0].options.map((option) => ( listingFilterGetDTO[option.value] = option.checked))
+    filters[0].options.map(
+      (option) => (listingFilterGetDTO[option.value] = option.checked)
+    );
 
     let response = await api.get("/listings", {
       params: listingFilterGetDTO,
@@ -84,6 +79,13 @@ export default function Search() {
     }
     setListings(response.data);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      loadListings().catch(console.error);
+    };
+    fetchData();
+  }, [loadListings]);
 
   const handleApply = async (listingId) => {
     let token = localStorage.getItem("authtoken");
