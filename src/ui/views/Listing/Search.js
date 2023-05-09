@@ -4,12 +4,11 @@ import {
   FunnelIcon,
   MinusIcon,
   PlusIcon,
-  Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Label, TextInput } from "flowbite-react";
 import { api } from "helpers/api";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { toast } from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 
@@ -55,12 +54,12 @@ export default function Search() {
   //   return listing.title.toLowerCase().includes(searchText);
   // });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      loadListings().catch(console.error);
-    };
-    fetchData();
-  }, [loadListings]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     loadListings().catch(console.error);
+  //   };
+  //   fetchData();
+  // }, [loadListings]);
 
   const loadListings = async () => {
     const listingFilterGetDTO = {
@@ -69,9 +68,9 @@ export default function Search() {
       flatmateCapacity: flatmateCapacity,
       sortBy: sortBy.value,
     };
-    filters[0].options.map((option) => {
-      listingFilterGetDTO[option.value] = option.checked;
-    });
+
+    filters[0].options.map((option) => ( listingFilterGetDTO[option.value] = option.checked))
+
     let response = await api.get("/listings", {
       params: listingFilterGetDTO,
     });
