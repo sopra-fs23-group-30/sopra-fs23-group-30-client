@@ -102,28 +102,43 @@ const applicationItem = (application) => {
         </div>
 
         <div className="flex flex-row items-center gap-4">
-          {getStateBadge(application.state)}
-          <Dropdown
-            className="text-center text-white bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 rounded-lg text-sm focus:outline-none dark:focus:ring-blue-800"
-            label="Actions"
-            dismissOnClick={false}
+        {application.state === "MOVEIN" ? (
+          <Button
+            size="xs"
+            className="bg-primary w-30"
+            href={
+              "/inventories/" +
+              applications.find((x) => x.state === "MOVEIN").inventoryId
+            }
           >
-            <Dropdown.Item
-              onClick={() => action(application.applicationId, "DECLINE")}
+            Inventory List{" "}
+          </Button>
+        ) : (
+          <div className="flex flex-row items-center gap-4">
+            {getStateBadge(application.state)}
+            <Dropdown
+              class="text-center text-white bg-secondary hover:bg-primary focus:ring-4 focus:ring-primary-300 rounded-lg text-sm focus:outline-none dark:focus:ring-blue-800"
+              label="Actions"
+              dismissOnClick={false}
             >
-              Take Back
-            </Dropdown.Item>
-            {application.state === "ACCEPTED" && (
               <Dropdown.Item
-                onClick={() => action(application.applicationId, "MOVEIN")}
+                onClick={() => action(application.applicationId, "DECLINE")}
               >
-                Move-In
+                Take Back
               </Dropdown.Item>
-            )}
-          </Dropdown>
+              {application.state === "ACCEPTED" && (
+                <Dropdown.Item
+                  onClick={() => action(application.applicationId, "MOVEIN")}
+                >
+                  Move-In
+                </Dropdown.Item>
+              )}
+            </Dropdown>
+            </div>
+)}
           <a
             href={"/listings/" + application.listingId}
-            className="text-sm text-primary hover:underline"
+            className="text-sm text-secondary hover:underline"
           >
             See Listing
           </a>
@@ -183,7 +198,7 @@ const applicationItem = (application) => {
 
       {!hasActiveItem && (
         <div>
-          <h1 class="mt-4 mb-4 font-bold">My Applications</h1>
+          <h1 class="mt-3 mb-4 font-bold">My Applications</h1>
           <div class="mb-20 ml-6">
             <h2 class="font-bold mb-4">Pending</h2>
             {applications
@@ -208,16 +223,6 @@ const applicationItem = (application) => {
       {hasActiveItem && (
         <div class="mt-20 ml-6">
           <h2 class="font-bold mb-4">Your new home:</h2>
-          <Button
-            size="xs"
-            className="mb-2 bg-primary w-40"
-            href={
-              "/inventories/" +
-              applications.find((x) => x.state === "MOVEIN").inventoryId
-            }
-          >
-            Edit Inventory List{" "}
-          </Button>
           {applications
             .filter((application) => application.state === "MOVEIN")
             .map((application) => applicationItem(application))}
