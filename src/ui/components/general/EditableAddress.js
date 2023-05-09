@@ -19,7 +19,7 @@ function EditableAddress(props) {
     };
     setCoordinates(updatedCoordinates);
     props.onChange({
-      address: address,
+      address: results[0].formatted_address,
       coordinates: updatedCoordinates,
     });
   };

@@ -8,12 +8,12 @@ export default function CreateListing() {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [googleMapsData, setGoogleMapsData] = useState({
-    address:"",
-    coordinates:{
-      lat:null,
-      lng:null
-    }
-  })
+    address: "",
+    coordinates: {
+      lat: null,
+      lng: null,
+    },
+  });
   const [pricePerMonth, setPricePerMonth] = useState();
   const [perfectFlatmateDescription, setPerfectFlatmateDescription] =
     useState();
@@ -26,9 +26,9 @@ export default function CreateListing() {
     const requestBody = JSON.stringify({
       title,
       description,
-      address:googleMapsData.address,
-      lattitude:googleMapsData.coordinates.lat,
-      longitude:googleMapsData.coordinates.lng,
+      address: googleMapsData.address,
+      lattitude: googleMapsData.coordinates.lat,
+      longitude: googleMapsData.coordinates.lng,
       pricePerMonth,
       perfectFlatmateDescription,
       listerId: userId,
@@ -36,7 +36,7 @@ export default function CreateListing() {
       rooms: 4,
       petsAllowed: true,
       elevator: true,
-      dishwasher: true
+      dishwasher: true,
     });
 
     let response = await api
@@ -150,6 +150,7 @@ export default function CreateListing() {
             value={googleMapsData.address}
             onChange={(e) => {
               setGoogleMapsData(e);
+              console.log(e);
             }}
           />
         </div>
@@ -176,7 +177,11 @@ export default function CreateListing() {
         </div>
 
         <div className="flex flex-row gap-3 pt-2">
-          <Button className="bg-secondary hover:bg-primary"type="submit" onClick={() => saveListing()}>
+          <Button
+            className="bg-secondary hover:bg-primary"
+            type="submit"
+            onClick={() => saveListing()}
+          >
             Create Listing
           </Button>
 
