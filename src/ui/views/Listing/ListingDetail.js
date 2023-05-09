@@ -90,7 +90,8 @@ export default function ListingDetail() {
   const updateListing = async () => {
     const formData = new FormData();
     formData.append("body", JSON.stringify(listingData));
-    formData.append("files", []);
+    console.log(listingData)
+    formData.append("files", [new Blob()]);
 
     try {
       let response = await api.put("/listings/" + params.id, listingData);

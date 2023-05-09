@@ -1,6 +1,8 @@
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
+import { connectApplications, disconnectApplications } from "helpers/WebSocketFactory";
 import jwt_decode from "jwt-decode";
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 const handleLogout = () => {
   localStorage.removeItem("authtoken");
@@ -8,10 +10,34 @@ const handleLogout = () => {
 };
 
 function NavbarSignedIn() {
+
   const [isSearcher, setIsSearcher] = useState();
   const [profilePictureURL, setProfilePictureURL] = useState();
   const [firstname, setFirstname] = useState();
   const [goToProfileLink, setGoToProfileLink] = useState();
+
+  const handleChangedItems = async (msg) => {
+    let updatedItem = JSON.parse(msg);
+
+    toast("New Application State: " + updatedItem.state, {
+      duration: 4000,
+      position: "top-right",
+    });
+
+    
+
+    if(updatedItem.state === "MOVEIN"){
+     navigateToInventory(updatedItem.inventoryId);
+    }
+  };
+
+  const navigateToInventory = async (inventoryId) => {
+    toast("You got automatically redirected to fill out the inventory", {
+      duration: 4000,
+      position: "top-right",
+    });
+    window.location.href = '/inventories/' + inventoryId;
+  }
 
   useEffect(() => {
     const token = localStorage.getItem("authtoken");
@@ -20,6 +46,11 @@ function NavbarSignedIn() {
     setGoToProfileLink("/profile/" + claims.userId);
     setProfilePictureURL(claims.profilePictureURL);
     setFirstname(claims.firstname);
+
+    connectApplications(claims.userId, handleChangedItems);
+    return () => {    
+      disconnectApplications();
+    };
   }, []);
 
   return (

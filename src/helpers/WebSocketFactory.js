@@ -65,3 +65,22 @@ export const disconnectInventoryItems = () => {
     console.log("disconnected inventory items!");
   });
 };
+
+let stompClientApplications;
+
+export const connectApplications = (userId, changeCallback, deletedCallback) => {
+  let stompClient = openSocket();
+  stompClientApplications = stompClient;
+  stompClient.connect({ userId: userId }, () => {
+    stompClient.subscribe(`/applications/` + userId, (message) => {
+      console.log(`Received changed message: ${message.body}`);
+      changeCallback(message.body);
+    });   
+  });
+};
+
+export const disconnectApplications = () => {
+  stompClientApplications.disconnect(() => {
+    console.log("disconnected inventory items!");
+  });
+};
