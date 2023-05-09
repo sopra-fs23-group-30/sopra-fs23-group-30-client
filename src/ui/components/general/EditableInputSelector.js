@@ -17,11 +17,12 @@ function InputSelector(props) {
     <>
       <label
         htmlFor="small-input"
-        className="block text-sm font-medium text-gray-900 dark:text-white pt-4"
+        className="block text-sm font-medium text-gray-900 dark:text-white pt-3"
       >
         {props.label}
       </label>
       <Select
+        className="cursor-pointer pt-1"
         required={true}
         value={props.content}
         onChange={handleOptionChange}
@@ -36,7 +37,7 @@ function InputSelector(props) {
     <>
       <label
         htmlFor="small-input"
-        className="block text-sm font-medium text-gray-900 dark:text-white"
+        className="block text-sm font-medium text-gray-900 dark:text-white pt-3"
       >
         {props.label}
       </label>

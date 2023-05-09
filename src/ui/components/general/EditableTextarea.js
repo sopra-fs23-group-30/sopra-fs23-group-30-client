@@ -59,7 +59,7 @@ function EditableTextarea(props) {
             id="actionsContainer"
             className="flex flex-row justify-center ml-1 px-2"
           >
-            <span className="inline-block align-middle">
+            <span className="inline-block align-middle cursor-pointer">
               {editable && (
                 <CheckIcon
                   height={18}
@@ -82,7 +82,7 @@ function EditableTextarea(props) {
             </span>
 
             {editable && (
-              <span className="inline-block align-middle ...">
+              <span className="inline-block align-middle ... cursor-pointer">
                 <XMarkIcon
                   height={18}
                   color="blue"

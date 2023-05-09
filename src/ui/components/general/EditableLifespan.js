@@ -110,11 +110,11 @@ function EditableLifespan(props) {
 
   const topSection = () => {
     return (
-      <div className="flex flex-row mb-1 items-center justify-between">
+      <div className="flex flex-row mb-0.5 items-center justify-between">
         <div className="flex flex-row">
           <label
             htmlFor="small-input"
-            className="block text-sm font-medium text-gray-900 dark:text-white pt-3"
+            className="block text-sm font-medium text-gray-900 dark:text-white"
           >
             {props.label}
           </label>
@@ -125,7 +125,7 @@ function EditableLifespan(props) {
             id="actionsContainer"
             className="flex flex-row justify-center px-2"
           >
-            <span className="inline-block align-middle">
+            <span className="inline-block align-middle cursor-pointer">
               {canAdd && (
                 <PlusIcon
                   height={18}
@@ -189,7 +189,7 @@ function EditableLifespan(props) {
         </div>
         <div className="col-span-1 flex flex-row justify-end px-2">
           {lifespan.isEditing && (
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-center cursor-pointer">
               <CheckIcon
                 height={18}
                 onClick={() => {
@@ -208,7 +208,7 @@ function EditableLifespan(props) {
           )}
 
           {!lifespan.isEditing && props.canEdit && (
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-center cursor-pointer">
               <TrashIcon
                 height={18}
                 onClick={() => {

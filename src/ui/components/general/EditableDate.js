@@ -39,7 +39,7 @@ function EditableDate(props) {
       <div className="flex flex-row mb-1 items-center">
         <label
           htmlFor="small-input"
-          className="block text-sm font-medium text-gray-900 dark:text-white pt-3"
+          className="block text-sm font-medium text-gray-900 dark:text-white"
         >
           {props.label}
         </label>
@@ -63,7 +63,7 @@ function EditableDate(props) {
             ref={inputRef}
             type="date"
             pattern="\d{4}\d{1,2}/\d{1,2}/"
-            className="p-0 text-sm border-none bg-transparent focus:border-none focus:ring-transparent block w-full text-black-900"
+            className="p-0 text-sm border-none bg-transparent focus:border-none focus:ring-transparent block w-full text-black-900 cursor-pointer"
             value={content ?? ""}
             onChange={({ target: { value: content } }) => {
               setContent(content);
@@ -76,7 +76,7 @@ function EditableDate(props) {
             id="actionsContainer"
             className="flex flex-row justify-center ml-1"
           >
-            <span className="inline-block align-middle">
+            <span className="inline-block align-middle cursor-pointer">
               {editable && (
                 <CheckIcon
                   height={18}
@@ -102,7 +102,7 @@ function EditableDate(props) {
             </span>
 
             {editable && (
-              <span className="inline-block align-middle ...">
+              <span className="inline-block align-middle ... cursor-pointer">
                 <XMarkIcon
                   height={18}
                   color="blue"

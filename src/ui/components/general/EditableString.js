@@ -64,7 +64,7 @@ function EditableString(props) {
           !isValid ? "border-red-500" : ""
         }`}
       >
-        {!editable && <p className="text-sm text-gray-400">{content}</p>}
+        {!editable && <p className="text-sm text-gray-400 cursor-default">{content}</p>}
 
         {editable && (
           <input
@@ -90,7 +90,7 @@ function EditableString(props) {
             id="actionsContainer"
             className="flex flex-row justify-center ml-1"
           >
-            <span className="inline-block align-middle">
+            <span className="inline-block align-middle cursor-pointer">
               {editable && isValid && (
                 <CheckIcon
                   height={18}
@@ -116,7 +116,7 @@ function EditableString(props) {
             </span>
 
             {editable && (
-              <span className="inline-block align-middle ...">
+              <span className="inline-block align-middle ... cursor-pointer">
                 <XMarkIcon
                   height={18}
                   color="blue"

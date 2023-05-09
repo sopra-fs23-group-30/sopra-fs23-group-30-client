@@ -279,10 +279,14 @@ export default function ProfilePage(props) {
           </li>
         </ol>
       </nav>
-      <h1 className="mt-8 ml-4 text-lg font-medium text-gray-900">
+      {canEdit ? (
+      <h1 className="mt-3 font-bold">
         My Profile
-      </h1>
-      <div className="flex flex-col xl:grid grid-cols-5 grid-rows-3 ml-4 mt-4">
+      </h1>) : ( <h1 className="mt-3 font-bold">
+          {profileData?.firstname}'s Profile
+      </h1>)}
+
+      <div className="flex flex-col xl:grid grid-cols-5 grid-rows-1 ml-4 mt-4">
         <div className="col-span-1 row-span-1 h-full flex flex-col items-center w-full">
           <h2 className="font-sm mb-2 text-sm">Photo</h2>
           {profileData?.profilePictureURL && (
@@ -322,14 +326,15 @@ export default function ProfilePage(props) {
                 onClick={() => {
                   handleDeletePicture();
                 }}
-                className="text-sm mt-2 text-red-700 text-center items-center hover:underline"
+                className="text-sm mt-2 text-red-600 text-center items-center hover:underline"
               >
                 Delete
               </button>
             </div>
           )}
         </div>
-        <div className="col-start-2 col-span-4 flex flex-row lg:flex-row gap-4 pb-4">
+        <div className="flex flex-col col-span-4">
+        <div className="flex flex-row lg:flex-row gap-4 pb-4">
           <div className="flex flex-col gap-2 w-full xl:w-1/3">
             <div className="flex flex-col md:grid grid-cols-2 grid-rows-1 gap-2 gap-y-0 w-full pt-4 ">
               <EditableString
@@ -360,7 +365,7 @@ export default function ProfilePage(props) {
             </div>
           </div>
         </div>
-        <div className="col-start-2 col-span-4 row-span-2 flex flex-col md:flex-row justify-between gap-4 ">
+        <div className="flex flex-col md:flex-row justify-between gap-4 xl:pt-20">
           <div className="w-full md:w-1/2">
             <EditableDate
               label="Birthdate"
@@ -375,18 +380,36 @@ export default function ProfilePage(props) {
               onSave={handleGender}
               canEdit={canEdit}
             />
-            <EditableTextarea
-              label="About Me"
-              content={profileData?.biography}
-              onSave={handleBiography}
-              canEdit={canEdit}
+            {canEdit ? (
+              <EditableTextarea
+                label="About Me"
+                content={profileData?.biography}
+                onSave={handleBiography}
+                canEdit={canEdit}
+              />
+            ) : (
+              <EditableTextarea
+                label={`About ${profileData?.firstname}`}
+                content={profileData?.biography}
+                onSave={handleBiography}
+                canEdit={canEdit}
+              />
+            )}
+            {canEdit ? (
+              <EditableTextarea
+                label="I am looking for"
+                content={profileData?.futureFlatmatesDescription}
+                onSave={handleFlatemateDescription}
+                canEdit={canEdit}
             />
-            <EditableTextarea
-              label="I am looking for"
+            ) : (
+              <EditableTextarea
+              label={`${profileData?.firstname} is looking for`}
               content={profileData?.futureFlatmatesDescription}
               onSave={handleFlatemateDescription}
               canEdit={canEdit}
-            />
+              />
+            )}
             <label
               htmlFor="small-input"
               className="block text-sm font-medium text-gray-900 dark:text-white"
@@ -451,7 +474,7 @@ export default function ProfilePage(props) {
                 </div>
                 <div className="flex gap-2 mt-2">
                   <Button className="bg-secondary hover:bg-primary" onClick={handlePDFUpload}>Upload</Button>
-                  <Button className="bg-red-700 hover:bg-primary" onClick={handleRemoveFile}>
+                  <Button className="bg-red-600 hover:bg-red-700" onClick={handleRemoveFile}>
                     Remove
                   </Button>
                 </div>
@@ -474,6 +497,7 @@ export default function ProfilePage(props) {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }
