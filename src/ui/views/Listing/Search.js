@@ -75,7 +75,7 @@ export default function Search() {
       });
     }
     setListings(response.data);
-  }, [searchText, maxRentPerMonth, flatmateCapacity, sortBy, filters, api]);
+  }, [searchText, maxRentPerMonth, flatmateCapacity, sortBy]);
 
   useEffect(() => {
     loadListings();
