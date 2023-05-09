@@ -190,10 +190,11 @@ export default function ListingDetail() {
               <TransparentEditableAddress
                 className="text-black text-sm bg-transparent"
                 content={{
-                  address:listingData?.address, 
-                  coordinates:{
-                    lat:listingData?.lattitude,
-                    lng:listingData?.longitude}
+                  address: listingData?.address,
+                  coordinates: {
+                    lat: listingData?.lattitude,
+                    lng: listingData?.longitude,
+                  },
                 }}
                 canEdit={canEdit}
                 onSave={handleAddressChange}
@@ -311,8 +312,8 @@ export default function ListingDetail() {
         </h5>
         <Map
           coords={{
-            lat: -3.745,
-            lng: -38.523,
+            lat: listingData?.lattitude,
+            lng: listingData?.longitude,
           }}
         />
       </div>
