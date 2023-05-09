@@ -88,12 +88,28 @@ export default function ListingDetail() {
   };
 
   const updateListing = async () => {
+
+    let toUpdateObj = {
+      title: listingData.title,
+      description: listingData.description,
+      address: listingData.address,
+      lattitude: listingData.lattitude,
+      longitude: listingData.longitude,
+      pricePerMonth: listingData.pricePerMonth,
+      perfectFlatmateDescription: listingData.perfectFlatmateDescription,
+      listerId: listingData.listerId,
+      imagesJson: listingData.imagesJson,
+      petsAllowed: listingData.petsAllowed,
+      elevator: listingData.elevator,
+      dishwasher: listingData.dishwasher,
+      flatmateCapacity: listingData.flatmateCapacity
+    }
+
     const formData = new FormData();
-    formData.append("body", JSON.stringify(listingData));
-    formData.append("files", [new Blob()]);
+    formData.append("body", JSON.stringify(toUpdateObj));
 
     try {
-      let response = await api.put("/listings/" + params.id, listingData);
+      let response = await api.put("/listings/" + params.id, formData);
       if (response.status === 204) {
         toast("Save successful", {
           duration: 4000,
