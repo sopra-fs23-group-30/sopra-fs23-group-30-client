@@ -256,6 +256,24 @@ export default function Search() {
                         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                       />
                     </ul>
+                    <ul className="px-2 py-3 font-medium text-gray-900">
+                      <div>
+                        <div className="mb-2 block">
+                          <Label
+                            htmlFor="email1"
+                            value="Maximum number of roommates"
+                          />
+                        </div>
+                        <TextInput
+                          type="number"
+                          value={flatmateCapacity}
+                          onChange={({ target: { value: nmb } }) => {
+                            setFlatmateCapacity(nmb);
+                          }}
+                          required={true}
+                        />
+                      </div>
+                    </ul>
 
                     {filters.map((section) => (
                       <Disclosure
