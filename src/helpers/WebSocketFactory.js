@@ -13,6 +13,7 @@ export const socketFactory = () => {
 
 export const openSocket = () => {
   let stompClient = Stomp.over(function () {
+    console.log(getWebSocketUrl())
     return new WebSocket(`${getWebSocketUrl()}`);
   });
 
