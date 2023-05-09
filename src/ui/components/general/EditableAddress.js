@@ -25,46 +25,45 @@ function EditableAddress(props) {
   };
 
   return (
-    <>
-      <PlacesAutocomplete
-        value={address}
-        onChange={setAddress}
-        onSelect={handleSelect}
-      >
-        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div>
-            <TextInput
-              {...getInputProps({
-                placeholder: "Search Places ...",
-                className: "location-search-input",
-              })}
-            />
-            <div className="p-0 text-sm border-none bg-transparent focus:border-none focus:ring-transparent block w-full text-black-900">
-              {loading && <div>Loading...</div>}
-              {suggestions.map((suggestion) => {
-                const className = suggestion.active
-                  ? "suggestion-item--active"
-                  : "suggestion-item";
-                // inline style for demonstration purpose
-                const style = suggestion.active
-                  ? { backgroundColor: "#fafafa", cursor: "pointer" }
-                  : { backgroundColor: "#ffffff", cursor: "pointer" };
-                return (
-                  <div
-                    {...getSuggestionItemProps(suggestion, {
-                      className,
-                      style,
-                    })}
-                  >
-                    <span>{suggestion.description}</span>
-                  </div>
-                );
-              })}
-            </div>
+    <PlacesAutocomplete
+      value={address}
+      onChange={setAddress}
+      onSelect={handleSelect}
+    >
+      {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+        <div className="w-full">
+          <TextInput
+            {...getInputProps({
+              placeholder: "Search Places ...",
+              className: "location-search-input",
+              style: { height: "2.5px", backgroundColor: "transparent" },
+            })}
+          />
+          <div className="p-0 text-sm border-none bg-transparent focus:border-none focus:ring-transparent block w-full text-black-900">
+            {loading && <div>Loading...</div>}
+            {suggestions.map((suggestion) => {
+              const className = suggestion.active
+                ? "suggestion-item--active"
+                : "suggestion-item";
+              // inline style for demonstration purpose
+              const style = suggestion.active
+                ? { backgroundColor: "#fafafa", cursor: "pointer" }
+                : { backgroundColor: "#ffffff", cursor: "pointer" };
+              return (
+                <div
+                  {...getSuggestionItemProps(suggestion, {
+                    className,
+                    style,
+                  })}
+                >
+                  <span>{suggestion.description}</span>
+                </div>
+              );
+            })}
           </div>
-        )}
-      </PlacesAutocomplete>
-    </>
+        </div>
+      )}
+    </PlacesAutocomplete>
   );
 }
 

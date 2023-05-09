@@ -90,7 +90,6 @@ export default function ListingDetail() {
   const updateListing = async () => {
     const formData = new FormData();
     formData.append("body", JSON.stringify(listingData));
-    console.log(listingData)
     formData.append("files", [new Blob()]);
 
     try {
@@ -180,32 +179,30 @@ export default function ListingDetail() {
         <div className="flex flex-row justify-between">
           <div className="flex flex-col w-1/2">
             <TransparendEditableString
-              className="font-extrabold text-primary text-md bg-transparent"
+              className="font-extrabold text-primary text-md bg-transparent text-left"
               content={listingData?.title}
               canEdit={canEdit}
               onSave={handleTitleChange}
               inputType="text"
             />
 
-            <p className="text-black text-sm">
-              <TransparentEditableAddress
-                className="text-black text-sm bg-transparent"
-                content={{
-                  address: listingData?.address,
-                  coordinates: {
-                    lat: listingData?.lattitude,
-                    lng: listingData?.longitude,
-                  },
-                }}
-                canEdit={canEdit}
-                onSave={handleAddressChange}
-              />
-            </p>
+            <TransparentEditableAddress
+              className="text-black text-sm bg-transparent"
+              content={{
+                address: listingData?.address,
+                coordinates: {
+                  lat: listingData?.lattitude,
+                  lng: listingData?.longitude,
+                },
+              }}
+              canEdit={canEdit}
+              onSave={handleAddressChange}
+            />
           </div>
 
           <div className="flex flex-row font-extrabold text-primary text-md">
             <TransparendEditableString
-              className="font-extrabold text-primary text-md bg-transparent mr-2"
+              className="font-extrabold text-primary text-md bg-transparent mr-2 text-right"
               content={listingData?.pricePerMonth.toString()}
               canEdit={canEdit}
               onSave={handlePricePerMonthChange}

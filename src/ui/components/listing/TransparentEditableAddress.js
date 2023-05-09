@@ -31,7 +31,7 @@ function TransparentEditableAddress(props) {
 
   return (
     <div>
-      <div className="mx-0 flex justify-between items-center">
+      <div className="flex justify-between">
         {!editable && <p {...props}>{content.address}</p>}
 
         {editable && (
@@ -44,18 +44,15 @@ function TransparentEditableAddress(props) {
         )}
 
         {props.canEdit && (
-          <div
-            id="actionsContainer"
-            className="flex flex-row justify-center ml-1"
-          >
-            <span className="inline-block align-middle">
+          <div id="actionsContainer" className="flex flex-row ml-1">
+            <span className="inline-block align-right">
               {editable && (
                 <CheckIcon
                   height={18}
                   onClick={() => {
                     save();
                   }}
-                  className="inline-block align-middle text-blue-500"
+                  className="inline-block align-right text-blue-500"
                 />
               )}
               {!editable && (
@@ -68,18 +65,18 @@ function TransparentEditableAddress(props) {
                       inputRef.current?.focus();
                     }, 0);
                   }}
-                  className="inline-block align-middle text-blue-500"
+                  className="inline-block align-right text-blue-500"
                 />
               )}
             </span>
 
             {editable && (
-              <span className="inline-block align-middle ...">
+              <span className="inline-block align-right ...">
                 <XMarkIcon
                   height={18}
                   color="blue"
                   onClick={() => cancel()}
-                  className="inline-block align-middle text-blue-500"
+                  className="inline-block align-right text-blue-500"
                 />
               </span>
             )}
