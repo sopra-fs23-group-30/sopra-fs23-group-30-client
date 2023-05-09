@@ -122,7 +122,7 @@ const applicationItem = (application) => {
               dismissOnClick={false}
             >
               <Dropdown.Item
-                onClick={() => action(application.applicationId, "DECLINE")}
+                onClick={() => action(application.applicationId, "DECLINED")}
               >
                 Take Back
               </Dropdown.Item>
