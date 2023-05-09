@@ -8,7 +8,7 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Label, TextInput } from "flowbite-react";
 import { api } from "helpers/api";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 
@@ -50,11 +50,8 @@ export default function Search() {
   const [listings, setListings] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [sortBy, setSortBy] = useState(sortOptions[0]);
-  // const filteredListings = listings.filter((listing) => {
-  //   return listing.title.toLowerCase().includes(searchText);
-  // });
 
-  const loadListings = async () => {
+  const loadListings = useCallback(async () => {
     const listingFilterGetDTO = {
       searchText: searchText,
       maxRentPerMonth: maxRentPerMonth,
@@ -78,13 +75,10 @@ export default function Search() {
       });
     }
     setListings(response.data);
-  };
+  }, [searchText, maxRentPerMonth, flatmateCapacity, sortBy, filters, api]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      loadListings().catch(console.error);
-    };
-    fetchData();
+    loadListings();
   }, [loadListings]);
 
   const handleApply = async (listingId) => {
