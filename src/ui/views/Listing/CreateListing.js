@@ -17,6 +17,7 @@ export default function CreateListing() {
   const [pricePerMonth, setPricePerMonth] = useState();
   const [perfectFlatmateDescription, setPerfectFlatmateDescription] =
     useState();
+  const [images, setImages] = useState([]);
 
   const saveListing = async (e) => {
     let token = localStorage.getItem("authtoken");
@@ -33,14 +34,20 @@ export default function CreateListing() {
       perfectFlatmateDescription,
       listerId: userId,
       imagesJson: "[{}]",
-      rooms: 4,
+      flatmateCapacity: 4,
       petsAllowed: true,
       elevator: true,
       dishwasher: true,
     });
 
+    const formData = new FormData();
+    formData.append("body", requestBody);
+    images.forEach((image) => {
+      formData.append("files", image, image.name);
+    });
+
     let response = await api
-      .post("/listings", requestBody)
+      .post("/listings", formData)
       .catch(function (error) {
         //display error
         return;
@@ -49,6 +56,14 @@ export default function CreateListing() {
     if (response.status === 201) {
       window.location.href = "/";
     }
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    let tempImages = images;
+    tempImages.push(file);
+    setImages(tempImages);
+    console.log(images);
   };
 
   return (
@@ -174,6 +189,22 @@ export default function CreateListing() {
               setPerfectFlatmateDescription(e.target.value);
             }}
           />
+        </div>
+        
+        <div>
+          <input
+            type="file"
+            name="uploadfile"
+            id="img"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+          <label
+            for="img"
+            className="text-white text-center focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-secondary hover:bg-primary focus:outline-none"
+          >
+            Add Photo
+          </label>
         </div>
 
         <div className="flex flex-row gap-3 pt-2">
