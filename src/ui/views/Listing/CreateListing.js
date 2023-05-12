@@ -189,11 +189,12 @@ export default function CreateListing() {
             }}
           />
         </div>
-        
+
         <div>
           <EditableImageDisplay
             images={images}
             isLink={false}
+            onChange={handleFileChange}
           />
         </div>
 
