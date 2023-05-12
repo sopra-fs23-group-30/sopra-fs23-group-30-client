@@ -54,7 +54,6 @@ export default function Search() {
     const listingFilterGetDTO = {
       searchText: searchText,
       maxRentPerMonth: maxRentPerMonth,
-      flatmateCapacity: 100,
       sortBy: sortBy.value,
     };
 

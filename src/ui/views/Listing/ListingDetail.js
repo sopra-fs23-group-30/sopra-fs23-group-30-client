@@ -140,7 +140,6 @@ export default function ListingDetail() {
       perfectFlatmateDescription: listingData.perfectFlatmateDescription,
       listerId: listingData.listerId,
       imagesJson: JSON.stringify(imageUrls),
-      flatmateCapacity: listingData.flatmateCapacity,
       petsAllowed: listingData.petsAllowed,
       elevator: listingData.elevator,
       dishwasher: listingData.dishwasher,

@@ -39,7 +39,6 @@ export default function CreateListing() {
       perfectFlatmateDescription,
       listerId: userId,
       imagesJson: "[{}]",
-      flatmateCapacity: 4,
       petsAllowed: petsAllowed,
       elevator: elevator,
       dishwasher: dishwasher,
