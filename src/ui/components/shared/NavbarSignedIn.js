@@ -76,7 +76,7 @@ function NavbarSignedIn() {
                     alt="User settings"
                     img={profilePictureURL}
                     rounded={true}
-                    className="m-0 md:mr-4"
+                    className="m-0 md:mr-4 object-cover"
                   >
                     <div className="space-y-1">
                       <div className="hidden md:block text-sm text-black-500 float-left">

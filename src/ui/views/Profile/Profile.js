@@ -10,6 +10,7 @@ import InputSelector from "ui/components/general/EditableInputSelector";
 import EditableLifespan from "ui/components/general/EditableLifespan";
 import EditableString from "ui/components/general/EditableString";
 import EditableTextarea from "ui/components/general/EditableTextarea";
+import {HiOutlineDownload } from 'react-icons/hi';
 
 export default function ProfilePage(props) {
   const [profileData, setProfileData] = useState(null);
@@ -293,7 +294,7 @@ export default function ProfilePage(props) {
             <img
               src={profileData?.profilePictureURL}
               alt="face of lister / searcher"
-              className="rounded-full bg-gray-900 w-36 aspect-square text-white flex items-center justify-center"
+              className="rounded-full bg-gray-900 w-36 aspect-square text-white flex items-center justify-center object-cover"
             />
           )}
 
@@ -416,18 +417,7 @@ export default function ProfilePage(props) {
             >
               Debt collection register extract
             </label>
-            {profileData?.documentURL ? (
-              <a
-                href={profileData.documentURL}
-                class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-              >
-                Your current debt collection register extract
-              </a>
-            ) : (
-              <p class="text-sm text-gray-900 dark:text-gray-100">
-                No debt collection register extract uploaded
-              </p>
-            )}
+            
             {canEdit && (
               <>
                 <div className="container text-center mt-1">
@@ -472,6 +462,21 @@ export default function ProfilePage(props) {
                     </div>
                   </div>
                 </div>
+                </>)}
+            {profileData?.documentURL ? (
+              <a href={profileData.documentURL} class="text-sm text-blue-600 dark:text-blue-500 hover:underline">
+              <div class="flex items-center ">
+                <span>See debt collection register extract</span>
+                <HiOutlineDownload class="ml-2" size={20}/>
+              </div>
+            </a>
+            ) : (
+              <p class="text-sm text-gray-900 dark:text-gray-100">
+                No debt collection register extract uploaded
+              </p>
+            )}
+            {canEdit && (
+              <>
                 <div className="flex gap-2 mt-2">
                   <Button className="bg-secondary hover:bg-primary" onClick={handlePDFUpload}>Upload</Button>
                   <Button className="bg-red-600 hover:bg-red-700" onClick={handleRemoveFile}>

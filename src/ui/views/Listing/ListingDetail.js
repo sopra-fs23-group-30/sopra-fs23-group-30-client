@@ -284,7 +284,7 @@ export default function ListingDetail() {
               <img
                 src={listingData?.profilePictureURL}
                 alt="face of lister / searcher"
-                className="object-fill w-24 h-24"
+                className="w-24 h-24 rounded object-cover"
               />
             )}
 
