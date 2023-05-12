@@ -14,7 +14,7 @@ function EditableImageDisplay(props) {
   const image = (styling, index) => {
     return (
       <>
-        <img src={images[index].imageURL} alt="image" className={styling} />
+        <img src={images[index].imageURL} alt="listing" className={styling} />
         {canEdit ? (
           <XMarkIcon
             height={18}
@@ -58,13 +58,13 @@ function EditableImageDisplay(props) {
   };
 
   const imageContainer = () => {
-    if (images.length == 0) {
+    if (images.length === 0) {
       return (
         <div className="">
-          <p>No images here yet.</p>
+          <p className="text-sm">No images here yet.</p>
         </div>
       );
-    } else if (images.length == 1) {
+    } else if (images.length === 1) {
       return (
         <div className="container">
           {image("w-full h-full rounded shadow-sm", 0)}

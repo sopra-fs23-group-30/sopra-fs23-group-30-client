@@ -65,6 +65,12 @@ function ExpandableListingCard(props) {
       <Card className="divide-y">
         <div className="flex flex-row justify-between items-center">
           <p className="text-sm font-bold">{props.listing.listingTitle}</p>
+          <div className="flex flex-row gap-3 items-center">
+          {props.listing.applicants.some((applicant) => applicant.state === "MOVEIN") ? (
+          <div className="flex flex-row gap-3">
+            {getBadge("MOVEIN")}
+          </div>
+        ) : (
           <div className="flex flex-row gap-3">
             <a
               href={"/listings/" + props.listing.listingId}
@@ -73,13 +79,17 @@ function ExpandableListingCard(props) {
             >
               Edit
             </a>
-            <button
-              onClick={() => takeOffline()}
-              type="button"
-              class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1 focus:outline-none"
-            >
-              Take Offline
-            </button>
+            {!props.listing.applicants.some((applicant) => applicant.state === "MOVEIN") && (
+              <button
+                onClick={() => takeOffline()}
+                type="button"
+                class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1 focus:outline-none"
+              >
+                Take Offline
+              </button>
+            )}
+          </div>
+        )}
 
 
 
@@ -144,7 +154,7 @@ function ExpandableListingCard(props) {
                             <img
                               src={applicant?.profilePictureURL}
                               alt="face of lister / searcher"
-                              class="bg-gray-400 rounded-full w-8 h-8"
+                              class="bg-gray-400 rounded-full w-8 h-8 object-cover"
                             />
                           )}
 
@@ -152,7 +162,7 @@ function ExpandableListingCard(props) {
                             <img
                               src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                               alt="face of lister / searcher"
-                              className="bg-gray-400 rounded-full w-8 h-8"
+                              className="bg-gray-400 rounded-full w-8 h-8 "
                             />
                           )}
 
