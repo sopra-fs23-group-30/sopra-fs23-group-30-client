@@ -1,4 +1,4 @@
-import { api } from "helpers/api";
+import { api, handleError } from "helpers/api";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
@@ -42,7 +42,7 @@ export default function ListingDetail() {
         return;
       }
     } catch (ex) {
-      toast("Application unsuccessful - you've already applied", {
+      toast(handleError(ex), {
         duration: 4000,
         position: "top-right",
         icon: "❌",

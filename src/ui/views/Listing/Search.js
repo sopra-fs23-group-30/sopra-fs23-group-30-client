@@ -6,7 +6,7 @@ import {
   PlusIcon,
 } from "@heroicons/react/20/solid";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { api } from "helpers/api";
+import { api, handleError } from "helpers/api";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { decodeToken } from "react-jwt";
@@ -100,7 +100,8 @@ export default function Search() {
         return;
       }
     } catch (ex) {
-      toast("Application unsuccessful - you've already applied", {
+  
+      toast(handleError(ex), {
         duration: 4000,
         position: "top-right",
         icon: "❌",
