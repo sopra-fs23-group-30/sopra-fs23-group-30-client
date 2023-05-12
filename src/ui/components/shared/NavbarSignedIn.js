@@ -53,6 +53,16 @@ function NavbarSignedIn() {
     // };
   }, [handleChangedItems]);
 
+  const avatarImageProps = {
+    className: 'object-cover',
+    alt: 'User Avatar',
+    src: profilePictureURL,
+  };
+
+  const renderAvatarImage = () => {
+    return <img className="object-cover h-12 w-12 rounded-full" alt="head of lister / searcher" src={profilePictureURL} />;
+  };
+
   return (
     <div className="bg-white w-full">
       <Navbar fluid={true} rounded={true} className="px-4 md:mx-48">
@@ -73,7 +83,8 @@ function NavbarSignedIn() {
                 <div className="flex flex-row">
                   <Avatar
                     alt="User settings"
-                    img={profilePictureURL}
+                    img={renderAvatarImage}
+                    size={"sm"}
                     rounded={true}
                     className="m-0 md:mr-4 object-cover"
                   >
