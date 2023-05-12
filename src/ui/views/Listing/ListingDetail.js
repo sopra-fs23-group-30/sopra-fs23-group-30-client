@@ -90,13 +90,6 @@ export default function ListingDetail() {
     updateListing();
   };
 
-  const handleFlatmateCapacity = (newVal) => {
-    let existingData = listingData;
-    existingData.flatmateCapacity = newVal;
-    setListingData(existingData);
-    updateListing();
-  };
-
   const handlePetsAllowed = (newVal) => {
     let existingData = listingData;
     existingData.petsAllowed = newVal;
