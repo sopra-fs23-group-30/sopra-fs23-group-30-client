@@ -9,10 +9,15 @@ const handleLogout = () => {
 };
 
 function NavbarSignedIn() {
+  const [profileId, setProfileId] = useState();
   const [isSearcher, setIsSearcher] = useState();
   const [profilePictureURL, setProfilePictureURL] = useState();
   const [firstname, setFirstname] = useState();
   const [goToProfileLink, setGoToProfileLink] = useState();
+
+  const handleGoToProfile = () => {
+    window.location.href = "/profile/" + profileId;
+  };
 
   const handleChangedItems = useCallback((msg) => {
     let updatedItem = JSON.parse(msg);
@@ -42,7 +47,7 @@ function NavbarSignedIn() {
     setGoToProfileLink("/profile/" + claims.userId);
     setProfilePictureURL(claims.profilePictureURL);
     setFirstname(claims.firstname);
-
+    setProfileId(claims.userId)
     // connectApplications(claims.userId, handleChangedItems);
     // return () => {
     //   disconnectApplications();
@@ -50,7 +55,13 @@ function NavbarSignedIn() {
   }, [handleChangedItems]);
 
   const renderAvatarImage = () => {
-    return <img className="object-cover h-12 w-12 rounded-full" alt="head of lister / searcher" src={profilePictureURL} />;
+    return (
+      <img
+        className="object-cover h-12 w-12 rounded-full"
+        alt="head of lister / searcher"
+        src={profilePictureURL}
+      />
+    );
   };
 
   return (
@@ -89,6 +100,9 @@ function NavbarSignedIn() {
               arrowIcon={false}
               inline={true}
             >
+              <Dropdown.Item onClick={handleGoToProfile}>
+                Go to profile
+              </Dropdown.Item>
               <Dropdown.Item onClick={handleLogout} className="text-red-500">
                 Sign out
               </Dropdown.Item>
