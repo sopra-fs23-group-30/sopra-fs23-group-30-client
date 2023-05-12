@@ -10,6 +10,7 @@ import { api, handleError } from "helpers/api";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { decodeToken } from "react-jwt";
+import { Link } from "react-router-dom";
 import EditableImageDisplay from "ui/components/general/EditableImageDisplay";
 
 const sortOptions = [
@@ -110,46 +111,51 @@ export default function Search() {
 
   const listingItem = (listing) => {
     return (
-      <div className="grid grid-cols-2 xl:grid-cols-5 gap-6 rounded-lg p-4 mt-4 bg-white">
-        <div
-          className="col-span-3 xl:col-span-3 text-white rounded flex items-center justify-center"
-          style={{ minHeight: "200px" }}
-        >
-          <EditableImageDisplay
-            images={JSON.parse(listing.imagesJson)}
-            canEdit={false}
-            handleAddImage={() => {}}
-            handleDeleteImage={() => {}}
-          />
-        </div>
-        <div className="col-span-2 xl:col-span-2 grid grid-rows-1 lg:grid-cols-2 my-2">
-          <div className="col-span-1 flex flex-col justify-center mb-4 lg:mb-0">
-            <p className="font-bold text-lg text-secondary">{listing.title}</p>
-            <p className="font-extralight text-sm text-gray-900">
-              {listing.address}
-            </p>
-            <p className="font-bold text-lg mt-4">
-              {listing.pricePerMonth} CHF / month
-            </p>
+      <Link to={`/listings/${listing.id}`}>
+        <div className="grid grid-cols-2 xl:grid-cols-5 gap-6 rounded-lg p-4 mt-4 bg-white">
+          <div
+            className="col-span-3 xl:col-span-3 text-white rounded flex items-center justify-center"
+            style={{ minHeight: "200px" }}
+          >
+            <EditableImageDisplay
+              images={JSON.parse(listing.imagesJson)}
+              canEdit={false}
+              handleAddImage={() => {}}
+              handleDeleteImage={() => {}}
+            />
           </div>
-          <div className="col-span-1 flex flex-col justify-center justify-items-center lg:justify-items-start gap-2 xl:gap-4">
-            <button
-              onClick={() => {
-                handleApply(listing.id);
-              }}
-              className="text-white text-center focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
-            >
-              Apply
-            </button>
-            <a
-              href={"/listings/" + listing.id}
-              className="text-sm text-primary text-center items-center hover:underline"
-            >
-              Details
-            </a>
+          <div className="col-span-2 xl:col-span-2 grid grid-rows-1 lg:grid-cols-2 my-2">
+            <div className="col-span-1 flex flex-col justify-center mb-4 lg:mb-0">
+              <p className="font-bold text-lg text-secondary">
+                {listing.title}
+              </p>
+              <p className="font-extralight text-sm text-gray-900">
+                {listing.address}
+              </p>
+              <p className="font-bold text-lg mt-4">
+                {listing.pricePerMonth} CHF / month
+              </p>
+            </div>
+            <div className="z-50 col-span-1 flex flex-col justify-center justify-items-center lg:justify-items-start gap-2 xl:gap-4">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleApply(listing.id);
+                }}
+                className="text-white text-center focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
+              >
+                Apply
+              </button>
+              <a
+                href={"/listings/" + listing.id}
+                className="text-sm text-primary text-center items-center hover:underline"
+              >
+                Details
+              </a>
+            </div>
           </div>
         </div>
-      </div>
+      </Link>
     );
   };
 
