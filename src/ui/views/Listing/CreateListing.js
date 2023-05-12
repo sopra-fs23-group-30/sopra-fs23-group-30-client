@@ -3,6 +3,7 @@ import { api } from "helpers/api";
 import { useState } from "react";
 import { decodeToken } from "react-jwt";
 import EditableAddress from "ui/components/general/EditableAddress";
+import EditableCheckbox from "ui/components/general/EditableCheckbox";
 import EditableImageDisplay from "ui/components/general/EditableImageDisplay";
 
 export default function CreateListing() {
@@ -19,6 +20,10 @@ export default function CreateListing() {
   const [perfectFlatmateDescription, setPerfectFlatmateDescription] =
     useState();
   const [images, setImages] = useState([]);
+  const [flatmateCapacity, setFlatmateCapacity] = useState(5);
+  const [petsAllowed, setPetsAllowed] = useState(true);
+  const [elevator, setElevator] = useState(true);
+  const [dishwasher, setDishwasher] = useState(true);
 
   const saveListing = async (e) => {
     let token = localStorage.getItem("authtoken");
@@ -191,9 +196,30 @@ export default function CreateListing() {
         </div>
 
         <div>
+          <EditableCheckbox
+            label={"pets allowed"}
+            content={true}
+            canEdit={true}
+            onChange={setPetsAllowed}
+          />
+          <EditableCheckbox
+            label={"elevator"}
+            content={true}
+            canEdit={true}
+            onChange={setElevator}
+          />
+          <EditableCheckbox
+            label={"dishwasher"}
+            content={true}
+            canEdit={true}
+            onChange={setDishwasher}
+          />
+        </div>
+
+        <div>
           <EditableImageDisplay
             images={images}
-            isLink={false}
+            canEdit={true}
             onChange={handleFileChange}
           />
         </div>

@@ -61,7 +61,7 @@ function EditableImageDisplay(props) {
     if (images.length === 0) {
       return (
         <div className="">
-          <p>No images here yet.</p>
+          <p className="text-sm">No images here yet.</p>
         </div>
       );
     } else if (images.length === 1) {

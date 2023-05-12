@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 import { useParams } from "react-router-dom";
+import EditableCheckbox from "ui/components/general/EditableCheckbox";
 import EditableImageDisplay from "ui/components/general/EditableImageDisplay";
 import Map from "ui/components/listing/Map";
 import TransparentEditableAddress from "ui/components/listing/TransparentEditableAddress";
@@ -89,6 +90,34 @@ export default function ListingDetail() {
     updateListing();
   };
 
+  const handleFlatmateCapacity = (newVal) => {
+    let existingData = listingData;
+    existingData.flatmateCapacity = newVal;
+    setListingData(existingData);
+    updateListing();
+  };
+
+  const handlePetsAllowed = (newVal) => {
+    let existingData = listingData;
+    existingData.petsAllowed = newVal;
+    setListingData(existingData);
+    updateListing();
+  };
+
+  const handleElevator = (newVal) => {
+    let existingData = listingData;
+    existingData.elevator = newVal;
+    setListingData(existingData);
+    updateListing();
+  };
+
+  const handleDishwasher = (newVal) => {
+    let existingData = listingData;
+    existingData.dishwasher = newVal;
+    setListingData(existingData);
+    updateListing();
+  };
+
   const handleAddImage = (event) => {
     const file = event.target.files[0];
     let tempImages = imageFiles;
@@ -102,13 +131,12 @@ export default function ListingDetail() {
       console.log(image);
       console.log(imageUrl);
       return image.imageURL !== imageUrl;
-    })
+    });
     setImageUrls(tempImages);
     updateListing();
   };
 
   const updateListing = async () => {
-
     let toUpdateObj = {
       title: listingData.title,
       description: listingData.description,
@@ -123,7 +151,7 @@ export default function ListingDetail() {
       petsAllowed: listingData.petsAllowed,
       elevator: listingData.elevator,
       dishwasher: listingData.dishwasher,
-    }
+    };
 
     const formData = new FormData();
     formData.append("body", JSON.stringify(toUpdateObj));
@@ -179,7 +207,7 @@ export default function ListingDetail() {
     setImageUrls(JSON.parse(response.data.imagesJson));
     setCanEdit(response.data.listerId === userId);
   };
-  
+
   const titleInformationRow = () => {
     return (
       <div className="grid md:grid-cols-2 gap-4 grid-cols-1">
@@ -325,6 +353,31 @@ export default function ListingDetail() {
     );
   };
 
+  const checkboxSection = () => {
+    return (
+      <div className="flex flex-col">
+        <EditableCheckbox
+          label={"pets allowed"}
+          content={listingData?.petsAllowed}
+          canEdit={canEdit}
+          onChange={handlePetsAllowed}
+        />
+        <EditableCheckbox
+          label={"elevator"}
+          content={listingData?.elevator}
+          canEdit={canEdit}
+          onChange={handleElevator}
+        />
+        <EditableCheckbox
+          label={"dishwasher"}
+          content={listingData?.dishwasher}
+          canEdit={canEdit}
+          onChange={handleDishwasher}
+        />
+      </div>
+    );
+  };
+
   return (
     <div className="py-2.5 sm:px-4 rounded px-4 md:mx-48 flex flex-col gap-4 mt-8">
       <nav className="flex" aria-label="Breadcrumb">
@@ -381,6 +434,7 @@ export default function ListingDetail() {
       {descriptionSection()}
       {listerSection()}
       {lookingForSection()}
+      {checkboxSection()}
       {mapsSection()}
     </div>
   );

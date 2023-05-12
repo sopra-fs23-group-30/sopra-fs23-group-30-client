@@ -280,11 +280,10 @@ export default function ProfilePage(props) {
         </ol>
       </nav>
       {canEdit ? (
-      <h1 className="mt-3 font-bold">
-        My Profile
-      </h1>) : ( <h1 className="mt-3 font-bold">
-          {profileData?.firstname}'s Profile
-      </h1>)}
+        <h1 className="mt-3 font-bold">My Profile</h1>
+      ) : (
+        <h1 className="mt-3 font-bold">{profileData?.firstname}'s Profile</h1>
+      )}
 
       <div className="flex flex-col xl:grid grid-cols-5 grid-rows-1 ml-4 mt-4">
         <div className="col-span-1 row-span-1 h-full flex flex-col items-center w-full">
@@ -334,64 +333,50 @@ export default function ProfilePage(props) {
           )}
         </div>
         <div className="flex flex-col col-span-4">
-        <div className="flex flex-row lg:flex-row gap-4 pb-4">
-          <div className="flex flex-col gap-2 w-full xl:w-1/3">
-            <div className="flex flex-col md:grid grid-cols-2 grid-rows-1 gap-2 gap-y-0 w-full pt-4 ">
-              <EditableString
-                className="col-span-1"
-                label="Firstname"
-                content={profileData?.firstname}
-                onSave={handleFirstnameChange}
-                canEdit={canEdit}
-                regex="^[A-Za-z]+$"
-              />
-              <EditableString
-                className="col-span-1"
-                label="Lastname"
-                content={profileData?.lastname}
-                onSave={handleLastnameChange}
-                canEdit={canEdit}
-                regex="^[A-Za-z]+$"
-              />
-              <div className="col-span-2 w-full">
+          <div className="flex flex-row lg:flex-row gap-4 pb-4">
+            <div className="flex flex-col gap-2 w-full xl:w-1/3">
+              <div className="flex flex-col md:grid grid-cols-2 grid-rows-1 gap-2 gap-y-0 w-full pt-4 ">
                 <EditableString
-                  label="Phone"
-                  content={profileData?.phoneNumber}
-                  onSave={handlePhonenumber}
+                  className="col-span-1"
+                  label="Firstname"
+                  content={profileData?.firstname}
+                  onSave={handleFirstnameChange}
                   canEdit={canEdit}
-                  regex="^[0-9+]+$"
+                  regex="^[A-Za-z]+$"
                 />
+                <EditableString
+                  className="col-span-1"
+                  label="Lastname"
+                  content={profileData?.lastname}
+                  onSave={handleLastnameChange}
+                  canEdit={canEdit}
+                  regex="^[A-Za-z]+$"
+                />
+                <div className="col-span-2 w-full">
+                  <EditableString
+                    label="Phone"
+                    content={profileData?.phoneNumber}
+                    onSave={handlePhonenumber}
+                    canEdit={canEdit}
+                    regex="^[0-9+]+$"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-col md:flex-row justify-between gap-4 xl:pt-20">
-          <div className="w-full md:w-1/2">
-            <EditableDate
-              label="Birthdate"
-              content={profileData?.birthday}
-              onSave={handleBirthdateChange}
-              canEdit={canEdit}
-            />
-            <InputSelector
-              label="Gender"
-              content={profileData?.gender}
-              options={["Male", "Female", "Other"]}
-              onSave={handleGender}
-              canEdit={canEdit}
-            />
-            {canEdit ? (
-              <EditableTextarea
-                label="About Me"
-                content={profileData?.biography}
-                onSave={handleBiography}
+          <div className="flex flex-col md:flex-row justify-between gap-4 xl:pt-20">
+            <div className="w-full md:w-1/2">
+              <EditableDate
+                label="Birthdate"
+                content={profileData?.birthday}
+                onSave={handleBirthdateChange}
                 canEdit={canEdit}
               />
-            ) : (
-              <EditableTextarea
-                label={`About ${profileData?.firstname}`}
-                content={profileData?.biography}
-                onSave={handleBiography}
+              <InputSelector
+                label="Gender"
+                content={profileData?.gender}
+                options={["Other", "Male", "Female"]}
+                onSave={handleGender}
                 canEdit={canEdit}
               />
             )}
@@ -501,7 +486,6 @@ export default function ProfilePage(props) {
           </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }
