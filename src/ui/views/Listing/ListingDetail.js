@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 import { useParams } from "react-router-dom";
+import EditableImageDisplay from "ui/components/general/EditableImageDisplay";
 import Map from "ui/components/listing/Map";
 import TransparentEditableAddress from "ui/components/listing/TransparentEditableAddress";
 import TransparendEditableString from "ui/components/listing/TransparentEditableString";
@@ -12,7 +13,8 @@ export default function ListingDetail() {
   const [listingData, setListingData] = useState(null);
   const [canEdit, setCanEdit] = useState(false);
   const [hasApplied, setHasApplied] = useState(false);
-  const [, setImageUrls] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]);
+  const [imageFiles, setImageFiles] = useState([]);
 
   let params = useParams();
 
@@ -87,6 +89,24 @@ export default function ListingDetail() {
     updateListing();
   };
 
+  const handleAddImage = (event) => {
+    const file = event.target.files[0];
+    let tempImages = imageFiles;
+    tempImages.push(file);
+    setImageFiles(tempImages);
+    updateListing();
+  };
+
+  const handleDeleteImage = (imageUrl) => {
+    let tempImages = imageUrls.filter((image) => {
+      console.log(image);
+      console.log(imageUrl);
+      return image.imageURL !== imageUrl;
+    })
+    setImageUrls(tempImages);
+    updateListing();
+  };
+
   const updateListing = async () => {
 
     let toUpdateObj = {
@@ -98,15 +118,18 @@ export default function ListingDetail() {
       pricePerMonth: listingData.pricePerMonth,
       perfectFlatmateDescription: listingData.perfectFlatmateDescription,
       listerId: listingData.listerId,
-      imagesJson: listingData.imagesJson,
+      imagesJson: JSON.stringify(imageUrls),
+      flatmateCapacity: listingData.flatmateCapacity,
       petsAllowed: listingData.petsAllowed,
       elevator: listingData.elevator,
       dishwasher: listingData.dishwasher,
-      flatmateCapacity: listingData.flatmateCapacity
     }
 
     const formData = new FormData();
     formData.append("body", JSON.stringify(toUpdateObj));
+    imageFiles.forEach((image) => {
+      formData.append("files", image, image.name);
+    });
 
     try {
       let response = await api.put("/listings/" + params.id, formData);
@@ -156,39 +179,7 @@ export default function ListingDetail() {
     setImageUrls(JSON.parse(response.data.imagesJson));
     setCanEdit(response.data.listerId === userId);
   };
-
-  const imageGrid = () => {
-    return (
-      <div className="container grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <img
-          src="https://flatfox.ch/media/ff/2023/04/ir5yyrqtqotgpgm6jdveamn79gckqd6v7ntvseub8119i18bo6.jpg"
-          alt="test"
-          className="w-full h-full col-span-2 row-span-2 rounded shadow-sm lg:col-start-3 lg:row-start-1"
-        />
-        <img
-          className="w-full h-full"
-          alt="test"
-          src="https://flatfox.ch/media/ff/2023/04/ir5yyrqtqotgpgm6jdveamn79gckqd6v7ntvseub8119i18bo6.jpg"
-        />
-        <img
-          className="w-full h-full"
-          alt="test"
-          src="https://flatfox.ch/media/ff/2023/04/9dftx6b6atv4ep0g6h7bt0qumsclfh4fgh3e6rv41dcet262a3.jpg"
-        />
-        <img
-          className="w-full h-full"
-          alt="test"
-          src="https://flatfox.ch/media/ff/2023/04/aelnq8mpfp4shjsi9z6qjxm2brdopwbmci3st3n36o984yfrzj.jpg"
-        />
-        <img
-          className="w-full h-full"
-          alt="test"
-          src="https://flatfox.ch/media/ff/2023/04/27mo6afz7atla00ztilasqq7uzx1dhxif49sz9oabs5zjtwyu3.jpg"
-        />
-      </div>
-    );
-  };
-
+  
   const titleInformationRow = () => {
     return (
       <div className="grid md:grid-cols-2 gap-4 grid-cols-1">
@@ -380,7 +371,12 @@ export default function ListingDetail() {
           </li>
         </ol>
       </nav>
-      {imageGrid()}
+      <EditableImageDisplay
+        images={imageUrls}
+        canEdit={canEdit}
+        handleAddImage={handleAddImage}
+        handleDeleteImage={handleDeleteImage}
+      />
       {titleInformationRow()}
       {descriptionSection()}
       {listerSection()}

@@ -3,6 +3,7 @@ import { api } from "helpers/api";
 import { useState } from "react";
 import { decodeToken } from "react-jwt";
 import EditableAddress from "ui/components/general/EditableAddress";
+import EditableImageDisplay from "ui/components/general/EditableImageDisplay";
 
 export default function CreateListing() {
   const [title, setTitle] = useState();
@@ -63,7 +64,6 @@ export default function CreateListing() {
     let tempImages = images;
     tempImages.push(file);
     setImages(tempImages);
-    console.log(images);
   };
 
   return (
@@ -165,7 +165,6 @@ export default function CreateListing() {
             value={googleMapsData.address}
             onChange={(e) => {
               setGoogleMapsData(e);
-              console.log(e);
             }}
           />
         </div>
@@ -192,19 +191,10 @@ export default function CreateListing() {
         </div>
         
         <div>
-          <input
-            type="file"
-            name="uploadfile"
-            id="img"
-            className="hidden"
-            onChange={handleFileChange}
+          <EditableImageDisplay
+            images={images}
+            isLink={false}
           />
-          <label
-            for="img"
-            className="text-white text-center focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-secondary hover:bg-primary focus:outline-none"
-          >
-            Add Photo
-          </label>
         </div>
 
         <div className="flex flex-row gap-3 pt-2">
