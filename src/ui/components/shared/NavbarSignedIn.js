@@ -49,12 +49,6 @@ function NavbarSignedIn() {
     // };
   }, [handleChangedItems]);
 
-  const avatarImageProps = {
-    className: 'object-cover',
-    alt: 'User Avatar',
-    src: profilePictureURL,
-  };
-
   const renderAvatarImage = () => {
     return <img className="object-cover h-12 w-12 rounded-full" alt="head of lister / searcher" src={profilePictureURL} />;
   };
