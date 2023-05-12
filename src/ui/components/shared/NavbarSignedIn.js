@@ -1,4 +1,8 @@
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
+import {
+  connectApplications,
+  disconnectApplications,
+} from "helpers/WebSocketFactory";
 import jwt_decode from "jwt-decode";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -43,10 +47,10 @@ function NavbarSignedIn() {
     setProfilePictureURL(claims.profilePictureURL);
     setFirstname(claims.firstname);
 
-    // connectApplications(claims.userId, handleChangedItems);
-    // return () => {
-    //   disconnectApplications();
-    // };
+    connectApplications(claims.userId, handleChangedItems);
+    return () => {
+      disconnectApplications();
+    };
   }, [handleChangedItems]);
 
   const renderAvatarImage = () => {

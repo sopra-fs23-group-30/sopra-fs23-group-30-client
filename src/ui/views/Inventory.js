@@ -121,7 +121,9 @@ export default function Inventory() {
               placeholder="Item Text"
               required
               value={inventoryItem.text}
-              disabled={!inventoryItem.isSelected}
+              disabled={
+                !inventoryItem.isSelected || !isSearcher === isSearcherItem
+              }
               onChange={(e) => {
                 let item = inventoryItem;
                 item.text = e.target.value;
