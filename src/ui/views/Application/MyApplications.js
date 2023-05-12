@@ -85,7 +85,7 @@ const applicationItem = (application) => {
           setShowInquiry(false);
         }}
       />
-      <div className="flex flex-col sm:flex-row items-center justify-between p-4">
+      <div className="flex flex-col sm:flex-row md:items-center md:justify-between p-4">
         <div className="flex flex-col">
           <p className="text-sm">
             {format(new Date(application.creationDate), "dd.MM.yyyy")}
@@ -102,7 +102,12 @@ const applicationItem = (application) => {
         </div>
 
         <div className="flex flex-row items-center gap-4">
-        {application.state === "MOVEIN" ? (
+        {getStateBadge(application.state)}
+        {application.state === "PENDING" ? (
+          <Button className="bg-secondary hover:bg-primary w-25" size="sm">
+            Take Back
+          </Button>
+        ) : application.state === "MOVEIN" ? (
           <Button
             size="xs"
             className="bg-primary w-30"
@@ -113,29 +118,26 @@ const applicationItem = (application) => {
           >
             Inventory List{" "}
           </Button>
-        ) : (
-          <div className="flex flex-row items-center gap-4">
-            {getStateBadge(application.state)}
-            <Dropdown
-              class="text-center text-white bg-secondary hover:bg-primary focus:ring-4 focus:ring-primary-300 rounded-lg text-sm focus:outline-none dark:focus:ring-blue-800"
-              label="Actions"
-              dismissOnClick={false}
+        ) : application.state !== "DECLINED" && (
+          <Dropdown
+            class="text-center text-white bg-secondary hover:bg-primary focus:ring-4 focus:ring-primary-300 rounded-lg text-sm focus:outline-none dark:focus:ring-blue-800"
+            label="Actions"
+            dismissOnClick={false}
+          >
+            <Dropdown.Item
+              onClick={() => action(application.applicationId, "DECLINED")}
             >
+              Take Back
+            </Dropdown.Item>
+            {application.state === "ACCEPTED" && (
               <Dropdown.Item
-                onClick={() => action(application.applicationId, "DECLINED")}
+                onClick={() => action(application.applicationId, "MOVEIN")}
               >
-                Take Back
+                Move-In
               </Dropdown.Item>
-              {application.state === "ACCEPTED" && (
-                <Dropdown.Item
-                  onClick={() => action(application.applicationId, "MOVEIN")}
-                >
-                  Move-In
-                </Dropdown.Item>
-              )}
-            </Dropdown>
-            </div>
-)}
+            )}
+          </Dropdown>
+        )}
           <a
             href={"/listings/" + application.listingId}
             className="text-sm text-secondary hover:underline"
