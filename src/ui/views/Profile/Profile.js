@@ -381,6 +381,19 @@ export default function ProfilePage(props) {
               />
               {canEdit ? (
                 <EditableTextarea
+                  label="About Me"
+                  content={profileData?.biography}
+                  onSave={handleBiography}
+                />
+              ) : (
+                <EditableTextarea
+                  label={`About ${profileData?.firstname}`}
+                  content={profileData?.biography}
+                  onSave={handleBiography}
+                />
+              )}
+              {canEdit ? (
+                <EditableTextarea
                   label="I am looking for"
                   content={profileData?.futureFlatmatesDescription}
                   onSave={handleFlatemateDescription}

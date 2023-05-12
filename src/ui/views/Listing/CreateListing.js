@@ -20,7 +20,6 @@ export default function CreateListing() {
   const [perfectFlatmateDescription, setPerfectFlatmateDescription] =
     useState();
   const [images, setImages] = useState([]);
-  const [flatmateCapacity, setFlatmateCapacity] = useState(5);
   const [petsAllowed, setPetsAllowed] = useState(true);
   const [elevator, setElevator] = useState(true);
   const [dishwasher, setDishwasher] = useState(true);
@@ -41,9 +40,9 @@ export default function CreateListing() {
       listerId: userId,
       imagesJson: "[{}]",
       flatmateCapacity: 4,
-      petsAllowed: true,
-      elevator: true,
-      dishwasher: true,
+      petsAllowed: petsAllowed,
+      elevator: elevator,
+      dishwasher: dishwasher,
     });
 
     const formData = new FormData();
