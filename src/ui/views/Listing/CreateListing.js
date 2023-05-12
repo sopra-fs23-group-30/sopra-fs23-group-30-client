@@ -3,6 +3,7 @@ import { api } from "helpers/api";
 import { useState } from "react";
 import { decodeToken } from "react-jwt";
 import EditableAddress from "ui/components/general/EditableAddress";
+import EditableImageDisplay from "ui/components/general/EditableImageDisplay";
 
 export default function CreateListing() {
   const [title, setTitle] = useState();
@@ -17,6 +18,7 @@ export default function CreateListing() {
   const [pricePerMonth, setPricePerMonth] = useState();
   const [perfectFlatmateDescription, setPerfectFlatmateDescription] =
     useState();
+  const [images, setImages] = useState([]);
 
   const saveListing = async (e) => {
     let token = localStorage.getItem("authtoken");
@@ -33,14 +35,20 @@ export default function CreateListing() {
       perfectFlatmateDescription,
       listerId: userId,
       imagesJson: "[{}]",
-      rooms: 4,
+      flatmateCapacity: 4,
       petsAllowed: true,
       elevator: true,
       dishwasher: true,
     });
 
+    const formData = new FormData();
+    formData.append("body", requestBody);
+    images.forEach((image) => {
+      formData.append("files", image, image.name);
+    });
+
     let response = await api
-      .post("/listings", requestBody)
+      .post("/listings", formData)
       .catch(function (error) {
         //display error
         return;
@@ -49,6 +57,13 @@ export default function CreateListing() {
     if (response.status === 201) {
       window.location.href = "/";
     }
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    let tempImages = images;
+    tempImages.push(file);
+    setImages(tempImages);
   };
 
   return (
@@ -150,7 +165,6 @@ export default function CreateListing() {
             value={googleMapsData.address}
             onChange={(e) => {
               setGoogleMapsData(e);
-              console.log(e);
             }}
           />
         </div>
@@ -173,6 +187,13 @@ export default function CreateListing() {
             onChange={(e) => {
               setPerfectFlatmateDescription(e.target.value);
             }}
+          />
+        </div>
+        
+        <div>
+          <EditableImageDisplay
+            images={images}
+            isLink={false}
           />
         </div>
 

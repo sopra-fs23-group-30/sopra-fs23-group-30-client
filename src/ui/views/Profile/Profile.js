@@ -23,7 +23,6 @@ export default function ProfilePage(props) {
     formData.append("document", acceptedDocument[0]);
     setCurrentDocument(acceptedDocument[0]);
     console.log(acceptedDocument[0]);
-    console.log(formData);
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
