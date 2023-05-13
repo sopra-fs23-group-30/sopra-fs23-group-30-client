@@ -8,8 +8,25 @@ function ExpandableListingCard(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [showInquiry, setShowInquiry] = useState(false);
 
-  const takeOffline = async () => {
-    setShowInquiry(true);
+  const takeOffline = async (listingId) => {
+    try {
+      let response = await api.delete("/listings/" + listingId);
+
+      if (response.status === 204) {
+        toast("Deletion successful", {
+          duration: 4000,
+          position: "top-right",
+          icon: "✅",
+        });
+        props.onUpdate();
+      }
+    } catch (ex) {
+      toast("Deletion unsuccessful", {
+        duration: 4000,
+        position: "top-right",
+        icon: "❌",
+      })
+    };
   };
 
   const action = async (applicationId, newState) => {
@@ -57,7 +74,7 @@ function ExpandableListingCard(props) {
         show={showInquiry}
         title="Do you really want to take the listing offline?"
         content="This will be permanent."
-        onClick={() => { }}
+        onClick={() => {}}
         onClose={() => {
           setShowInquiry(false);
         }}
@@ -66,32 +83,32 @@ function ExpandableListingCard(props) {
         <div className="flex flex-row justify-between items-center">
           <p className="text-sm font-bold">{props.listing.listingTitle}</p>
           <div className="flex flex-row gap-3 items-center">
-          {props.listing.applicants.some((applicant) => applicant.state === "MOVEIN") ? (
-          <div className="flex flex-row gap-3">
-            {getBadge("MOVEIN")}
-          </div>
-        ) : (
-          <div className="flex flex-row gap-3">
-            <a
-              href={"/listings/" + props.listing.listingId}
-              type="button"
-              class="text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-1 hover:underline focus:outline-none dark:focus:ring-blue-800"
-            >
-              Edit
-            </a>
-            {!props.listing.applicants.some((applicant) => applicant.state === "MOVEIN") && (
-              <button
-                onClick={() => takeOffline()}
-                type="button"
-                class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1 focus:outline-none"
-              >
-                Take Offline
-              </button>
+            {props.listing.applicants.some(
+              (applicant) => applicant.state === "MOVEIN"
+            ) ? (
+              <div className="flex flex-row gap-3">{getBadge("MOVEIN")}</div>
+            ) : (
+              <div className="flex flex-row gap-3">
+                <a
+                  href={"/listings/" + props.listing.listingId}
+                  type="button"
+                  class="text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-1 hover:underline focus:outline-none dark:focus:ring-blue-800"
+                >
+                  Edit
+                </a>
+                {!props.listing.applicants.some(
+                  (applicant) => applicant.state === "MOVEIN"
+                ) && (
+                  <button
+                    onClick={() => takeOffline(props.listing.listingId)}
+                    type="button"
+                    class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1 focus:outline-none"
+                  >
+                    Take Offline
+                  </button>
+                )}
+              </div>
             )}
-          </div>
-        )}
-
-
 
             {!isOpen && (
               <svg
@@ -205,7 +222,7 @@ function ExpandableListingCard(props) {
                                 size="xs"
                                 className="bg-primary "
                                 href={"/inventories/" + applicant.inventoryId}
-                                style={{ whiteSpace: 'nowrap' }}
+                                style={{ whiteSpace: "nowrap" }}
                               >
                                 Inventory List
                               </Button>
@@ -216,7 +233,7 @@ function ExpandableListingCard(props) {
                             <a
                               href={"/profile/" + applicant.applicantId}
                               class="text-center text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm  hover:underline focus:outline-none dark:focus:ring-blue-800"
-                              style={{ whiteSpace: 'nowrap' }}
+                              style={{ whiteSpace: "nowrap" }}
                             >
                               See Profile
                             </a>
