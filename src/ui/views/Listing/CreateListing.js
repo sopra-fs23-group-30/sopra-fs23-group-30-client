@@ -38,7 +38,7 @@ export default function CreateListing() {
       pricePerMonth,
       perfectFlatmateDescription,
       listerId: userId,
-      imagesJson: "[{}]",
+      imagesJson: "[]",
       petsAllowed: petsAllowed,
       elevator: elevator,
       dishwasher: dishwasher,
