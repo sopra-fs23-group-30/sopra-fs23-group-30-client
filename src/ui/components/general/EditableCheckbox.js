@@ -15,7 +15,7 @@ function EditableCheckbox(props) {
   return (
     <div>
       <input
-        className="mr-2 rounded"
+        className="mr-2 rounded cursor-pointer"
         checked={checked}
         type="checkbox"
         disabled={!props.canEdit}

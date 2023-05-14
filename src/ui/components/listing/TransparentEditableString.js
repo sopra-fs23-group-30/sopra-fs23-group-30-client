@@ -50,14 +50,14 @@ function TransparendEditableString(props) {
             id="actionsContainer"
             className="flex flex-row justify-center ml-1"
           >
-            <span className="inline-block align-middle">
+            <span className="inline-block align-middle cursor-pointer">
               {editable && (
                 <CheckIcon
                   height={18}
                   onClick={() => {
                     save();
                   }}
-                  className="inline-block align-middle text-blue-500"
+                  className="inline-block align-middle text-blue-500 cursor-pointer"
                 />
               )}
               {!editable && (
@@ -76,12 +76,12 @@ function TransparendEditableString(props) {
             </span>
 
             {editable && (
-              <span className="inline-block align-middle ...">
+              <span className="inline-block align-middle ... cursor-pointer">
                 <XMarkIcon
                   height={18}
                   color="blue"
                   onClick={() => cancel()}
-                  className="inline-block align-middle text-blue-500"
+                  className="inline-block align-middle text-blue-500 cursor-pointer"
                 />
               </span>
             )}

@@ -208,7 +208,7 @@ export default function ListingDetail() {
         <div className="flex flex-row justify-between">
           <div className="flex flex-col w-1/2">
             <TransparendEditableString
-              className="font-extrabold text-primary text-md bg-transparent text-left cursor-pointer"
+              className="font-extrabold text-primary text-md bg-transparent text-left"
               content={listingData?.title}
               canEdit={canEdit}
               onSave={handleTitleChange}

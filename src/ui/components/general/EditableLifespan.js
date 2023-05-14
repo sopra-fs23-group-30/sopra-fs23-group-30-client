@@ -110,7 +110,7 @@ function EditableLifespan(props) {
 
   const topSection = () => {
     return (
-      <div className="flex flex-row mb-0.5 items-center justify-between">
+      <div className="flex flex-row mb-1 items-center justify-between">
         <div className="flex flex-row">
           <label
             htmlFor="small-input"
@@ -162,7 +162,7 @@ function EditableLifespan(props) {
               value={lifespan.text}
               onChange={(e) => updateText(e.target.value)}
               placeholder="What did you do?"
-              class="h-8 block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500"
+              class="h-7 block w-full p-2 text-gray-400 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
           <div className="flex flex-row">
@@ -173,7 +173,7 @@ function EditableLifespan(props) {
               value={lifespan.fromDate}
               placeholder="From"
               onChange={(e) => updateFrom(e.target.value)}
-              class="h-8 block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500"
+              class="h-7 block w-full p-2 text-gray-400 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500"
             />
             <div className="mx-4">-</div>
             <input
@@ -183,7 +183,7 @@ function EditableLifespan(props) {
               placeholder="To"
               onChange={(e) => updateTo(e.target.value)}
               value={lifespan.toDate}
-              class="h-8 block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500"
+              class="h-7 block w-full p-2 text-gray-400 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
         </div>

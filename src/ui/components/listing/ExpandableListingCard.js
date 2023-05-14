@@ -171,7 +171,7 @@ function ExpandableListingCard(props) {
                             <img
                               src={applicant?.profilePictureURL}
                               alt="face of lister / searcher"
-                              class="bg-gray-400 rounded-full w-8 h-8 object-cover"
+                              class="bg-gray-400 rounded w-8 h-8 object-cover"
                             />
                           )}
 
@@ -194,6 +194,7 @@ function ExpandableListingCard(props) {
                         </td>
                         <td class="text-right px-4 py-2 text-sm">
                           <div class="flex justify-end items-center gap-3">
+                            {getBadge(applicant.state)}
                             {applicant.state === "PENDING" && (
                               <Dropdown
                                 class="text-center text-white bg-secondary hover:bg-primary focus:ring-4 focus:ring-primary-300 rounded-lg text-sm focus:outline-none dark:focus:ring-blue-800"
@@ -227,8 +228,6 @@ function ExpandableListingCard(props) {
                                 Inventory List
                               </Button>
                             )}
-
-                            {getBadge(applicant.state)}
 
                             <a
                               href={"/profile/" + applicant.applicantId}

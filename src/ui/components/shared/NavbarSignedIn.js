@@ -61,12 +61,14 @@ function NavbarSignedIn() {
 
   }, [handleChangedItems]);
 
+  const defaultPictureURL = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+
   const renderAvatarImage = () => {
     return (
       <img
-        className="object-cover h-12 w-12 rounded-full"
+        className="object-cover h-10 w-10 rounded-full"
         alt="head of lister / searcher"
-        src={profilePictureURL}
+        src={profilePictureURL ? profilePictureURL : defaultPictureURL}
       />
     );
   };
@@ -120,7 +122,7 @@ function NavbarSignedIn() {
         <Navbar.Collapse>
           {isSearcher ? (
             <>
-              <Navbar.Link className="font-bold text-sm" href="/search">
+              <Navbar.Link className="text-sm" href="/search">
                 Search
               </Navbar.Link>
               <Navbar.Link className="text-sm" href="/applications">
