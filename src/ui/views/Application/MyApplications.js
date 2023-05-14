@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 import DecisionConfirmationInquiry from "ui/components/shared/DecisionConfirmationInquiry";
+import { useNavigate } from 'react-router-dom';
 
 export default function MyApplications() {
   const [applications, setApplications] = useState([]);
   const [showInquiry, setShowInquiry] = useState(false);
 
   const hasActiveItem = applications.some((item) => item.state === "MOVEIN");
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadApplications().catch(console.error);
@@ -85,7 +87,7 @@ export default function MyApplications() {
             setShowInquiry(false);
           }}
         />
-        <div className="flex flex-col sm:flex-row md:items-center md:justify-between p-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4">
           <div className="flex flex-col">
             <p className="text-sm">
               {format(new Date(application.creationDate), "dd.MM.yyyy")}
@@ -164,23 +166,14 @@ export default function MyApplications() {
     <div className="py-2.5 sm:px-4 rounded px-4 md:mx-48">
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
-          <li className="inline-flex items-center">
-            <a
-              href="/"
-              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
-            >
-              <svg
-                aria-hidden="true"
-                className="w-4 h-4 mr-2"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-              </svg>
-              Home
-            </a>
-          </li>
+        <div class="group">
+          <button onClick={() => navigate(-1)} className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white group-hover:text-blue-600">
+            <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="w-4 h-4 mr-2 hover:text-blue-600 text-gray-400 group-hover:text-blue-600">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"></path>
+            </svg>
+            Back
+          </button>
+        </div>
           <li>
             <div className="flex items-center">
               <svg

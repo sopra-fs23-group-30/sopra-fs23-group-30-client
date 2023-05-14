@@ -10,13 +10,14 @@ import InputSelector from "ui/components/general/EditableInputSelector";
 import EditableLifespan from "ui/components/general/EditableLifespan";
 import EditableString from "ui/components/general/EditableString";
 import EditableTextarea from "ui/components/general/EditableTextarea";
-import { HiOutlineDownload } from "react-icons/hi";
+import { useNavigate } from 'react-router-dom';
 
 export default function ProfilePage(props) {
   const [profileData, setProfileData] = useState(null);
   const [lifespans, setLifespans] = useState([]);
   const [canEdit, setCanEdit] = useState(false);
   const [currentDocument, setCurrentDocument] = useState(null);
+  const navigate = useNavigate();
 
   const onDrop = useCallback((acceptedDocument) => {
     const formData = new FormData();
@@ -237,23 +238,14 @@ export default function ProfilePage(props) {
     <div className="py-2.5 sm:px-4 rounded px-4 md:mx-48 pb-4">
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
-          <li className="inline-flex items-center">
-            <a
-              href="/"
-              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
-            >
-              <svg
-                aria-hidden="true"
-                className="w-4 h-4 mr-2"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+          <div class="group">
+            <button onClick={() => navigate(-1)} className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white group-hover:text-blue-600">
+              <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="w-4 h-4 mr-2 hover:text-blue-600 text-gray-400 group-hover:text-blue-600">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"></path>
               </svg>
-              Home
-            </a>
-          </li>
+              Back
+            </button>
+          </div>
           <li>
             <div className="flex items-center">
               <svg
@@ -384,6 +376,7 @@ export default function ProfilePage(props) {
                   label="About Me"
                   content={profileData?.biography}
                   onSave={handleBiography}
+                  canEdit={canEdit}
                 />
               ) : (
                 <EditableTextarea
@@ -468,7 +461,9 @@ export default function ProfilePage(props) {
                 >
                   <div class="flex items-center ">
                     <span>See debt collection register extract</span>
-                    <HiOutlineDownload class="ml-2" size={20} />
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="pl-1 w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"></path>
+                    </svg>
                   </div>
                 </a>
               ) : (

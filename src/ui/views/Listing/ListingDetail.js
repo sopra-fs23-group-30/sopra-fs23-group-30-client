@@ -9,6 +9,7 @@ import Map from "ui/components/listing/Map";
 import TransparentEditableAddress from "ui/components/listing/TransparentEditableAddress";
 import TransparendEditableString from "ui/components/listing/TransparentEditableString";
 import TransparentEditableTextArea from "ui/components/listing/TransparentEditableTextArea";
+import { useNavigate } from 'react-router-dom';
 
 export default function ListingDetail() {
   const [listingData, setListingData] = useState(null);
@@ -16,6 +17,7 @@ export default function ListingDetail() {
   const [hasApplied, setHasApplied] = useState(false);
   const [imageUrls, setImageUrls] = useState([]);
   const [imageFiles, setImageFiles] = useState([]);
+  const navigate = useNavigate();
 
   let params = useParams();
 
@@ -206,7 +208,7 @@ export default function ListingDetail() {
         <div className="flex flex-row justify-between">
           <div className="flex flex-col w-1/2">
             <TransparendEditableString
-              className="font-extrabold text-primary text-md bg-transparent text-left"
+              className="font-extrabold text-primary text-md bg-transparent text-left cursor-pointer"
               content={listingData?.title}
               canEdit={canEdit}
               onSave={handleTitleChange}
@@ -242,7 +244,7 @@ export default function ListingDetail() {
             <button
               onClick={() => handleApply()}
               type="button"
-              className="w-full font-bold md:w-1/4 text-white bg-secondary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none dark:focus:ring-blue-800"
+              className="w-full font-bold md:w-1/4 text-white bg-secondary hover:bg-primary focus:ring-4 focus:ring-primary-300 rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none dark:focus:ring-blue-800"
             >
               Apply
             </button>
@@ -285,7 +287,7 @@ export default function ListingDetail() {
 
           <a
             href={"/profile/" + listingData?.listerId}
-            className="text-white text-center focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
+            className="text-white text-center focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-secondary hover:bg-primary focus:outline-none"
           >
             See Profile
           </a>
@@ -371,26 +373,17 @@ export default function ListingDetail() {
   };
 
   return (
-    <div className="py-2.5 sm:px-4 rounded px-4 md:mx-48 flex flex-col gap-4 mt-8">
+    <div className="py-2.5 sm:px-4 rounded px-4 md:mx-48 flex flex-col gap-4">
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
-          <li className="inline-flex items-center">
-            <a
-              href="/"
-              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
-            >
-              <svg
-                aria-hidden="true"
-                className="w-4 h-4 mr-2"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-              </svg>
-              Home
-            </a>
-          </li>
+        <div class="group">
+          <button onClick={() => navigate(-1)} className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white group-hover:text-blue-600">
+            <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="w-4 h-4 mr-2 hover:text-blue-600 text-gray-400 group-hover:text-blue-600">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"></path>
+            </svg>
+            Back
+          </button>
+        </div>
           <li>
             <div className="flex items-center">
               <svg

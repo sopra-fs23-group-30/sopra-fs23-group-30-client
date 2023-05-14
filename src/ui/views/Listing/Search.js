@@ -142,7 +142,7 @@ export default function Search() {
                   e.preventDefault();
                   handleApply(listing.id);
                 }}
-                className="text-white text-center focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-600 hover:bg-blue-700 focus:outline-none"
+                className="text-white text-center focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-secondary hover:bg-primary focus:outline-none"
               >
                 Apply
               </button>
@@ -166,6 +166,33 @@ export default function Search() {
 
   return (
     <div className="py-2.5  sm:px-4 rounded px-4 md:mx-48">
+      <nav className="flex " aria-label="Breadcrumb">
+        <ol className="inline-flex items-center space-x-1 md:space-x-3">
+        <li className="inline-flex items-center pl-5">
+            <svg
+              aria-hidden="true"
+              className="w-6 h-6 text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+          </li>
+          <li className="inline-flex items-center">
+            <a
+              href="/"
+              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
+            >
+              Search
+            </a>
+          </li>
+        </ol>
+      </nav>
       <div>
         {/* Mobile filter dialog */}
         <Transition.Root show={mobileFiltersOpen} as={Fragment}>
@@ -304,7 +331,7 @@ export default function Search() {
           </Dialog>
         </Transition.Root>
 
-        <main className="mt-8 mx-auto max-w-7xl px-4 md:lg:mt-24">
+        <main className="mt-8 mx-auto max-w-7xl px-4 md:lg:mt-10">
           <div className="w-full flex flex-col md:lg:flex-row justify-between">
             <div className="w-full md:lg:mr-6">
               <label
@@ -508,7 +535,7 @@ export default function Search() {
               {/* Listings grid */}
               <div className="lg:col-span-3">
                 <div className="h-96 lg:h-full">
-                  <p class="text-sm text-gray-500">{listings.length} results</p>
+                  <p className="text-sm text-gray-500">{listings.length} results</p>
                   {listings.map((listing) => listingItem(listing))}
                 </div>
               </div>
