@@ -7,7 +7,7 @@ function NavbarSignedOut() {
       <Navbar fluid={true} rounded={true} className="md:mx-48">
         <Navbar.Brand href="/">
           <img
-            src="https://flowbite.com/docs/images/logo.svg"
+            src="https://imgtr.ee/images/2023/05/17/vh2Qx.png"
             className="mr-3 h-6 sm:h-9"
             alt="upsearch Logo"
           />
