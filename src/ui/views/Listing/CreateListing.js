@@ -4,8 +4,8 @@ import { useState } from "react";
 import { decodeToken } from "react-jwt";
 import EditableAddress from "ui/components/general/EditableAddress";
 import EditableCheckbox from "ui/components/general/EditableCheckbox";
-import EditableImageDisplay from "ui/components/general/EditableImageDisplay";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import ImageUploader from "ui/components/general/ImageUploader";
 
 export default function CreateListing() {
   const [title, setTitle] = useState();
@@ -64,25 +64,33 @@ export default function CreateListing() {
     }
   };
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    let tempImages = images;
-    tempImages.push(file);
-    setImages(tempImages);
-  };
-
   return (
     <div className="px-2 py-2.5 sm:px-4 rounded px-4 md:mx-48">
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
-        <div class="group">
-          <button onClick={() => navigate(-1)} className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white group-hover:text-blue-600">
-            <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="w-4 h-4 mr-2 hover:text-blue-600 text-gray-400 group-hover:text-blue-600">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"></path>
-            </svg>
-            Back
-          </button>
-        </div>
+          <div class="group">
+            <button
+              onClick={() => navigate(-1)}
+              className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white group-hover:text-blue-600"
+            >
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                className="w-4 h-4 mr-2 hover:text-blue-600 text-gray-400 group-hover:text-blue-600"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                ></path>
+              </svg>
+              Back
+            </button>
+          </div>
           <li>
             <div className="flex items-center">
               <svg
@@ -214,11 +222,7 @@ export default function CreateListing() {
         </div>
 
         <div>
-          <EditableImageDisplay
-            images={images}
-            canEdit={true}
-            onChange={handleFileChange}
-          />
+          <ImageUploader onChange={setImages} />
         </div>
 
         <div className="flex flex-row gap-3 pt-2">
