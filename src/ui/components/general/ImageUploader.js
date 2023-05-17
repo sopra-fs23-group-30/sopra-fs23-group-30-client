@@ -7,8 +7,6 @@ function ImageUploader(props) {
   const maxNumber = 69;
 
   const onChange = (imageList, addUpdateIndex) => {
-    // data for submit
-    console.log(imageList, addUpdateIndex);
     setImages(imageList);
     props.onChange(
       imageList.map((image) => {

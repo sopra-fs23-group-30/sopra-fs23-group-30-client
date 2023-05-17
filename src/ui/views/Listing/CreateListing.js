@@ -4,7 +4,6 @@ import { useState } from "react";
 import { decodeToken } from "react-jwt";
 import EditableAddress from "ui/components/general/EditableAddress";
 import EditableCheckbox from "ui/components/general/EditableCheckbox";
-import EditableImageDisplay from "ui/components/general/EditableImageDisplay";
 import { useNavigate } from "react-router-dom";
 import ImageUploader from "ui/components/general/ImageUploader";
 
@@ -63,13 +62,6 @@ export default function CreateListing() {
     if (response.status === 201) {
       window.location.href = "/";
     }
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    let tempImages = images;
-    tempImages.push(file);
-    setImages(tempImages);
   };
 
   return (
@@ -230,12 +222,7 @@ export default function CreateListing() {
         </div>
 
         <div>
-          <ImageUploader
-            onChange={(e) => {
-              setImages(e);
-              console.log(e);
-            }}
-          />
+          <ImageUploader onChange={setImages} />
         </div>
 
         <div className="flex flex-row gap-3 pt-2">
