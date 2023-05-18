@@ -96,7 +96,7 @@ export default function Signup() {
     }
     if (!email) {
       setEmailError("Please enter your email");
-    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       setEmailError("Please enter a valid email");
     } else {
       setEmailError("");

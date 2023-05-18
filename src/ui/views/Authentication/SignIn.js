@@ -1,6 +1,5 @@
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { AtSymbolIcon } from "@heroicons/react/24/outline";
-import { set } from "date-fns";
 import { api } from "helpers/api";
 import { useState } from "react";
 import Button from "ui/components/general/Button";
@@ -43,7 +42,7 @@ const Login = () => {
   const validate = () => {
     if (!email) {
       setEmailError("Please enter your email");
-    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       setEmailError("Please enter a valid email");
     } else {
       setEmailError("");
