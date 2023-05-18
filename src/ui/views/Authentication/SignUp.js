@@ -23,9 +23,25 @@ export default function Signup() {
   const [isSearcher, setIsSearcher] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
   const [isSigningUp, setIsSigningUp] = useState(false);
+  const [firstnameError, setFirstnameError] = useState("");
+  const [lastnameError, setLastnameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordRepeatError, setPasswordRepeatError] = useState("");
 
   const goToNextScreen = async (e) => {
-    setGeneralInformationSuccessful(true);
+    if (validate()) {
+      setFirstnameError("");
+      setLastnameError("");
+      setEmailError("");
+      setPhoneError("");
+      setPasswordError("");
+      setPasswordRepeatError("");
+      setGeneralInformationSuccessful(true);
+    } else {
+      e.preventDefault();
+    }
   };
 
   const signup = async (e) => {
@@ -67,12 +83,69 @@ export default function Signup() {
     setIsSigningUp(false);
   };
 
+  const validate = () => {
+    if (!firstname) {
+      setFirstnameError("Please enter your firstname");
+    } else {
+      setFirstnameError("");
+    }
+    if (!lastname) {
+      setLastnameError("Please enter your lastname");
+    } else {
+      setLastnameError("");
+    }
+    if (!email) {
+      setEmailError("Please enter your email");
+    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      setEmailError("Please enter a valid email");
+    } else {
+      setEmailError("");
+    }
+    if (!phoneNumber) {
+      setPhoneError(
+        "Please enter your phone number in the format !41 XX XXX XX XX"
+      );
+    } else {
+      setPhoneError("");
+    }
+    if (password !== repeatedPassword) {
+      setPasswordError("Passwords do not match");
+      setPasswordRepeatError("Passwords do not match");
+    } else if (!password && repeatedPassword) {
+      setPasswordError("Please enter your password");
+    } else if (password && !repeatedPassword) {
+      setPasswordRepeatError("");
+    } else if (!password && !repeatedPassword) {
+      setPasswordError("Please enter your password");
+      setPasswordRepeatError("Please enter your password");
+    } else {
+      setPasswordError("");
+      setPasswordRepeatError("");
+    }
+    if (
+      firstname &&
+      lastname &&
+      email &&
+      phoneNumber &&
+      password &&
+      repeatedPassword &&
+      password === repeatedPassword
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <div>
       <div className="h-screen md:flex">
         <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
           {!generalInformationSuccessful && !accountTypeSuccessful && (
-            <form className="bg-white w-3/4" onSubmit={goToNextScreen}>
+            <form
+              noValidate
+              className="bg-white w-3/4"
+              onSubmit={goToNextScreen}
+            >
               <h1 className="text-gray-800 font-bold text-2xl mb-1">
                 Welcome!
               </h1>
@@ -84,22 +157,28 @@ export default function Signup() {
                 <div className="flex flex-col items-center py-2">
                   <Label value="Firstname" />
                   <IconTextInput
+                    colorscheme={firstnameError === "" ? "primary" : "failure"}
                     placeholder={"Hans"}
-                    required={true}
                     type={"text"}
                     icon={UserIcon}
                     onChange={(e) => setFirstname(e.target.value)}
                   />
+                  {firstnameError !== "" && (
+                    <p className="text-sm text-red-500">{firstnameError}</p>
+                  )}
                 </div>
                 <div className="flex flex-col items-center py-2">
                   <Label value="Lastname" />
                   <IconTextInput
+                    colorscheme={lastnameError === "" ? "primary" : "failure"}
                     placeholder={"Muster"}
-                    required={true}
                     type={"text"}
                     icon={UserIcon}
                     onChange={(e) => setLastname(e.target.value)}
                   />
+                  {lastnameError !== "" && (
+                    <p className="text-sm text-red-500">{lastnameError}</p>
+                  )}
                 </div>
               </div>
 
@@ -107,45 +186,59 @@ export default function Signup() {
                 <div className="flex flex-col items-center py-2">
                   <Label value="Email" />
                   <IconTextInput
+                    colorscheme={emailError === "" ? "primary" : "failure"}
                     placeholder={"hans.muster@gmail.com"}
-                    required={true}
                     type={"email"}
                     icon={AtSymbolIcon}
                     onChange={(e) => setEmail(e.target.value)}
                   />
+                  {emailError !== "" && (
+                    <p className="text-sm text-red-500">{emailError}</p>
+                  )}
                 </div>
                 <div className="flex flex-col items-center py-2">
                   <Label value="Phone" />
                   <IconTextInput
+                    colorscheme={phoneError === "" ? "primary" : "failure"}
                     placeholder={"+41 XX XXX XX XX"}
-                    required={true}
                     type={"tel"}
                     icon={PhoneIcon}
                     onChange={(e) => setPhone(e.target.value)}
                   />
+                  {phoneError !== "" && (
+                    <p className="text-sm text-red-500">{phoneError}</p>
+                  )}
                 </div>
               </div>
 
               <div className="mb-4">
                 <Label value="Password" />
                 <IconTextInput
+                  colorscheme={passwordError === "" ? "primary" : "failure"}
                   placeholder={"********"}
-                  required={true}
                   type={"password"}
                   icon={LockClosedIcon}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                {passwordError !== "" && (
+                  <p className="text-sm text-red-500">{passwordError}</p>
+                )}
               </div>
 
               <div className="mb-6">
                 <Label value="Repeat Password" />
                 <IconTextInput
+                  colorscheme={
+                    passwordRepeatError === "" ? "primary" : "failure"
+                  }
                   placeholder={"********"}
-                  required={true}
                   type={"password"}
                   icon={LockClosedIcon}
                   onChange={(e) => setRepeatedPassword(e.target.value)}
                 />
+                {passwordRepeatError !== "" && (
+                  <p className="text-sm text-red-500">{passwordRepeatError}</p>
+                )}
               </div>
 
               <p className="text-sm text-red-500">{errorMsg}</p>

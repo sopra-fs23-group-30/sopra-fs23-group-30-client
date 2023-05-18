@@ -1,5 +1,6 @@
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { AtSymbolIcon } from "@heroicons/react/24/outline";
+import { set } from "date-fns";
 import { api } from "helpers/api";
 import { useState } from "react";
 import Button from "ui/components/general/Button";
@@ -10,30 +11,58 @@ import Label from "ui/components/general/Label";
 const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [isSigningIn, setIsSigningIn] = useState(false);
 
   const handleSubmit = async (e) => {
-    setIsSigningIn(true);
-    e.preventDefault();
-    const config = {
-      headers: { Authorization: `Bearer ` },
-    };
-    const requestBody = JSON.stringify({ email, password });
-    let response = await api
-      .post("/login", requestBody, config)
-      .catch(function (error) {
-        setErrorMsg("Login failed, please try again");
-        setIsSigningIn(false);
-      });
-    localStorage.setItem("authtoken", response.data.token);
-    window.location.href = "/";
+    if (validate()) {
+      setErrorMsg("");
+      setEmailError("");
+      setPasswordError("");
+      setIsSigningIn(true);
+      e.preventDefault();
+      const config = {
+        headers: { Authorization: `Bearer ` },
+      };
+      const requestBody = JSON.stringify({ email, password });
+      let response = await api
+        .post("/login", requestBody, config)
+        .catch(function (error) {
+          setErrorMsg("E-Mail and/or password is incorrect");
+          setIsSigningIn(false);
+        });
+      localStorage.setItem("authtoken", response.data.token);
+      window.location.href = "/";
+    } else {
+      e.preventDefault();
+    }
+  };
+
+  const validate = () => {
+    if (!email) {
+      setEmailError("Please enter your email");
+    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      setEmailError("Please enter a valid email");
+    } else {
+      setEmailError("");
+    }
+    if (!password) {
+      setPasswordError("Please enter your password");
+    } else {
+      setPasswordError("");
+    }
+    if (email && password) {
+      return true;
+    }
+    return false;
   };
 
   return (
     <div className="h-screen md:flex">
       <Container>
-        <form className="bg-white w-3/4" onSubmit={handleSubmit}>
+        <form noValidate className="bg-white w-3/4" onSubmit={handleSubmit}>
           <h1 className="text-gray-800 font-bold text-2xl mb-1 font-poppins">
             Hello Again!
           </h1>
@@ -41,27 +70,35 @@ const Login = () => {
           <div className="mb-4">
             <Label value="Your Email:" />
             <IconTextInput
+              colorscheme={emailError === "" ? "primary" : "failure"}
               placeholder={"hans.muster@gmail.com"}
-              required={true}
               type={"email"}
               icon={AtSymbolIcon}
               onChange={(e) => setEmail(e.target.value)}
             />
+            {emailError !== "" && (
+              <p className="text-sm text-red-500">{emailError}</p>
+            )}
           </div>
 
           <div className="mb-6">
             <Label value="Your Password:" />
             <IconTextInput
+              colorscheme={passwordError === "" ? "primary" : "failure"}
               className="mb-3"
               placeholder={"********"}
-              required={true}
               type={"password"}
               icon={LockClosedIcon}
               onChange={(e) => setPassword(e.target.value)}
             />
+            {passwordError !== "" && (
+              <p className="text-sm text-red-500">{passwordError}</p>
+            )}
           </div>
 
-          <p className="text-sm text-red-500">{errorMsg}</p>
+          {emailError === "" && passwordError === "" && (
+            <p className="text-sm text-red-500">{errorMsg}</p>
+          )}
           <Button
             type="submit"
             width="w-max"
