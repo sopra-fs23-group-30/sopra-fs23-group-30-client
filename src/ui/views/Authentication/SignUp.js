@@ -103,7 +103,7 @@ export default function Signup() {
     }
     if (!phoneNumber) {
       setPhoneError(
-        "Please enter your phone number in the format !41 XX XXX XX XX"
+        "Please enter your phone number in the format +41 XX XXX XX XX"
       );
     } else {
       setPhoneError("");

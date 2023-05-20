@@ -128,6 +128,9 @@ function EditableString(props) {
           </div>
         )}
       </div>
+      {!isValid && (
+        <p className="text-sm text-red-500">{props.errormessage}</p>)
+      }
     </div>
   );
 }

@@ -17,22 +17,31 @@ export default function ProfilePage(props) {
   const [lifespans, setLifespans] = useState([]);
   const [canEdit, setCanEdit] = useState(false);
   const [currentDocument, setCurrentDocument] = useState(null);
+  const [pictureUploadError, setPictureUploadError] = useState("");
+  const [debtDocumentError, setDebtDocumentError] = useState("");
   const navigate = useNavigate();
 
-  const onDrop = useCallback((acceptedDocument) => {
+  const onDrop = useCallback((acceptedDocument, fileRejections) => {
     const formData = new FormData();
-    formData.append("document", acceptedDocument[0]);
-    setCurrentDocument(acceptedDocument[0]);
-    console.log(acceptedDocument[0]);
+    if(fileRejections[0]){
+      setDebtDocumentError("Error: Only PDFs can be uploaded");
+      return;
+    } else {
+      setDebtDocumentError("");
+      formData.append("document", acceptedDocument[0]);
+      setCurrentDocument(acceptedDocument[0]);
+      console.log(acceptedDocument[0]);
+    }
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: "application/pdf",
+    accept: {'application/pdf': ['.pdf']},
     minSize: 0,
   });
 
   const handleRemoveFile = () => {
+    setDebtDocumentError("");
     let blob = new Blob();
     blob.name = "deleted";
     setCurrentDocument(null);
@@ -178,10 +187,18 @@ export default function ProfilePage(props) {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    updateProfile(lifespans, file, getUnchangedDocumentBlob());
+    const fileType = file.type;
+    if(!fileType.match('image.*')) {
+      setPictureUploadError("Error: Only images can be uploaded");
+      return;
+    } else {
+      setPictureUploadError("");
+      updateProfile(lifespans, file, getUnchangedDocumentBlob());
+    }
   };
 
   const handleDeletePicture = () => {
+    setPictureUploadError("");
     let blob = new Blob();
     blob.name = "deleted";
     updateProfile(lifespans, blob, getUnchangedDocumentBlob());
@@ -296,13 +313,14 @@ export default function ProfilePage(props) {
             />
           )}
           {canEdit && (
-            <div className="flex flex-col justify-center justify-items-start gap-2 p-4">
+            <div className="flex flex-col text-center gap-2 p-4">
               <div>
                 <input
                   type="file"
                   name="uploadfile"
                   id="img"
                   className="hidden"
+                  accept="image/*"
                   onChange={handleFileChange}
                 />
                 <label
@@ -321,6 +339,9 @@ export default function ProfilePage(props) {
               >
                 Delete
               </button>
+              {pictureUploadError !== "" && (
+                  <p className="text-sm text-red-500">{pictureUploadError}</p>
+              )}
             </div>
           )}
         </div>
@@ -334,7 +355,7 @@ export default function ProfilePage(props) {
                   content={profileData?.firstname}
                   onSave={handleFirstnameChange}
                   canEdit={canEdit}
-                  regex="^[A-Za-z]+$"
+                  regex=""
                 />
                 <EditableString
                   className="col-span-1"
@@ -350,7 +371,8 @@ export default function ProfilePage(props) {
                     content={profileData?.phoneNumber}
                     onSave={handlePhonenumber}
                     canEdit={canEdit}
-                    regex="^[0-9+]+$"
+                    regex="(\+41)\s(\d{2})\s(\d{3})\s(\d{2})\s(\d{2})$"
+                    errormessage={"Please enter a phone number in the format +41 XX XXX XX XX"}
                   />
                 </div>
               </div>
@@ -500,6 +522,9 @@ export default function ProfilePage(props) {
                       Remove
                     </Button>
                   </div>
+                  {debtDocumentError !== "" && (
+                    <p className="text-sm text-red-500">{debtDocumentError}</p>
+                  )}
                 </>
               )}
               </div>
