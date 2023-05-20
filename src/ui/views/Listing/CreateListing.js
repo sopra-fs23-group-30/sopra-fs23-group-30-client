@@ -24,43 +24,90 @@ export default function CreateListing() {
   const [petsAllowed, setPetsAllowed] = useState(true);
   const [elevator, setElevator] = useState(true);
   const [dishwasher, setDishwasher] = useState(true);
+  const [titleError, setTitleError] = useState("");
+  const [descriptionError, setDescriptionError] = useState("");
+  const [googleMapsDataError, setGoogleMapsDataError] = useState("");
+  const [pricePerMonthError, setPricePerMonthError] = useState("");
+  const [perfectFlatmateDescriptionError, setPerfectFlatmateDescriptionError] = useState("");
+  const [imagesError, setImagesError] = useState("");
   const navigate = useNavigate();
 
+  const validate = () => {
+    if (!title) {
+      setTitleError("Please enter a title for your listing");
+    } else {
+      setTitleError("");
+    }
+    if (!description) {
+      setDescriptionError("Please enter a description for your listing");
+    } else {
+      setDescriptionError("");
+    }
+    if (!googleMapsData.coordinates.lat || !googleMapsData.coordinates.lng) {
+      setGoogleMapsDataError("Please enter a valid address for your listing");
+    } else {
+      setGoogleMapsDataError("");
+    }
+    if(!pricePerMonth) {
+      setPricePerMonthError("Please enter a price per month");
+    } else {
+      setPricePerMonthError("");
+    }
+    if (!perfectFlatmateDescription) {
+      setPerfectFlatmateDescriptionError("Please enter a description for your perfect flatmate");
+    } else {
+      setPerfectFlatmateDescriptionError("");
+    }
+    if(!images[0]) {
+      setImagesError("Please upload at least one image of the listing");
+    } else {
+      setImagesError("");
+    }
+    if (title && description && googleMapsData && pricePerMonth && perfectFlatmateDescription && images) {
+      return true;
+    }
+    return false;
+  };
+
   const saveListing = async (e) => {
-    let token = localStorage.getItem("authtoken");
-    const decoded = decodeToken(token);
-    const userId = decoded.userId;
+    if(validate()) {
+      let token = localStorage.getItem("authtoken");
+      const decoded = decodeToken(token);
+      const userId = decoded.userId;
 
-    const requestBody = JSON.stringify({
-      title,
-      description,
-      address: googleMapsData.address,
-      lattitude: googleMapsData.coordinates.lat,
-      longitude: googleMapsData.coordinates.lng,
-      pricePerMonth,
-      perfectFlatmateDescription,
-      listerId: userId,
-      imagesJson: "[]",
-      petsAllowed: petsAllowed,
-      elevator: elevator,
-      dishwasher: dishwasher,
-    });
-
-    const formData = new FormData();
-    formData.append("body", requestBody);
-    images.forEach((image) => {
-      formData.append("files", image, image.name);
-    });
-
-    let response = await api
-      .post("/listings", formData)
-      .catch(function (error) {
-        //display error
-        return;
+      const requestBody = JSON.stringify({
+        title,
+        description,
+        address: googleMapsData.address,
+        lattitude: googleMapsData.coordinates.lat,
+        longitude: googleMapsData.coordinates.lng,
+        pricePerMonth,
+        perfectFlatmateDescription,
+        listerId: userId,
+        imagesJson: "[]",
+        petsAllowed: petsAllowed,
+        elevator: elevator,
+        dishwasher: dishwasher,
       });
 
-    if (response.status === 201) {
-      window.location.href = "/";
+      const formData = new FormData();
+      formData.append("body", requestBody);
+      images.forEach((image) => {
+        formData.append("files", image, image.name);
+      });
+
+      let response = await api
+        .post("/listings", formData)
+        .catch(function (error) {
+          //display error
+          return;
+        });
+
+      if (response.status === 201) {
+        window.location.href = "/";
+      }
+    } else {
+      return;
     }
   };
 
@@ -124,6 +171,7 @@ export default function CreateListing() {
           </div>
           <TextInput
             id="small"
+            color={titleError === "" ? "primary" : "failure"}
             type="text"
             className="text-sm"
             value={title}
@@ -131,6 +179,9 @@ export default function CreateListing() {
               setTitle(e.target.value);
             }}
           />
+          {titleError !== "" && (
+            <p className="text-sm text-red-500">{titleError}</p>
+          )}
         </div>
 
         <div>
@@ -139,6 +190,7 @@ export default function CreateListing() {
           </div>
           <Textarea
             className="text-sm"
+            color={descriptionError === "" ? "primary" : "failure"}
             id="comment"
             placeholder="Describe your listing..."
             required={true}
@@ -148,6 +200,9 @@ export default function CreateListing() {
               setDescription(e.target.value);
             }}
           />
+          {descriptionError !== "" && (
+            <p className="text-sm text-red-500">{descriptionError}</p>
+          )}
         </div>
 
         <div>
@@ -156,6 +211,7 @@ export default function CreateListing() {
           </div>
           <TextInput
             id="number"
+            color={pricePerMonthError === "" ? "primary" : "failure"}
             type="number"
             addon="CHF"
             required={true}
@@ -165,6 +221,9 @@ export default function CreateListing() {
               setPricePerMonth(e.target.value);
             }}
           />
+          {pricePerMonthError !== "" && (
+            <p className="text-sm text-red-500">{pricePerMonthError}</p>
+          )}
         </div>
 
         <div>
@@ -176,7 +235,11 @@ export default function CreateListing() {
             onChange={(e) => {
               setGoogleMapsData(e);
             }}
+            color={googleMapsDataError === "" ? "primary" : "failure"}
           />
+          {googleMapsDataError !== "" && (
+            <p className="text-sm text-red-500">{googleMapsDataError}</p>
+          )}
         </div>
 
         <div>
@@ -189,6 +252,7 @@ export default function CreateListing() {
           </div>
           <Textarea
             className="text-sm"
+            color={perfectFlatmateDescriptionError === "" ? "primary" : "failure"}
             id="comment"
             placeholder="Leave a comment..."
             required={true}
@@ -198,6 +262,9 @@ export default function CreateListing() {
               setPerfectFlatmateDescription(e.target.value);
             }}
           />
+          {perfectFlatmateDescriptionError !== "" && (
+            <p className="text-sm text-red-500">{perfectFlatmateDescriptionError}</p>
+          )}
         </div>
 
         <div>
@@ -223,6 +290,9 @@ export default function CreateListing() {
 
         <div>
           <ImageUploader onChange={setImages} />
+          {imagesError !== "" && (
+            <p className="text-sm text-red-500">{imagesError}</p>
+          )}
         </div>
 
         <div className="flex flex-row gap-3 pt-2">

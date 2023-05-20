@@ -213,6 +213,9 @@ export default function ListingDetail() {
               canEdit={canEdit}
               onSave={handleTitleChange}
               inputType="text"
+              errormessage="Please enter a title"
+              alignerrorright={false}
+              isNumeric={false}
             />
 
             <TransparentEditableAddress
@@ -235,6 +238,9 @@ export default function ListingDetail() {
               content={listingData?.pricePerMonth.toString()}
               canEdit={canEdit}
               onSave={handlePricePerMonthChange}
+              errormessage="Please enter a price per month"
+              alignerrorright={true}
+              isNumeric={true}
             />
             CHF / month
           </div>
@@ -264,6 +270,7 @@ export default function ListingDetail() {
           canEdit={canEdit}
           onSave={handleDescriptionChange}
           isCardContent={true}
+          errormessage="Please enter a description"
         />
       </div>
     );
@@ -325,6 +332,7 @@ export default function ListingDetail() {
             canEdit={canEdit}
             onSave={handleFutureFlatmateDescriptionChange}
             isCardContent={false}
+            errormessage="Please enter a perfect flatmate description"
           />
         </div>
       </div>

@@ -10,12 +10,25 @@ function TransparendEditableString(props) {
   const [editable, setEditable] = useState(false);
   const [content, setContent] = useState(props.content);
   const [initialContent, setInitialContent] = useState(props.content);
+  const [errorMessage, setErrorMessage] = useState("");
   const inputRef = useRef(null);
 
   useEffect(() => {
     setContent(props.content);
     setInitialContent(props.content);
   }, [props.content]);
+
+  const validate = () => {
+    if(content === "") {
+      setErrorMessage(props.errormessage);
+      return false;
+    } else if (props.isNumeric && !Number.isInteger(parseInt(content))) {
+      setErrorMessage("Please enter a whole number (non-decimal value)");
+    } else {
+      setErrorMessage("");
+      return true;
+    }
+  }
 
   const save = () => {
     setInitialContent(content);
@@ -25,6 +38,7 @@ function TransparendEditableString(props) {
   };
 
   const cancel = () => {
+    setErrorMessage("");
     setEditable(false);
     setContent(initialContent);
   };
@@ -54,8 +68,12 @@ function TransparendEditableString(props) {
               {editable && (
                 <CheckIcon
                   height={18}
-                  onClick={() => {
-                    save();
+                  onClick={(e) => {
+                    if(validate()) {
+                      save();
+                    } else {
+                      e.preventDefault();
+                    }
                   }}
                   className="inline-block align-middle text-blue-500 cursor-pointer"
                 />
@@ -88,6 +106,12 @@ function TransparendEditableString(props) {
           </div>
         )}
       </div>
+    {errorMessage !== "" && props.alignerrorright && (
+      <p className="text-sm text-red-500 text-right">{errorMessage}</p>
+    )}
+    {errorMessage !== "" && !props.alignerrorright && (
+      <p className="text-sm text-red-500">{errorMessage}</p>
+    )}
     </div>
   );
 }

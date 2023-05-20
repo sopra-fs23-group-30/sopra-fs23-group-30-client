@@ -37,6 +37,7 @@ function EditableAddress(props) {
               placeholder: "Search Places ...",
               className: "location-search-input",
               style: { height: "2.5px", backgroundColor: "transparent" },
+              color: props.color
             })}
           />
           <div className="p-0 text-sm border-none bg-transparent focus:border-none focus:ring-transparent block w-full text-black-900">

@@ -10,12 +10,23 @@ function TransparentEditableTextArea(props) {
   const [editable, setEditable] = useState(false);
   const [content, setContent] = useState(props.content);
   const [initialContent, setInitialContent] = useState(props.content);
+  const [errorMessage, setErrorMessage] = useState("");
   const inputRef = useRef(null);
 
   useEffect(() => {
     setContent(props.content);
     setInitialContent(props.content);
   }, [props.content]);
+
+  const validate = () => {
+    if(content === "") {
+      setErrorMessage(props.errormessage);
+      return false;
+    } else {
+      setErrorMessage("");
+      return true;
+    }
+  }
 
   const save = () => {
     setInitialContent(content);
@@ -25,6 +36,7 @@ function TransparentEditableTextArea(props) {
   };
 
   const cancel = () => {
+    setErrorMessage("");
     setEditable(false);
     setContent(initialContent);
   };
@@ -49,8 +61,12 @@ function TransparentEditableTextArea(props) {
               {editable && (
                 <CheckIcon
                   height={18}
-                  onClick={() => {
-                    save();
+                  onClick={(e) => {
+                    if(validate()) {
+                      save();
+                    } else {
+                      e.preventDefault();
+                    }
                   }}
                   className="inline-block align-middle text-blue-500 cursor-pointer"
                 />
@@ -115,6 +131,9 @@ function TransparentEditableTextArea(props) {
           />
         )}
       </div>
+      {errorMessage !== "" && (
+        <p className="text-sm text-red-500">{errorMessage}</p>
+      )}
     </div>
   );
 }
