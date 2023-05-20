@@ -284,8 +284,8 @@ export default function ListingDetail() {
         </h5>
         <div className="flex flex-col gap-4">
           <p className="text-sm font-bold text-gray-700 dark:text-gray-400">
-            {listingData?.listerFirstname} {listingData?.listerLastname} (
-            {calculateAge(new Date(listingData?.listerBirthdate))} years old)
+            {listingData?.listerFirstname} {listingData?.listerLastname}
+            {listingData?.listerBirthdate !== null ? "(" +  calculateAge(new Date(listingData?.listerBirthdate)) + "years old)" : ""}
           </p>
 
           <p className="w-2/3 md:w-3/4 text-sm font-normal text-gray-700 dark:text-gray-400">
