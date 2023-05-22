@@ -1,46 +1,89 @@
-# SoPra FS23 - Client Template with build pack
+# upsearch.ch
+upsearch.ch is an open-source web platform designed to alleviate the tedious and exhausting process that students face when searching for a flat in highly sought-after areas like Zurich. Our project aims to simplify the entire experience for both seekers and listers, eliminating the need for repetitive self-information and providing a streamlined hub for managing applications and listings.
 
-## Getting started
+Key Features:
 
-Read and go through these Tutorials. It will make your life easier:)
+- Streamlined Flat Search: We provide an intuitive and user-friendly interface that simplifies the search process, enabling students to find suitable flats quickly and efficiently.
+- Automated Profile Management: Say goodbye to repeatedly entering the same information about yourself. Our platform automates profile creation, saving you time and effort.
+- Centralized Application Hub: Manage all your flat applications in one place, allowing you to track their status, communicate with listers, and stay organized throughout the process.
+- Enhanced Listing Management: Listers can easily create and manage property listings, eliminating the hassle of repetitive data entry and providing a clear overview of all listings.
 
-- Read the React [Docs](https://reactjs.org/docs/getting-started.html)
-- Do this React [Getting Started](https://reactjs.org/tutorial/tutorial.html) Tutorial (it doesn’t assume any existing React knowledge)
-- Get an Understanding of [CSS](https://www.w3schools.com/Css/), [SCSS](https://sass-lang.com/documentation/syntax), and [HTML](https://www.w3schools.com/html/html_intro.asp)!
+```
+Join us in revolutionizing the flat search experience for students in high-demand locations with upsearch.ch!
+```
 
-Next, there are two other technologies that you should look at:
-
-* [react-router-dom](https://reacttraining.com/react-router/web/guides/quick-start) offers declarative routing for React. It is a collection of navigational components that fit nicely with the application. 
-* [react-hooks](https://reactrouter.com/web/api/Hooks) let you access the router's state and perform navigation from inside your components.
-
-## Prerequisites and Installation
-For your local development environment, you will need Node.js. You can download it [here](https://nodejs.org). All other dependencies, including React, get installed with:
-
-```npm install```
-
-Run this command before you start your application for the first time. Next, you can start the app with:
-
-```npm run dev```
-
-Now you can open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-Notice that the page will reload if you make any edits. You will also see any lint errors in the console (use Google Chrome).
-
-### Testing
-Testing is optional, and you can run the tests with `npm run test`.
-This launches the test runner in an interactive watch mode. See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-> For macOS user running into a 'fsevents' error: https://github.com/jest-community/vscode-jest/issues/423
-
-### Build
-Finally, `npm run build` builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance: the build is minified, and the filenames include hashes.<br>
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## Learn More
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Technologies 
+- FrontEnd Framework [React](https://react.dev/).
+- FrontEnd Styling Framework [Tailwind CSS](https://tailwindcss.com/)
+- Backend Framework [JPA](https://tailwindcss.com/](https://spring.io/projects/spring-boot)
+- WebApp Hosting [Google Cloud](https://cloud.google.com/)
+- Database Hosting & Blob Storage [Microsoft Azure](https://azure.microsoft.com/)
 
 
-> Thanks to Lucas Pelloni and Kyrill Hux for working on the template.
+## High-level components 
+1. [API-Controllers](https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-server/tree/main/src/main/java/ch/uzh/ifi/hase/soprafs23/controller) (The API Controllers are the endpoints of our system. They retrieve https requests, which must be authorizes using the [JWT Token Techonology](https://jwt.io/). 
+2. [Backend-Data-Services](https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-server/tree/main/src/main/java/ch/uzh/ifi/hase/soprafs23/service) (Our DataServices are in direct communication with our repositories, which access our databases data, modify it and transform it into DTO's, which we then send back to the FrontEnd for display)
+3. [WebSecurityConfig](https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/config/WebSecurityConfig.java) (This component manages which endpoints are protected and need authorization for accessing and which not. This component also sets an automatic PreRequestFilter, which checks specified requests automatically regarding if they fulfill our authority check)
+4. [WebSocketFactory](https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-client/blob/main/src/helpers/WebSocketFactory.js) (This factory is a FrontEnd component, which sets up and handles the WebSocket connections we need for our live-feature)  
+
+
+## Launch & Deployment:
+**For Running our Webapp**
+1. Check Out our [Client Repository](https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-client.git) & [Server Repository](https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-server.git)
+2. Make sure you've installed [node.js](https://nodejs.org/en), [NugetPackageManager](https://www.npmjs.com/)
+3. Open both projects in your IDE of choice (e.g. [Visual Studio Code](https://code.visualstudio.com/))
+4. For FrontEnd run: 
+```cmd
+npm install
+npm run dev
+```
+5. For BackEnd run:
+```bash
+./gradlew build
+./gradlew bootRun
+```
+
+**For Running our Tests**
+Run the following code in the IDE in our BackEnd repository:
+```bash
+./gradlew test
+```
+
+-> we do not have external dependencies that are manually need to be started (Azure Services should run)
+-> Releases are only done by the original contributors listed in this document
+
+
+## Illustrations
+**Create Your Account**
+<img width="1040" alt="image" src="https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-client/assets/33682680/6be84758-919e-4ccd-bccc-c296737e077c">
+
+
+**Describe Yourself (Searcher Side)**
+
+**Search for Listings (Searcher Side)**
+
+**Apply With One Click (Searcher Side)**
+
+**See Who Applied at one glance (Lister Side)**
+
+**Work Simultaniously (Live) on your inventory list)**
+
+
+## Roadmap
+1. A Reset Password Functionality that automatically sends an email with a password refresh link.
+2. Specifying more useful filtering opportunities when searchers want to find a matching listing 
+3. Change cardinality of Listing-Lister by enabling to add multiple listers to the same listing using their email
+
+
+## Authors
+* **Rafael Estermann** - FullStack Developer - [rafaaaaaaa](https://github.com/rafaaaaaaa)
+* **Mika Schoch** - FullStack Developer - [ThePunisher77777](https://github.com/ThePunisher77777))
+* **Mathias Kern** - FullStack Developer - [make2002](https://github.com/make2002)
+* **Delia Datsomor** - FrontEnd Developer - [nyc6](https://github.com/nyc6)
+* **Fatih Yagan** - FrontEnd Developer - [fatihyag](https://github.com/fatihyag)
+
+## Acknowledgment
+We'd like to thank [Jerome Maier](https://github.com/jemaie), who has been our personal Tutor during the last three months and has provided us with the required guidance and expertise.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-server/blob/main/LICENSE) file for details
