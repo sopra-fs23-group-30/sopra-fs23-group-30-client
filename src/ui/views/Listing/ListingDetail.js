@@ -262,7 +262,7 @@ export default function ListingDetail() {
 
   const descriptionSection = () => {
     return (
-      <div className="block w-full md:w-1/2 p-2 pt-1 pr-4 pb-4 bg-white border border-gray-200 rounded-lg shadow">
+      <div className="block w-full lg:w-1/2 p-2 pt-1 pr-4 pb-4 bg-white border border-gray-200 rounded-lg shadow">
         <TransparentEditableTextArea
           label="Description"
           className="text-sm font-normal text-gray-700 dark:text-gray-400 bg-transparent"
@@ -278,18 +278,18 @@ export default function ListingDetail() {
 
   const listerSection = () => {
     return (
-      <div className="relative block w-full md:w-1/2 p-5 bg-white border border-gray-200 rounded-lg shadow">
+      <div className="relative block w-full lg:w-1/2 p-5 bg-white border border-gray-200 rounded-lg shadow">
         <h5 className="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white">
           About the lister
         </h5>
         <div className="flex flex-col gap-4">
           <p className="text-sm font-bold text-gray-700 dark:text-gray-400">
             {listingData?.listerFirstname} {listingData?.listerLastname}
-            {listingData?.listerBirthdate !== null ? "(" +  calculateAge(new Date(listingData?.listerBirthdate)) + "years old)" : ""}
+            {listingData?.listerBirthdate !== null ? " (" +  calculateAge(new Date(listingData?.listerBirthdate)) + " years old)" : ""}
           </p>
 
           <p className="w-2/3 md:w-3/4 text-sm font-normal text-gray-700 dark:text-gray-400">
-            "{listingData?.listerDescription}"
+            {listingData?.listerDescription}
           </p>
 
           <a
@@ -323,7 +323,7 @@ export default function ListingDetail() {
 
   const lookingForSection = () => {
     return (
-      <div className="relative block w-full md:w-1/2 p-2 pt-4 pr-4 pb-4">
+      <div className="relative block w-full lg:w-1/2 p-2 pt-4 pr-4 pb-4">
         <div className="flex flex-col gap-4">
           <TransparentEditableTextArea
             label="What we're looking for"
@@ -341,7 +341,7 @@ export default function ListingDetail() {
 
   const mapsSection = () => {
     return (
-      <div className=" w-full md:w-1/2 p-2 pt-4 pr-4 pb-4">
+      <div className=" w-full lg:w-1/2 p-2 pt-4 pr-4 pb-4">
         <h5 className="mb-2 text-md font-bold tracking-tight text-gray-900 dark:text-white">
           Where we live
         </h5>
@@ -381,7 +381,7 @@ export default function ListingDetail() {
   };
 
   return (
-    <div className="py-2.5 sm:px-4 rounded px-4 md:mx-48 flex flex-col gap-4">
+    <div className="py-2.5 sm:px-4 rounded px-4 lg:mx-48 flex flex-col gap-4">
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
         <div class="group">

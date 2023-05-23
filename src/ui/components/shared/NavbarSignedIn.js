@@ -75,7 +75,7 @@ function NavbarSignedIn() {
 
   return (
     <div className="bg-white w-full">
-      <Navbar fluid={true} rounded={true} className="px-4 md:mx-48">
+      <Navbar fluid={true} rounded={true} className="px-4 lg:mx-48">
         <Navbar.Brand href="/">
           <img
             src="https://imgtr.ee/images/2023/05/17/vh2Qx.png"
