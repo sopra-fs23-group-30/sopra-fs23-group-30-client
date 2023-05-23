@@ -93,4 +93,4 @@ Run the following code in the IDE in our BackEnd repository:
 We'd like to thank [Jerome Maier](https://github.com/jemaie), who has been our personal Tutor during the last three months and has provided us with the required guidance and expertise.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-server/blob/main/LICENSE) file for details
+This project is licensed under the GNU GPLv3 License - see the [LICENSE.md](https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-server/blob/main/LICENSE) file for details
