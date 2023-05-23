@@ -45,20 +45,12 @@ const Landing = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const loadListings = useCallback(async () => {
-    const listingFilterGetDTO = {
-      searchText: searchText,
-      maxRentPerMonth: maxRentPerMonth,
-      sortBy: sortBy.value,
+    const config = {
+      headers: { Authorization: `Bearer ` },
     };
+    let response = await api.get("/listingpreviews",config);
 
-    filters[0].options.map(
-      (option) => (listingFilterGetDTO[option.value] = option.checked)
-    );
-
-    let response = await api.get("/listings", {
-      params: listingFilterGetDTO,
-    });
-
+    console.log(response)
     if (response.status !== 200) {
       toast("Fetch unsuccessful", {
         duration: 4000,
