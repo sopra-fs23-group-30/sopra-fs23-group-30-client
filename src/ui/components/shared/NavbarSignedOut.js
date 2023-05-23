@@ -15,8 +15,10 @@ function NavbarSignedOut() {
             upsearch
           </span>
         </Navbar.Brand>
+
         <Navbar.Toggle />
         <Navbar.Collapse>
+          <Navbar.Link href="/howitworks">How It Works</Navbar.Link>
           <Navbar.Link href="/signin">Sign In</Navbar.Link>
           <Navbar.Link href="/signup">Sign Up</Navbar.Link>
         </Navbar.Collapse>

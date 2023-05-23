@@ -6,41 +6,8 @@ import { Link } from "react-router-dom";
 import EditableImageDisplay from "ui/components/general/EditableImageDisplay";
 import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
 
-
-const sortOptions = [
-  {
-    name: "Price: Low to High",
-    value: "PRICE_ASCENDING",
-    href: "#",
-    current: false,
-  },
-  {
-    name: "Price: High to Low",
-    value: "PRICE_DESCENDING",
-    href: "#",
-    current: false,
-  },
-  { name: "Newest", value: "NEWEST", href: "#", current: false },
-];
-const filters = [
-  {
-    id: "properties",
-    name: "Properties",
-    options: [
-      { value: "dishwasher", label: "dishwasher", checked: false },
-      { value: "elevator", label: "elevator", checked: false },
-      { value: "petsAllowed", label: "pets allowed", checked: false },
-    ],
-  },
-];
-
-
 const Landing = () => {
-  
-  const [maxRentPerMonth] = useState(1000);
-  const [listings, setListings] = useState([]);
-  const [searchText] = useState("");
-  const [sortBy] = useState(sortOptions[0]);
+    const [listings, setListings] = useState([]);
   const [currentListings, setCurrentListings] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -59,7 +26,7 @@ const Landing = () => {
       });
     }
     setListings(response.data);
-  }, [searchText, maxRentPerMonth, sortBy]);
+  }, []);
 
   useEffect(() => {
     loadListings();
@@ -82,7 +49,7 @@ const Landing = () => {
   const listingItem = (listing) => {
     return (
       <Link to={`/signup`}>
-        <div className='rounded-lg p-4 mt-4 bg-white'>
+        <div className='rounded-lg p-4 mt-4 bg-white shadow-md'>
         <div className="grid grid-cols-2 gap-3">
           <div
             className="col-span-3 xl:col-span-3 text-white rounded flex items-center justify-center"
@@ -189,44 +156,6 @@ const Landing = () => {
     </div>
   </section>
 
-  <section id="how-it-works" class="sectionSize justify-center justify-between items-center text-center pt-10">
-    <div>
-      <h2 class="text-secondary font-bold bg-underline2 text-3xl pb-10 ">How it works</h2>
-    </div>
-    <div class="flex flex-col md:flex-row gap-5 ">
-      <div class="flex-1 mx-8 flex flex-col items-center my-4">
-        <div class="border-2 border-primary rounded font-bold text-secondary h-12 w-12 flex justify-center items-center mb-3">
-          1
-        </div>
-        <h3 class="text-xl mb-2 text-secondary font-bold">Set up Profile</h3>
-        <p class="">
-          Create your Profile to give a first impression of your personality.
-          Add a profile pic, describe yourself and upload documents.
-        </p>
-      </div>
-      <div class="flex-1 mx-8 flex flex-col items-center my-4">
-        <div class="border-2 rounded border-primary text-secondary font-bold h-12 w-12 flex justify-center items-center mb-3">
-          2
-        </div>
-        <h3 class="font-bold text-xl mb-2 text-secondary">Search and Apply</h3>
-        <p class="text-center">
-          Search for your perfect appartment and apply with a click.
-        </p>
-        <p class="text-center text-secondary">
-          One Click – One Apply
-        </p>
-      </div>
-      <div class="flex-1 mx-8 flex flex-col items-center my-4">
-        <div class="border-2 rounded border-primary text-secondary font-bold h-12 w-12 flex justify-center items-center mb-3">
-          3
-        </div>
-        <h3 class="font-bold text-xl mb-2 text-secondary">Move in to your new home</h3>
-        <p class="text-center">
-          Found your new flat? Move in and have fun with your new flatmates.
-        </p>
-      </div>
-    </div>
-  </section>
   <hr className="w-96 h-0.5 mx-auto my-4 bg-secondary border-0 rounded md:my-10 dark:bg-gray-700" />
   
   <section id="features" class="h-screen lg:px-40 sm:px-10 pt-2 mb-10">

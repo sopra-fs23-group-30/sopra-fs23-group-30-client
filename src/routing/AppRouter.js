@@ -5,6 +5,7 @@ import NavbarSignedOut from "ui/components/shared/NavbarSignedOut";
 import MyApplications from "ui/views/Application/MyApplications";
 import SignIn from "ui/views/Authentication/SignIn";
 import SignUp from "ui/views/Authentication/SignUp";
+import HowItWorks from "ui/views/HowItWorks";
 import Inventory from "ui/views/Inventory";
 import Landing from "ui/views/Landing";
 import CreateListing from "ui/views/Listing/CreateListing";
@@ -30,6 +31,7 @@ const AppRouter = () => {
             <Route path="/" element={<Landing />} exact />
             <Route path="/signin" element={<SignIn />} exact />
             <Route path="/signup" element={<SignUp />} exact />
+            <Route path="/howitworks" element={<HowItWorks />} exact />
             <Route path="*" element={<NotFound />} exact />
           </Routes>
         </BrowserRouter>

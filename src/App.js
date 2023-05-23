@@ -1,4 +1,4 @@
-import AppRouter from "routing/routers/AppRouter";
+import AppRouter from "routing/AppRouter";
 import { Toaster } from "react-hot-toast";
 
 const App = () => {

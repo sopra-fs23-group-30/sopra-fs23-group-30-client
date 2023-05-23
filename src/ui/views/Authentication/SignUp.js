@@ -387,7 +387,7 @@ export default function Signup() {
             </div>
           )}
         </div>
-        <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-700 i justify-around items-center hidden">
+        <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-primary to-secondary i justify-around items-center hidden">
           <div className="p-5">
             <h1 className="text-white font-bold text-4xl">
               One Click - One Apply
@@ -395,12 +395,13 @@ export default function Signup() {
             <p className="text-white mt-1">
               The most popular platform for finding your perfect flatmate
             </p>
-            <button
-              type="button"
-              className="block w-28 bg-white text-indigo-800 mt-4 py-2 rounded-2xl font-bold mb-2"
-            >
-              Read More
-            </button>
+            <a
+            type="submit"
+            href="/howitworks"
+            className="px-3 bg-white text-indigo-800 mt-4 py-2 rounded-2xl font-bold mb-2 items-center"
+          >
+            Read More
+          </a>
           </div>
           <div className="absolute -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
           <div className="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
