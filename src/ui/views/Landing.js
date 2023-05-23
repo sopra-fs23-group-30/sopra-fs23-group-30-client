@@ -81,17 +81,6 @@ const Landing = () => {
     );
   };
 
-  const scrollToHowItWorks = () => {
-    const howItWorksSection = document.getElementById('how-it-works');
-    if (howItWorksSection) {
-      scroll.scrollTo(howItWorksSection.offsetTop, {
-        duration: 500,
-        smooth: true,
-        offset: -80,
-      });
-    }
-  };
-
   const scrollToFeatures = () => {
     const featuresSection = document.getElementById('features');
     if (featuresSection) {
@@ -123,14 +112,13 @@ const Landing = () => {
       </p>
       <div class="">
       <button class="bg-secondary px-6 py-3 border-2 border-secondary rounded-lg text-white mr-2 mb-2">
-        <ScrollLink
-          to="how-it-works"
+        <Link
+          to="howitworks"
           smooth={true}
           duration={500}
-          onClick={scrollToHowItWorks}
         >
           How it works
-        </ScrollLink>
+        </Link>
       </button>
       <button class="px-6 py-3 border-2 border-primary border-solid rounded-lg text-secondary">
       <ScrollLink
