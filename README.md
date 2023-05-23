@@ -77,7 +77,7 @@ Run the following code in the IDE in our BackEnd repository:
 
 ## Authors
 * **Rafael Estermann** - FullStack Developer - [rafaaaaaaa](https://github.com/rafaaaaaaa)
-* **Mika Schoch** - FullStack Developer - [ThePunisher77777](https://github.com/ThePunisher77777))
+* **Mika Schoch** - FullStack Developer - [ThePunisher77777](https://github.com/ThePunisher77777)
 * **Mathias Kern** - FullStack Developer - [make2002](https://github.com/make2002)
 * **Delia Datsomor** - FrontEnd Developer - [nyc6](https://github.com/nyc6)
 * **Fatih Yagan** - FrontEnd Developer - [fatihyag](https://github.com/fatihyag)
