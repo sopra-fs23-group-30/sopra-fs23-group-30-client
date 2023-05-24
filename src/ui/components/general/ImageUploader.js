@@ -56,7 +56,7 @@ function ImageUploader(props) {
               </div>
             </button>
             {imageList.map((image, index) => (
-              <div key={index} className="w-1/3 py-4 image-item">
+              <div key={image.dataURL} className="w-1/3 py-4 image-item">
                 <img src={image["data_url"]} alt="" width="full" />
                 <div className="flex flex-row justify-around mt-2 image-item__btn-wrapper">
                   <button onClick={() => onImageUpdate(index)}>
@@ -67,7 +67,7 @@ function ImageUploader(props) {
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        class="w-6 h-6"
+                        className="w-6 h-6"
                       >
                         <path
                           stroke-linecap="round"

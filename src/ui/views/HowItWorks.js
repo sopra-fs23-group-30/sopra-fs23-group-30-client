@@ -50,42 +50,42 @@ export default function HowItWorks() {
     return (
       <section
         id="how-it-works"
-        class="sectionSize justify-center justify-between items-center text-center pt-10"
+        className="sectionSize justify-center justify-between items-center text-center pt-10"
       >
-        <div class="flex flex-col md:flex-row gap-5 ">
-          <div class="flex-1 mx-8 flex flex-col items-center my-4">
-            <div class="border-2 border-primary rounded font-bold text-secondary h-12 w-12 flex justify-center items-center mb-3">
+        <div className="flex flex-col md:flex-row gap-5 ">
+          <div className="flex-1 mx-8 flex flex-col items-center my-4">
+            <div className="border-2 border-primary rounded font-bold text-secondary h-12 w-12 flex justify-center items-center mb-3">
               1
             </div>
-            <h3 class="text-xl mb-2 text-secondary font-bold">
+            <h3 className="text-xl mb-2 text-secondary font-bold">
               Set up Profile
             </h3>
-            <p class="">
+            <p className="">
               Create your Profile to give a first impression of your
               personality. Add a profile pic, describe yourself and upload
               documents.
             </p>
           </div>
-          <div class="flex-1 mx-8 flex flex-col items-center my-4">
-            <div class="border-2 rounded border-primary text-secondary font-bold h-12 w-12 flex justify-center items-center mb-3">
+          <div className="flex-1 mx-8 flex flex-col items-center my-4">
+            <div className="border-2 rounded border-primary text-secondary font-bold h-12 w-12 flex justify-center items-center mb-3">
               2
             </div>
-            <h3 class="font-bold text-xl mb-2 text-secondary">
+            <h3 className="font-bold text-xl mb-2 text-secondary">
               Search and Apply
             </h3>
-            <p class="text-center">
+            <p className="text-center">
               Search for your perfect appartment and apply with a click.
             </p>
-            <p class="text-center text-secondary">One Click – One Apply</p>
+            <p className="text-center text-secondary">One Click – One Apply</p>
           </div>
-          <div class="flex-1 mx-8 flex flex-col items-center my-4">
-            <div class="border-2 rounded border-primary text-secondary font-bold h-12 w-12 flex justify-center items-center mb-3">
+          <div className="flex-1 mx-8 flex flex-col items-center my-4">
+            <div className="border-2 rounded border-primary text-secondary font-bold h-12 w-12 flex justify-center items-center mb-3">
               3
             </div>
-            <h3 class="font-bold text-xl mb-2 text-secondary">
+            <h3 className="font-bold text-xl mb-2 text-secondary">
               Move in to your new home
             </h3>
-            <p class="text-center">
+            <p className="text-center">
               Found your new flat? Move in and have fun with your new flatmates.
             </p>
           </div>

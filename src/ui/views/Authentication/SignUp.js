@@ -5,7 +5,7 @@ import {
   UserIcon,
 } from "@heroicons/react/20/solid";
 import { api } from "helpers/api";
-import React, { useState } from "react";
+import { useState } from "react";
 import Button from "../../components/general/Button";
 import IconTextInput from "../../components/general/IconTextInput";
 import Label from "../../components/general/Label";
@@ -71,7 +71,6 @@ export default function Signup() {
         setAccountTypeSuccessful(false);
         setGeneralInformationSuccessful(false);
         setIsSigningUp(false);
-        return;
       });
 
     if (response.status === 201) {
@@ -125,18 +124,15 @@ export default function Signup() {
       setPasswordError("");
       setPasswordRepeatError("");
     }
-    if (
-      firstname &&
+    return firstname &&
       lastname &&
       email &&
       phoneNumber &&
       password &&
       repeatedPassword &&
       password === repeatedPassword
-    ) {
-      return true;
-    }
-    return false;
+      ? true
+      : false;
   };
 
   return (

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 import DecisionConfirmationInquiry from "ui/components/shared/DecisionConfirmationInquiry";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export default function MyApplications() {
   const [applications, setApplications] = useState([]);
@@ -127,7 +127,7 @@ export default function MyApplications() {
             ) : (
               application.state !== "DECLINED" && (
                 <Dropdown
-                  class="text-center text-white bg-secondary hover:bg-primary focus:ring-4 focus:ring-primary-300 rounded-lg text-sm focus:outline-none dark:focus:ring-blue-800"
+                  className="text-center text-white bg-secondary hover:bg-primary focus:ring-4 focus:ring-primary-300 rounded-lg text-sm focus:outline-none dark:focus:ring-blue-800"
                   label="Actions"
                   dismissOnClick={false}
                 >
@@ -166,14 +166,29 @@ export default function MyApplications() {
     <div className="py-2.5 sm:px-4 rounded px-4 md:mx-48">
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
-        <div class="group">
-          <button onClick={() => navigate(-1)} className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white group-hover:text-blue-600">
-            <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="w-4 h-4 mr-2 hover:text-blue-600 text-gray-400 group-hover:text-blue-600">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"></path>
-            </svg>
-            Back
-          </button>
-        </div>
+          <div className="group">
+            <button
+              onClick={() => navigate(-1)}
+              className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white group-hover:text-blue-600"
+            >
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                className="w-4 h-4 mr-2 hover:text-blue-600 text-gray-400 group-hover:text-blue-600"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                ></path>
+              </svg>
+              Back
+            </button>
+          </div>
           <li>
             <div className="flex items-center">
               <svg
@@ -202,21 +217,21 @@ export default function MyApplications() {
 
       {!hasActiveItem && (
         <div>
-          <h1 class="mt-3 mb-4 font-bold">My Applications</h1>
-          <div class="mb-20 ml-6">
-            <h2 class="font-bold mb-4">Pending</h2>
+          <h1 className="mt-3 mb-4 font-bold">My Applications</h1>
+          <div className="mb-20 ml-6">
+            <h2 className="font-bold mb-4">Pending</h2>
             {applications
               .filter((application) => application.state === "PENDING")
               .map((application) => applicationItem(application))}
           </div>
-          <div class="mt-20 ml-6">
-            <h2 class="font-bold mb-4">Accepted</h2>
+          <div className="mt-20 ml-6">
+            <h2 className="font-bold mb-4">Accepted</h2>
             {applications
               .filter((application) => application.state === "ACCEPTED")
               .map((application) => applicationItem(application))}
           </div>
-          <div class="mt-20 ml-6">
-            <h2 class="font-bold mb-4">Rejected</h2>
+          <div className="mt-20 ml-6">
+            <h2 className="font-bold mb-4">Rejected</h2>
             {applications
               .filter((application) => application.state === "DECLINED")
               .map((application) => applicationItem(application))}
@@ -225,8 +240,8 @@ export default function MyApplications() {
       )}
 
       {hasActiveItem && (
-        <div class="mt-20 ml-6">
-          <h2 class="font-bold mb-4">Your new home:</h2>
+        <div className="mt-20 ml-6">
+          <h2 className="font-bold mb-4">Your new home:</h2>
           {applications
             .filter((application) => application.state === "MOVEIN")
             .map((application) => applicationItem(application))}

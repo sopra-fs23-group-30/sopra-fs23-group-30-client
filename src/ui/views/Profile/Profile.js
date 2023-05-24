@@ -4,13 +4,12 @@ import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import EditableDate from "ui/components/general/EditableDate";
 import InputSelector from "ui/components/general/EditableInputSelector";
 import EditableLifespan from "ui/components/general/EditableLifespan";
 import EditableString from "ui/components/general/EditableString";
 import EditableTextarea from "ui/components/general/EditableTextarea";
-import { useNavigate } from 'react-router-dom';
 
 export default function ProfilePage(props) {
   const [profileData, setProfileData] = useState(null);
@@ -23,9 +22,8 @@ export default function ProfilePage(props) {
 
   const onDrop = useCallback((acceptedDocument, fileRejections) => {
     const formData = new FormData();
-    if(fileRejections[0]){
+    if (fileRejections[0]) {
       setDebtDocumentError("Error: Only PDFs can be uploaded");
-      return;
     } else {
       setDebtDocumentError("");
       formData.append("document", acceptedDocument[0]);
@@ -35,7 +33,7 @@ export default function ProfilePage(props) {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: {'application/pdf': ['.pdf']},
+    accept: { "application/pdf": [".pdf"] },
     minSize: 0,
   });
 
@@ -87,87 +85,53 @@ export default function ProfilePage(props) {
     return blob;
   };
 
-  const getUnchangedDocumentBlob = () => {
-    let blob = new Blob();
-    blob.name = "unchanged";
-    return blob;
-  };
-
   const handleFirstnameChange = (newVal) => {
     let existingData = profileData;
     existingData.firstname = newVal;
     setProfileData(existingData);
-    updateProfile(
-      lifespans,
-      getUnchangedFileBlob(),
-      getUnchangedDocumentBlob()
-    );
+    updateProfile(lifespans, getUnchangedFileBlob(), getUnchangedFileBlob());
   };
 
   const handleLastnameChange = (newVal) => {
     let existingData = profileData;
     existingData.lastname = newVal;
     setProfileData(existingData);
-    updateProfile(
-      lifespans,
-      getUnchangedFileBlob(),
-      getUnchangedDocumentBlob()
-    );
+    updateProfile(lifespans, getUnchangedFileBlob(), getUnchangedFileBlob());
   };
 
   const handleBirthdateChange = (newVal) => {
     let existingData = profileData;
     existingData.birthday = newVal;
     setProfileData(existingData);
-    updateProfile(
-      lifespans,
-      getUnchangedFileBlob(),
-      getUnchangedDocumentBlob()
-    );
+    updateProfile(lifespans, getUnchangedFileBlob(), getUnchangedFileBlob());
   };
 
   const handlePhonenumber = (newVal) => {
     let existingData = profileData;
     existingData.phoneNumber = newVal;
     setProfileData(existingData);
-    updateProfile(
-      lifespans,
-      getUnchangedFileBlob(),
-      getUnchangedDocumentBlob()
-    );
+    updateProfile(lifespans, getUnchangedFileBlob(), getUnchangedFileBlob());
   };
 
   const handleGender = (newVal) => {
     let existingData = profileData;
     existingData.gender = newVal;
     setProfileData(existingData);
-    updateProfile(
-      lifespans,
-      getUnchangedFileBlob(),
-      getUnchangedDocumentBlob()
-    );
+    updateProfile(lifespans, getUnchangedFileBlob(), getUnchangedFileBlob());
   };
 
   const handleBiography = (newVal) => {
     let existingData = profileData;
     existingData.biography = newVal;
     setProfileData(existingData);
-    updateProfile(
-      lifespans,
-      getUnchangedFileBlob(),
-      getUnchangedDocumentBlob()
-    );
+    updateProfile(lifespans, getUnchangedFileBlob(), getUnchangedFileBlob());
   };
 
   const handleFlatemateDescription = (newVal) => {
     let existingData = profileData;
     existingData.futureFlatmatesDescription = newVal;
     setProfileData(existingData);
-    updateProfile(
-      lifespans,
-      getUnchangedFileBlob(),
-      getUnchangedDocumentBlob()
-    );
+    updateProfile(lifespans, getUnchangedFileBlob(), getUnchangedFileBlob());
   };
 
   const handleLifespansChanged = (newLifespans) => {
@@ -180,25 +144,24 @@ export default function ProfilePage(props) {
     updateProfile(
       saveableArray,
       getUnchangedFileBlob(),
-      getUnchangedDocumentBlob()
+      getUnchangedFileBlob()
     );
   };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
 
-    if(file.size > 1048576){
+    if (file.size > 1048576) {
       alert("File is too big! (over 1MB)");
       return;
-   };
+    }
 
     const fileType = file.type;
-    if(!fileType.match('image.*')) {
+    if (!fileType.match("image.*")) {
       setPictureUploadError("Error: Only images can be uploaded");
-      return;
     } else {
       setPictureUploadError("");
-      updateProfile(lifespans, file, getUnchangedDocumentBlob());
+      updateProfile(lifespans, file, getUnchangedFileBlob());
     }
   };
 
@@ -206,7 +169,7 @@ export default function ProfilePage(props) {
     setPictureUploadError("");
     let blob = new Blob();
     blob.name = "deleted";
-    updateProfile(lifespans, blob, getUnchangedDocumentBlob());
+    updateProfile(lifespans, blob, getUnchangedFileBlob());
   };
 
   const updateProfile = async (updatedLifespans, file, document) => {
@@ -260,10 +223,25 @@ export default function ProfilePage(props) {
     <div className="py-2.5 sm:px-4 rounded px-4 md:mx-48 pb-4">
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
-          <div class="group">
-            <button onClick={() => navigate(-1)} className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white group-hover:text-blue-600">
-              <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="w-4 h-4 mr-2 hover:text-blue-600 text-gray-400 group-hover:text-blue-600">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"></path>
+          <div className="group">
+            <button
+              onClick={() => navigate(-1)}
+              className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white group-hover:text-blue-600"
+            >
+              <svg
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                className="w-4 h-4 mr-2 hover:text-blue-600 text-gray-400 group-hover:text-blue-600"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                ></path>
               </svg>
               Back
             </button>
@@ -345,7 +323,7 @@ export default function ProfilePage(props) {
                 Delete
               </button>
               {pictureUploadError !== "" && (
-                  <p className="text-sm text-red-500">{pictureUploadError}</p>
+                <p className="text-sm text-red-500">{pictureUploadError}</p>
               )}
             </div>
           )}
@@ -377,7 +355,9 @@ export default function ProfilePage(props) {
                     onSave={handlePhonenumber}
                     canEdit={canEdit}
                     regex="(\+41)\s(\d{2})\s(\d{3})\s(\d{2})\s(\d{2})$"
-                    errormessage={"Please enter a phone number in the format +41 XX XXX XX XX"}
+                    errormessage={
+                      "Please enter a phone number in the format +41 XX XXX XX XX"
+                    }
                   />
                 </div>
               </div>
@@ -427,8 +407,8 @@ export default function ProfilePage(props) {
                   canEdit={canEdit}
                 />
               )}
-              </div>
-              <div className="w-full md:w-1/2 flex flex-col mb-3">
+            </div>
+            <div className="w-full md:w-1/2 flex flex-col mb-3">
               <EditableLifespan
                 label="Education"
                 canEdit={canEdit}
@@ -442,99 +422,111 @@ export default function ProfilePage(props) {
                 lifespans={lifespans}
               />
             </div>
-            </div>
-            <div className="w-full md:w-1/2 flex flex-col">
-              <label
-                htmlFor="small-input"
-                className="block text-sm font-medium text-gray-900 dark:text-white"
+          </div>
+          <div className="w-full md:w-1/2 flex flex-col">
+            <label
+              htmlFor="small-input"
+              className="block text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Debt collection register extract
+            </label>
+            {profileData?.documentURL ? (
+              <a
+                href={profileData.documentURL}
+                className="text-sm text-blue-600 dark:text-blue-500 hover:underline"
               >
-                Debt collection register extract
-              </label>
-              {profileData?.documentURL ? (
-                <a
-                  href={profileData.documentURL}
-                  class="text-sm text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  <div class="flex items-center ">
-                    <span>See debt collection register extract</span>
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="pl-1 w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"></path>
-                    </svg>
-                  </div>
-                </a>
-              ) : (
-                <p class="text-sm text-gray-900 dark:text-gray-100">
-                  No debt collection register extract uploaded
-                </p>
-              )}
-              {canEdit && (
-                <>
-                  <div className="container text-center mt-1">
-                    <div {...getRootProps()}>
-                      <input {...getInputProps()} />
-                      <div class="flex items-center justify-center w-full">
-                        <label
-                          for="dropzone-file"
-                          class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-                        >
-                          {currentDocument ? (
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                              {currentDocument.name}
-                            </div>
-                          ) : (
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                              <svg
-                                aria-hidden="true"
-                                class="w-10 h-10 mb-3 text-gray-400"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                                ></path>
-                              </svg>
-                              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                                <span class="font-semibold">
-                                  Click to upload
-                                </span>{" "}
-                                or drag and drop
-                              </p>
-                              <p class="text-xs text-gray-500 dark:text-gray-400">
-                                PDF Document
-                              </p>
-                            </div>
-                          )}
-                        </label>
-                      </div>
+                <div className="flex items-center ">
+                  <span>See debt collection register extract</span>
+                  <svg
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    className="pl-1 w-5 h-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
+                    ></path>
+                  </svg>
+                </div>
+              </a>
+            ) : (
+              <p className="text-sm text-gray-900 dark:text-gray-100">
+                No debt collection register extract uploaded
+              </p>
+            )}
+            {canEdit && (
+              <>
+                <div className="container text-center mt-1">
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <div className="flex items-center justify-center w-full">
+                      <label
+                        for="dropzone-file"
+                        className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                      >
+                        {currentDocument ? (
+                          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                            {currentDocument.name}
+                          </div>
+                        ) : (
+                          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                            <svg
+                              aria-hidden="true"
+                              className="w-10 h-10 mb-3 text-gray-400"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                              ></path>
+                            </svg>
+                            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                              <span className="font-semibold">
+                                Click to upload
+                              </span>{" "}
+                              or drag and drop
+                            </p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                              PDF Document
+                            </p>
+                          </div>
+                        )}
+                      </label>
                     </div>
                   </div>
-                  <div className="flex gap-2 mt-2">
-                    <Button
-                      className="bg-secondary hover:bg-primary"
-                      onClick={handlePDFUpload}
-                    >
-                      Upload
-                    </Button>
-                    <Button
-                      className="bg-red-600 hover:bg-red-700"
-                      onClick={handleRemoveFile}
-                    >
-                      Remove
-                    </Button>
-                  </div>
-                  {debtDocumentError !== "" && (
-                    <p className="text-sm text-red-500">{debtDocumentError}</p>
-                  )}
-                </>
-              )}
-              </div>
+                </div>
+                <div className="flex gap-2 mt-2">
+                  <Button
+                    className="bg-secondary hover:bg-primary"
+                    onClick={handlePDFUpload}
+                  >
+                    Upload
+                  </Button>
+                  <Button
+                    className="bg-red-600 hover:bg-red-700"
+                    onClick={handleRemoveFile}
+                  >
+                    Remove
+                  </Button>
+                </div>
+                {debtDocumentError !== "" && (
+                  <p className="text-sm text-red-500">{debtDocumentError}</p>
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>
+    </div>
   );
 }

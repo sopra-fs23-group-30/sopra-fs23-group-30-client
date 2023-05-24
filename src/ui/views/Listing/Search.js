@@ -111,7 +111,7 @@ export default function Search() {
 
   const listingItem = (listing) => {
     return (
-      <Link to={`/listings/${listing.id}`}>
+      <Link key={listing.id} to={`/listings/${listing.id}`}>
         <div className="grid grid-cols-2 xl:grid-cols-5 gap-6 rounded-lg p-4 mt-4 bg-white">
           <div
             className="col-span-3 xl:col-span-3 text-white rounded flex items-center justify-center"
@@ -168,7 +168,7 @@ export default function Search() {
     <div className="py-2.5  sm:px-4 rounded px-4 md:mx-48">
       <nav className="flex " aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
-        <li className="inline-flex items-center pl-5">
+          <li className="inline-flex items-center pl-5">
             <svg
               aria-hidden="true"
               className="w-6 h-6 text-gray-400"
@@ -535,7 +535,9 @@ export default function Search() {
               {/* Listings grid */}
               <div className="lg:col-span-3">
                 <div className="h-96 lg:h-full">
-                  <p className="text-sm text-gray-500">{listings.length} results</p>
+                  <p className="text-sm text-gray-500">
+                    {listings.length} results
+                  </p>
                   {listings.map((listing) => listingItem(listing))}
                 </div>
               </div>

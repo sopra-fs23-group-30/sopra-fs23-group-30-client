@@ -1,5 +1,4 @@
-import { GoogleMap } from "@react-google-maps/api";
-import { MarkerF } from "@react-google-maps/api";
+import { GoogleMap, MarkerF } from "@react-google-maps/api";
 
 function Map({ coords }) {
   return (

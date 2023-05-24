@@ -28,7 +28,8 @@ export default function CreateListing() {
   const [descriptionError, setDescriptionError] = useState("");
   const [googleMapsDataError, setGoogleMapsDataError] = useState("");
   const [pricePerMonthError, setPricePerMonthError] = useState("");
-  const [perfectFlatmateDescriptionError, setPerfectFlatmateDescriptionError] = useState("");
+  const [perfectFlatmateDescriptionError, setPerfectFlatmateDescriptionError] =
+    useState("");
   const [imagesError, setImagesError] = useState("");
   const navigate = useNavigate();
 
@@ -48,29 +49,35 @@ export default function CreateListing() {
     } else {
       setGoogleMapsDataError("");
     }
-    if(!pricePerMonth) {
+    if (!pricePerMonth) {
       setPricePerMonthError("Please enter a price per month");
     } else {
       setPricePerMonthError("");
     }
     if (!perfectFlatmateDescription) {
-      setPerfectFlatmateDescriptionError("Please enter a description for your perfect flatmate");
+      setPerfectFlatmateDescriptionError(
+        "Please enter a description for your perfect flatmate"
+      );
     } else {
       setPerfectFlatmateDescriptionError("");
     }
-    if(!images[0]) {
+    if (!images[0]) {
       setImagesError("Please upload at least one image of the listing");
     } else {
       setImagesError("");
     }
-    if (title && description && googleMapsData && pricePerMonth && perfectFlatmateDescription && images) {
-      return true;
-    }
-    return false;
+    return title &&
+      description &&
+      googleMapsData &&
+      pricePerMonth &&
+      perfectFlatmateDescription &&
+      images
+      ? true
+      : false;
   };
 
   const saveListing = async (e) => {
-    if(validate()) {
+    if (validate()) {
       let token = localStorage.getItem("authtoken");
       const decoded = decodeToken(token);
       const userId = decoded.userId;
@@ -115,7 +122,7 @@ export default function CreateListing() {
     <div className="px-2 py-2.5 sm:px-4 rounded px-4 md:mx-48">
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
-          <div class="group">
+          <div className="group">
             <button
               onClick={() => navigate(-1)}
               className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white group-hover:text-blue-600"
@@ -252,7 +259,9 @@ export default function CreateListing() {
           </div>
           <Textarea
             className="text-sm"
-            color={perfectFlatmateDescriptionError === "" ? "primary" : "failure"}
+            color={
+              perfectFlatmateDescriptionError === "" ? "primary" : "failure"
+            }
             id="comment"
             placeholder="Leave a comment..."
             required={true}
@@ -263,7 +272,9 @@ export default function CreateListing() {
             }}
           />
           {perfectFlatmateDescriptionError !== "" && (
-            <p className="text-sm text-red-500">{perfectFlatmateDescriptionError}</p>
+            <p className="text-sm text-red-500">
+              {perfectFlatmateDescriptionError}
+            </p>
           )}
         </div>
 
