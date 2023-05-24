@@ -31,6 +31,9 @@ export default function Signup() {
   const [passwordRepeatError, setPasswordRepeatError] = useState("");
 
   const goToNextScreen = async (e) => {
+    if (errorMsg !== "") {
+      setErrorMsg("");
+    }
     if (validate()) {
       setFirstnameError("");
       setLastnameError("");
@@ -48,12 +51,6 @@ export default function Signup() {
     setIsSigningUp(true);
     e.preventDefault();
 
-    if (repeatedPassword !== password) {
-      setErrorMsg("Passwords do not match");
-      setIsSigningUp(false);
-      return;
-    }
-
     const requestBody = JSON.stringify({
       firstname,
       lastname,
@@ -70,15 +67,18 @@ export default function Signup() {
     let response = await api
       .post("/registration", requestBody, config)
       .catch(function (error) {
-        setErrorMsg("Registration failed, please try again");
+        setErrorMsg(error.response.data.message);
         setAccountTypeSuccessful(false);
         setGeneralInformationSuccessful(false);
+        setIsSigningUp(false);
         return;
       });
 
     if (response.status === 201) {
       setAccountTypeSuccessful(true);
-    } else {
+    } else if (response.status === 400) {
+      setAccountTypeSuccessful(false);
+      setGeneralInformationSuccessful(false);
     }
     setIsSigningUp(false);
   };
@@ -350,6 +350,7 @@ export default function Signup() {
                       >
                         back
                       </span>
+                      <div>{errorMsg}</div>
                       <Button
                         onClick={signup}
                         type="submit"
