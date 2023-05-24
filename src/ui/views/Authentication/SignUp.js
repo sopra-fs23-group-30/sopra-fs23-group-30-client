@@ -101,7 +101,10 @@ export default function Signup() {
     } else {
       setEmailError("");
     }
-    if (!phoneNumber) {
+    if (
+      !phoneNumber ||
+      !/\+41\s\d{2}\s\d{3}\s\d{2}\s\d{2}$/.test(phoneNumber)
+    ) {
       setPhoneError(
         "Please enter your phone number in the format +41 XX XXX XX XX"
       );
@@ -396,12 +399,12 @@ export default function Signup() {
               The most popular platform for finding your perfect flatmate
             </p>
             <a
-            type="submit"
-            href="/howitworks"
-            className="px-3 bg-white text-indigo-800 mt-4 py-2 rounded-2xl font-bold mb-2 items-center"
-          >
-            Read More
-          </a>
+              type="submit"
+              href="/howitworks"
+              className="px-3 bg-white text-indigo-800 mt-4 py-2 rounded-2xl font-bold mb-2 items-center"
+            >
+              Read More
+            </a>
           </div>
           <div className="absolute -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
           <div className="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
