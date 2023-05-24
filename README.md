@@ -15,16 +15,6 @@ Join us in revolutionizing the flat search experience for students in high-deman
 ## Technologies 
 - FrontEnd Framework [React](https://react.dev/).
 - FrontEnd Styling Framework [Tailwind CSS](https://tailwindcss.com/)
-- Backend Framework [JPA](https://tailwindcss.com/](https://spring.io/projects/spring-boot)
-- WebApp Hosting [Google Cloud](https://cloud.google.com/)
-- Database Hosting & Blob Storage [Microsoft Azure](https://azure.microsoft.com/)
-
-
-## High-level components 
-1. [API-Controllers](https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-server/tree/main/src/main/java/ch/uzh/ifi/hase/soprafs23/controller) (The API Controllers are the endpoints of our system. They retrieve https requests, which must be authorizes using the [JWT Token Techonology](https://jwt.io/). 
-2. [Backend-Data-Services](https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-server/tree/main/src/main/java/ch/uzh/ifi/hase/soprafs23/service) (Our DataServices are in direct communication with our repositories, which access our databases data, modify it and transform it into DTO's, which we then send back to the FrontEnd for display)
-3. [WebSecurityConfig](https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/config/WebSecurityConfig.java) (This component manages which endpoints are protected and need authorization for accessing and which not. This component also sets an automatic PreRequestFilter, which checks specified requests automatically regarding if they fulfill our authority check)
-4. [WebSocketFactory](https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-client/blob/main/src/helpers/WebSocketFactory.js) (This factory is a FrontEnd component, which sets up and handles the WebSocket connections we need for our live-feature)  
 
 
 ## Launch & Deployment:
@@ -37,20 +27,6 @@ Join us in revolutionizing the flat search experience for students in high-deman
 npm install
 npm run dev
 ```
-5. For BackEnd run:
-```bash
-./gradlew build
-./gradlew bootRun
-```
-
-**For Running our Tests**
-Run the following code in the IDE in our BackEnd repository:
-```bash
-./gradlew test
-```
-
--> we do not have external dependencies that are manually need to be started (Azure Services should run)
--> Releases are only done by the original contributors listed in this document
 
 
 ## Illustrations
