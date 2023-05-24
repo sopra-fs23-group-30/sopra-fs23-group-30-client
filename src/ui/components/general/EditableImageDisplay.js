@@ -34,7 +34,6 @@ function EditableImageDisplay(props) {
   const nextButton = () => {
     return (
       <button
-        className="absolute"
         onClick={() => {
           setFirstImage((firstImage + 1) % images.length);
         }}
@@ -67,18 +66,18 @@ function EditableImageDisplay(props) {
     } else if (images.length === 1) {
       return (
         <div className="container">
-          {image("w-full h-full rounded shadow-sm", 0)}
+          {image("w-full h-full rounded shadow-sm bg-center bg-cover duration-500", 0)}
         </div>
       );
     } else if (images.length < 5) {
       return (
         <div className="container grid grid-cols-1 gap-4 lg:grid-cols-2">
           {image(
-            "w-full h-full col-span-1 row-span-1 rounded shadow-sm",
+            "w-full h-full col-span-1 row-span-1 rounded shadow-sm bg-center bg-cover duration-500",
             (0 + firstImage) % images.length
           )}
           {image(
-            "w-full h-full col-span-1 row-span-1 rounded shadow-sm",
+            "w-full h-full col-span-1 row-span-1 rounded shadow-sm bg-center bg-cover duration-500",
             (1 + firstImage) % images.length
           )}
           {images.length > 2 ? <>{nextButton()}</> : <></>}
@@ -88,13 +87,13 @@ function EditableImageDisplay(props) {
       return (
         <div className="container grid grid-cols-2 gap-4 lg:grid-cols-4">
           {image(
-            "w-full h-full col-span-2 row-span-2 rounded shadow-sm lg:col-start-3 lg:row-start-1",
+            "w-full h-full col-span-2 row-span-2 rounded shadow-sm lg:col-start-3 lg:row-start-1 bg-center bg-cover duration-500",
             images[(0 + firstImage) % images.length]
           )}
-          {image("w-full h-full", (1 + firstImage) % images.length)}
-          {image("w-full h-full", (2 + firstImage) % images.length)}
-          {image("w-full h-full", (3 + firstImage) % images.length)}
-          {image("w-full h-full", (4 + firstImage) % images.length)}
+          {image("w-full h-full bg-center bg-cover duration-500", (1 + firstImage) % images.length)}
+          {image("w-full h-full bg-center bg-cover duration-500", (2 + firstImage) % images.length)}
+          {image("w-full h-full bg-center bg-cover duration-500", (3 + firstImage) % images.length)}
+          {image("w-full h-full bg-center bg-cover duration-500", (4 + firstImage) % images.length)}
           {images.length > 5 ? <>{nextButton()}</> : <></>}
         </div>
       );
@@ -120,7 +119,7 @@ function EditableImageDisplay(props) {
             Add Photo
           </label>
         </>
-      ) : (
+        ) : (
         <></>
       )}
     </>
