@@ -119,23 +119,23 @@ export default function HowItWorks() {
               2
             </div>
             <h3 class="font-bold text-xl mb-2 text-secondary">
-              Search and Apply
+              Create a listing
             </h3>
             <p class="text-center">
-              Search for your perfect appartment and apply with a click.
-            </p>
-            <p class="text-center text-secondary">One Click – One Apply</p>
+              List you apartment. Add photos, a monthly rent, describe it and add its location.</p>
           </div>
           <div class="flex-1 mx-8 flex flex-col items-center my-4">
             <div class="border-2 rounded border-primary text-secondary font-bold h-12 w-12 flex justify-center items-center mb-3">
               3
             </div>
             <h3 class="font-bold text-xl mb-2 text-secondary">
-              Create a listing & Manage Applicants
+              Manage Applicants
             </h3>
             <p class="text-center">
               Get notified as soon as an application comes in. Observe the
-              applicants' profiles, compare them and select your perfect match.
+              applicants' profiles, compare them and select your perfect match. 
+              <p class="text-center text-secondary">
+              Have fun with your new flatmate!</p>
             </p>
           </div>
         </div>

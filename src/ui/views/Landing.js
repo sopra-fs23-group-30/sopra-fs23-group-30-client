@@ -104,10 +104,10 @@ const Landing = () => {
         The most popular platform for finding your perfect flatmate by simplifying the application process for all
       </p>
       <p class="font-normal mb-7 text-primary">
-        Welcome to Upsearch, where finding and listing apartments has never been easier.
-        Our platform simplifies the entire process, allowing you to effortlessly search for your dream apartment or conveniently 
-        list your own. Say goodbye to writing or multiple applications, as our streamlined system enables you to apply or with 
-        just one profile and a single click. Discover your perfect home or flatmate today!
+      Welcome to Upsearch, where finding and listing apartments has never been easier.
+      Our platform simplifies the entire process, allowing you to effortlessly search for your dream apartment or conveniently
+      list your own. Say goodbye to writing or handling multiple applications, as our streamlined system enables you to apply and accept with
+      just one profile and a single click. Discover your perfect home or flatmate today!
       </p>
       <div class="">
       <button class="bg-secondary px-6 py-3 border-2 border-secondary rounded-lg text-white mr-2 mb-2">
@@ -134,18 +134,17 @@ const Landing = () => {
     <div class="flex md:block mt-8 md:mt-0 md:flex-1 justify-center justify-between text-center">
       <div>
       <img
-  src="https://imgtr.ee/images/2023/05/17/vh2Qx.png"
-  className="w-30 h-30 justify-center justify-between items-center hidden md:flex"
-  alt="upsearch Logo"
-/>
+        src="https://imgtr.ee/images/2023/05/17/vh2Qx.png"
+        className="w-30 h-30 justify-center justify-between items-center hidden md:flex"
+        alt="upsearch Logo"
+      />
 
     </div>
     </div>
   </section>
 
-  <hr className="w-96 h-0.5 mx-auto my-4 bg-secondary border-0 rounded md:my-10 dark:bg-gray-700" />
   
-  <section id="features" class="h-screen lg:px-40 sm:px-10 pt-2 mb-10">
+  <section id="features" class="h-screen lg:px-40 sm:px-10 pt-10 mb-10">
     <h2 class="text-secondary font-bold bg-underline2 text-3xl pb-5 justify-center justify-between text-center">Have a look!</h2>
     <div className="md:grid">
       <div className="h-96 lg:h-full flex flex-wrap">
