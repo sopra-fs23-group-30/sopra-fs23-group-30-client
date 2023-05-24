@@ -30,7 +30,6 @@ export default function ProfilePage(props) {
       setDebtDocumentError("");
       formData.append("document", acceptedDocument[0]);
       setCurrentDocument(acceptedDocument[0]);
-      console.log(acceptedDocument[0]);
     }
   }, []);
 
@@ -187,6 +186,12 @@ export default function ProfilePage(props) {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+
+    if(file.size > 1048576){
+      alert("File is too big! (over 1MB)");
+      return;
+   };
+
     const fileType = file.type;
     if(!fileType.match('image.*')) {
       setPictureUploadError("Error: Only images can be uploaded");

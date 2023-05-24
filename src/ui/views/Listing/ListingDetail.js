@@ -123,8 +123,6 @@ export default function ListingDetail() {
 
   const handleDeleteImage = (imageUrl) => {
     let tempImages = imageUrls.filter((image) => {
-      console.log(image);
-      console.log(imageUrl);
       return image.imageURL !== imageUrl;
     });
     setImageUrls(tempImages);

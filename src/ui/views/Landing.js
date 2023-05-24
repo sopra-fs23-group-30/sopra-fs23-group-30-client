@@ -16,8 +16,7 @@ const Landing = () => {
       headers: { Authorization: `Bearer ` },
     };
     let response = await api.get("/listingpreviews",config);
-
-    console.log(response)
+    
     if (response.status !== 200) {
       toast("Fetch unsuccessful", {
         duration: 4000,
