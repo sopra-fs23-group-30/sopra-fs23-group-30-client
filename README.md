@@ -16,6 +16,11 @@ Join us in revolutionizing the flat search experience for students in high-deman
 - FrontEnd Framework [React](https://react.dev/).
 - FrontEnd Styling Framework [Tailwind CSS](https://tailwindcss.com/)
 
+## High-level components 
+1. [API-Controllers](https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-server/tree/main/src/main/java/ch/uzh/ifi/hase/soprafs23/controller) (The API Controllers are the endpoints of our system. They retrieve https requests, which must be authorizes using the [JWT Token Techonology](https://jwt.io/). 
+2. [Backend-Data-Services](https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-server/tree/main/src/main/java/ch/uzh/ifi/hase/soprafs23/service) (Our DataServices are in direct communication with our repositories, which access our databases data, modify it and transform it into DTO's, which we then send back to the FrontEnd for display)
+3. [WebSecurityConfig](https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-server/blob/main/src/main/java/ch/uzh/ifi/hase/soprafs23/config/WebSecurityConfig.java) (This component manages which endpoints are protected and need authorization for accessing and which not. This component also sets an automatic PreRequestFilter, which checks specified requests automatically regarding if they fulfill our authority check)
+4. [WebSocketFactory](https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-client/blob/main/src/helpers/WebSocketFactory.js) (This factory is a FrontEnd component, which sets up and handles the WebSocket connections we need for our live-feature)  
 
 ## Launch & Deployment:
 **For Running our Webapp**
