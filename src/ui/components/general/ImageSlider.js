@@ -6,7 +6,7 @@ function ImageSlider(props) {
       {props.imageUrls ? (
         <Carousel slideInterval={5000}>
           {props.imageUrls.map((obj) => (
-            <img src={obj.imageURL} alt="flat room img" />
+            <img key={obj.imageURL} src={obj.imageURL} alt="flat room img" />
           ))}
         </Carousel>
       ) : (
