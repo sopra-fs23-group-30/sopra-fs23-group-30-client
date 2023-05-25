@@ -50,12 +50,18 @@ function ImageSlider(props) {
 
   const noImage = () => {
     return (
-      <div className="p-2 items-center justify-center">No images present</div>
+      <div className="w-full aspect-[8/3] p-2 items-center justify-center text-sm">
+        No images present
+      </div>
     );
   };
 
   const singleImage = () => {
-    return <div className="w-full aspect-[4/3] p-2">{simpleImage(0)}</div>;
+    return (
+      <div className="w-full aspect-[8/3] justify-center p-2">
+        {simpleImage(0)}
+      </div>
+    );
   };
 
   const doubleImage = () => {
