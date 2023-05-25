@@ -399,7 +399,7 @@ export default function ListingDetail() {
           <>
             <ImageUploader
               onChange={(e) => {
-                imageFiles(e);
+                setImageFiles(e);
               }}
             />
             <button
