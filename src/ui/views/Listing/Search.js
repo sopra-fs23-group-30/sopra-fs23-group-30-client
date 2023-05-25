@@ -11,6 +11,7 @@ import { Fragment, useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 import { Link } from "react-router-dom";
+import ImageElement from "ui/components/general/ImageElement";
 
 const sortOptions = [
   {
