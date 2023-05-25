@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 import { useNavigate, useParams } from "react-router-dom";
 import EditableCheckbox from "ui/components/general/EditableCheckbox";
-import EditableImageDisplay from "ui/components/general/EditableImageDisplay";
+import ImageSlider from "ui/components/general/ImageSlider";
 import Map from "ui/components/listing/Map";
 import TransparentEditableAddress from "ui/components/listing/TransparentEditableAddress";
 import TransparendEditableString from "ui/components/listing/TransparentEditableString";
@@ -433,12 +433,7 @@ export default function ListingDetail() {
           </li>
         </ol>
       </nav>
-      <EditableImageDisplay
-        images={imageUrls}
-        canEdit={canEdit}
-        handleAddImage={handleAddImage}
-        handleDeleteImage={handleDeleteImage}
-      />
+      <ImageSlider images={imageUrls} />
       {titleInformationRow()}
       {descriptionSection()}
       {listerSection()}

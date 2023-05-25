@@ -122,7 +122,9 @@ export default function HowItWorks() {
               Create a listing
             </h3>
             <p class="text-center">
-              List you apartment. Add photos, a monthly rent, describe it and add its location.</p>
+              List you apartment. Add photos, a monthly rent, describe it and
+              add its location.
+            </p>
           </div>
           <div class="flex-1 mx-8 flex flex-col items-center my-4">
             <div class="border-2 rounded border-primary text-secondary font-bold h-12 w-12 flex justify-center items-center mb-3">
@@ -133,9 +135,10 @@ export default function HowItWorks() {
             </h3>
             <p class="text-center">
               Get notified as soon as an application comes in. Observe the
-              applicants' profiles, compare them and select your perfect match. 
+              applicants' profiles, compare them and select your perfect match.
               <p class="text-center text-secondary">
-              Have fun with your new flatmate!</p>
+                Have fun with your new flatmate!
+              </p>
             </p>
           </div>
         </div>

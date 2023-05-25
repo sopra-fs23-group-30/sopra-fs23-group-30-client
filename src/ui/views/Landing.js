@@ -3,8 +3,8 @@ import { api } from "helpers/api";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
-import EditableImageDisplay from "ui/components/general/EditableImageDisplay";
 import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
+import ImageSlider from "ui/components/general/ImageSlider";
 
 const Landing = () => {
   const [listings, setListings] = useState([]);
@@ -54,12 +54,7 @@ const Landing = () => {
               className="col-span-3 xl:col-span-3 text-white rounded flex items-center justify-center"
               style={{ minHeight: "200px" }}
             >
-              <EditableImageDisplay
-                images={JSON.parse(listing.imagesJson)}
-                canEdit={false}
-                handleAddImage={() => {}}
-                handleDeleteImage={() => {}}
-              />
+              <ImageSlider images={JSON.parse(listing.imagesJson)} />
             </div>
           </div>
           <div className="flex flex-col items-center justify-center text-center">
@@ -139,7 +134,6 @@ const Landing = () => {
           </div>
         </div>
       </section>
-
       <section id="features" className="h-screen lg:px-40 sm:px-10 pt-10 mb-10">
         <h2 className="text-secondary font-bold bg-underline2 text-3xl pb-5 justify-center justify-between text-center">
           Have a look!

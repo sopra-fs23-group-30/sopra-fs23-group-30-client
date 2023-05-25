@@ -36,6 +36,10 @@ module.exports = {
       fontFamily: {
         sans: ["Poppins", "sans-serif"],
       },
+      aspectRatio: {
+        "8/3": "8 / 3",
+        "4/3": "4 / 3",
+      },
     },
   },
   plugins: [
