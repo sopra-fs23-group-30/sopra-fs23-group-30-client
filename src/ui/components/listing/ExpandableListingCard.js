@@ -231,7 +231,7 @@ function ExpandableListingCard(props) {
 
                             <a
                               href={"/profile/" + applicant.applicantId}
-                              class="text-center text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm  hover:underline focus:outline-none dark:focus:ring-blue-800"
+                              className="text-center text-secondary bg-white focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm  hover:underline focus:outline-none dark:focus:ring-blue-800"
                               style={{ whiteSpace: "nowrap" }}
                             >
                               See Profile

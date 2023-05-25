@@ -412,7 +412,7 @@ export default function ListingDetail() {
     <div className="py-2.5 sm:px-4 rounded px-4 lg:mx-48 flex flex-col gap-4">
       <nav className="flex" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3">
-          <div class="group">
+          <div className="group">
             <button
               onClick={() => navigate(-1)}
               className="flex items-center text-sm font-medium text-gray-700 dark:text-gray-400 dark:hover:text-white group-hover:text-blue-600"
