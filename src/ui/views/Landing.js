@@ -132,7 +132,7 @@ const Landing = () => {
         <div className="flex md:block mt-8 md:mt-0 md:flex-1 justify-center justify-between text-center">
           <div>
             <img
-              src="https://imgtr.ee/images/2023/05/17/vh2Qx.png"
+              src="https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-client/assets/91197246/f863d4aa-cb5a-4cfa-8f4f-d9d98774f8a4"
               className="w-30 h-30 justify-center justify-between items-center hidden md:flex"
               alt="upsearch Logo"
             />

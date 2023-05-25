@@ -78,7 +78,7 @@ function NavbarSignedIn() {
       <Navbar fluid={true} rounded={true} className="px-4 lg:mx-48">
         <Navbar.Brand href="/">
           <img
-            src="https://imgtr.ee/images/2023/05/17/vh2Qx.png"
+            src="https://github.com/sopra-fs23-group-30/sopra-fs23-group-30-client/assets/91197246/f863d4aa-cb5a-4cfa-8f4f-d9d98774f8a4"
             className="mr-3 h-6 sm:h-9"
             alt="Upsearch Logo"
           />
