@@ -157,7 +157,7 @@ export default function ProfilePage(props) {
     }
 
     const fileType = file.type;
-    if (!fileType.match("image.*")) {
+    if (!fileType.match("image/*")) {
       setPictureUploadError("Error: Only images can be uploaded");
     } else {
       setPictureUploadError("");
@@ -216,7 +216,7 @@ export default function ProfilePage(props) {
     }
 
     loadProfile(params.id);
-    props.updateNavbar();
+    window.location.reload(true);
   };
 
   return (
@@ -280,21 +280,14 @@ export default function ProfilePage(props) {
       <div className="flex flex-col xl:grid grid-cols-5 grid-rows-1 ml-4 mt-4">
         <div className="col-span-1 row-span-1 h-full flex flex-col items-center w-full">
           <h2 className="font-sm mb-2 text-sm">Photo</h2>
-          {profileData?.profilePictureURL && (
-            <img
-              src={profileData?.profilePictureURL}
-              alt="face of lister / searcher"
-              className="rounded-full bg-gray-900 w-36 aspect-square text-white flex items-center justify-center object-cover"
-            />
-          )}
-
-          {!profileData?.profilePictureURL && (
-            <img
-              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-              alt="face of lister / searcher"
-              className="rounded-full bg-gray-900 w-36 aspect-square text-white flex items-center justify-center"
-            />
-          )}
+          <img
+            src={
+              profileData?.profilePictureURL ??
+              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+            }
+            alt="face of lister / searcher"
+            className="rounded-full bg-gray-900 w-36 aspect-square text-white flex items-center justify-center object-cover"
+          />
           {canEdit && (
             <div className="flex flex-col text-center gap-2 p-4">
               <div>
