@@ -7,13 +7,13 @@ function ImageElement(props) {
     setImages(props.images);
   }, [props]);
 
-  if (images == 0) {
+  if (images === 0) {
     return (
       <div className="items-center justify-center text-sm">
         No images present
       </div>
     );
-  } else if (images.length == 1) {
+  } else if (images.length === 1) {
     return (
       <div className="h-200 m-2 items-center">
         <img
@@ -23,7 +23,7 @@ function ImageElement(props) {
         />
       </div>
     );
-  } else if (images.length == 2) {
+  } else if (images.length === 2) {
     return (
       <div className="h-200 grid grid-rows-1 grid-cols-2 gap-4 m-2 items-center">
         <img
@@ -38,7 +38,7 @@ function ImageElement(props) {
         />
       </div>
     );
-  } else if (images.length == 3) {
+  } else if (images.length === 3) {
     return (
       <div className="h-200 grid grid-rows-2 grid-cols-4 gap-4 m-2 items-center">
         <img
