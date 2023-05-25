@@ -34,10 +34,13 @@ function ImageSlider(props) {
           backgroundImage: "url(" + images[index].url + ")",
           backgroundSize: "cover",
         }}
-        className="w-full h-full object-cover rounded"
+        className="relative w-full h-full object-cover rounded"
       >
         {canEdit ? (
-          <XMarkIcon onClick={props.onChange(images[index].url)} />
+          <XMarkIcon
+            className="absolute top-2 right-2 w-10"
+            onClick={props.onChange(images[index].url)}
+          />
         ) : (
           <></>
         )}
