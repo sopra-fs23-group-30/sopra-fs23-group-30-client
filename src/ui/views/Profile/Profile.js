@@ -90,6 +90,7 @@ export default function ProfilePage(props) {
     existingData.firstname = newVal;
     setProfileData(existingData);
     updateProfile(lifespans, getUnchangedFileBlob(), getUnchangedFileBlob());
+    window.location.reload(true);
   };
 
   const handleLastnameChange = (newVal) => {
@@ -162,6 +163,7 @@ export default function ProfilePage(props) {
     } else {
       setPictureUploadError("");
       updateProfile(lifespans, file, getUnchangedFileBlob());
+      window.location.reload(true);
     }
   };
 
@@ -216,7 +218,6 @@ export default function ProfilePage(props) {
     }
 
     loadProfile(params.id);
-    window.location.reload(true);
   };
 
   return (
