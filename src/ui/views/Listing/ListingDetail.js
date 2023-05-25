@@ -5,6 +5,7 @@ import { decodeToken } from "react-jwt";
 import { useNavigate, useParams } from "react-router-dom";
 import EditableCheckbox from "ui/components/general/EditableCheckbox";
 import ImageSlider from "ui/components/general/ImageSlider";
+import ImageUploader from "ui/components/general/ImageUploader";
 import Map from "ui/components/listing/Map";
 import TransparentEditableAddress from "ui/components/listing/TransparentEditableAddress";
 import TransparendEditableString from "ui/components/listing/TransparentEditableString";
@@ -17,6 +18,7 @@ export default function ListingDetail() {
   const [imageUrls, setImageUrls] = useState([]);
   const [imageFiles, setImageFiles] = useState([]);
   const navigate = useNavigate();
+  const [isEditingImages, setIsEditingImages] = useState(false);
 
   let params = useParams();
 
@@ -381,6 +383,53 @@ export default function ListingDetail() {
     );
   };
 
+  const editableImages = () => {
+    if (canEdit) {
+      if (!isEditingImages) {
+        return (
+          <>
+            <ImageSlider
+              images={imageUrls}
+              canEdit={true}
+              onChange={handleDeleteImage}
+            />
+            <button
+              onClick={() => setIsEditingImages(true)}
+              type="button"
+              className="w-full font-bold md:w-1/4 text-white bg-secondary hover:bg-primary focus:ring-4 focus:ring-primary-300 rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none dark:focus:ring-blue-800"
+            >
+              Upload Images
+            </button>
+          </>
+        );
+      } else {
+        return (
+          <>
+            <ImageUploader
+              onChange={(e) => {
+                imageFiles(e);
+              }}
+            />
+            <button
+              onClick={() => {
+                setIsEditingImages(false);
+                updateListing();
+              }}
+              type="button"
+              className="w-full font-bold md:w-1/4 text-white bg-secondary hover:bg-primary focus:ring-4 focus:ring-primary-300 rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none dark:focus:ring-blue-800"
+            >
+              Confirm
+            </button>
+          </>
+        );
+      }
+    } else {
+      return (
+        <ImageSlider images={imageUrls} canEdit={false} onChange={() => {}} />
+      );
+    }
+  };
+
   return (
     <div className="py-2.5 sm:px-4 rounded px-4 lg:mx-48 flex flex-col gap-4">
       <nav className="flex" aria-label="Breadcrumb">
@@ -433,7 +482,7 @@ export default function ListingDetail() {
           </li>
         </ol>
       </nav>
-      <ImageSlider images={imageUrls} />
+      {editableImages()}
       {titleInformationRow()}
       {descriptionSection()}
       {listerSection()}

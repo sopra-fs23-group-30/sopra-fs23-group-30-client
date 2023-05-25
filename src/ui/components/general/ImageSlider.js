@@ -1,12 +1,18 @@
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  XMarkIcon,
+} from "@heroicons/react/20/solid";
 import React, { useEffect, useState } from "react";
 
 function ImageSlider(props) {
   const [firstImage, setFirstImage] = useState(0);
+  const [canEdit, setCanEdit] = useState(false);
   const [images, setImages] = useState(props.images);
 
   useEffect(() => {
     setImages(props.images);
+    setCanEdit(props.canEdit);
   }, [props, firstImage]);
 
   const prev = () => {
@@ -29,7 +35,13 @@ function ImageSlider(props) {
           backgroundSize: "cover",
         }}
         className="w-full h-full object-cover rounded"
-      ></div>
+      >
+        {canEdit ? (
+          <XMarkIcon onClick={props.onChange(images[index].url)} />
+        ) : (
+          <></>
+        )}
+      </div>
     );
   };
 

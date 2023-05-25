@@ -54,7 +54,11 @@ const Landing = () => {
               className="col-span-3 xl:col-span-3 text-white rounded flex items-center justify-center"
               style={{ minHeight: "200px" }}
             >
-              <ImageSlider images={JSON.parse(listing.imagesJson)} />
+              <ImageSlider
+                images={JSON.parse(listing.imagesJson)}
+                canEdit={false}
+                onChange={() => {}}
+              />
             </div>
           </div>
           <div className="flex flex-col items-center justify-center text-center">
