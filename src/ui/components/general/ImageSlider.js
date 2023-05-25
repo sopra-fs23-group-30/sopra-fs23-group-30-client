@@ -92,11 +92,11 @@ function ImageSlider(props) {
   };
 
   const selector = () => {
-    if (images.length == 0) {
+    if (images.length === 0) {
       return noImage();
-    } else if (images.length == 1) {
+    } else if (images.length === 1) {
       return singleImage();
-    } else if (images.length == 2) {
+    } else if (images.length === 2) {
       return doubleImage();
     } else {
       return lessThanFiveImage();

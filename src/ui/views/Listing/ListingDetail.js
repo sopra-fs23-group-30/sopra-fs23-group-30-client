@@ -114,14 +114,6 @@ export default function ListingDetail() {
     updateListing();
   };
 
-  const handleAddImage = (event) => {
-    const file = event.target.files[0];
-    let tempImages = imageFiles;
-    tempImages.push(file);
-    setImageFiles(tempImages);
-    updateListing();
-  };
-
   const handleDeleteImage = (imageUrl) => {
     let tempImages = imageUrls.filter((image) => {
       return image.imageURL !== imageUrl;
