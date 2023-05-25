@@ -15,13 +15,17 @@ function ImageElement(props) {
     );
   } else if (images.length == 1) {
     return (
-      <div className="w-full m-2 items-center">
-        <img className="object-cover rounded" alt="test" src={images[0]} />
+      <div className="h-200 m-2 items-center">
+        <img
+          className="object-cover rounded"
+          alt="test"
+          src={images[0].imageURL}
+        />
       </div>
     );
   } else if (images.length == 2) {
     return (
-      <div className="w-full grid grid-rows-1 grid-cols-2 gap-4 m-2 items-center">
+      <div className="h-200 grid grid-rows-1 grid-cols-2 gap-4 m-2 items-center">
         <img
           className="row-span-1 col-span-1 object-cover rounded"
           alt="test"
@@ -36,7 +40,7 @@ function ImageElement(props) {
     );
   } else if (images.length == 3) {
     return (
-      <div className="w-full grid grid-rows-2 grid-cols-4 gap-4 m-2 items-center">
+      <div className="h-200 grid grid-rows-2 grid-cols-4 gap-4 m-2 items-center">
         <img
           className="row-span-3 col-span-3 object-cover rounded"
           alt="test"
@@ -56,7 +60,7 @@ function ImageElement(props) {
     );
   } else if (images.length >= 4) {
     return (
-      <div className="w-full grid grid-rows-3 grid-cols-4 gap-4 m-2">
+      <div className="h-200 grid grid-rows-3 grid-cols-4 gap-4 m-2">
         <img
           className="row-span-3 col-span-3 object-cover rounded"
           alt="test"
