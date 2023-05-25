@@ -7,12 +7,10 @@ import React, { useEffect, useState } from "react";
 
 function ImageSlider(props) {
   const [firstImage, setFirstImage] = useState(0);
-  const [canEdit, setCanEdit] = useState(false);
   const [images, setImages] = useState(props.images);
 
   useEffect(() => {
     setImages(props.images);
-    setCanEdit(props.canEdit);
   }, [props, firstImage]);
 
   const prev = () => {
@@ -35,16 +33,7 @@ function ImageSlider(props) {
           backgroundSize: "cover",
         }}
         className="relative w-full h-full object-cover rounded"
-      >
-        {canEdit ? (
-          <XMarkIcon
-            className="absolute top-2 right-2 w-10"
-            onClick={props.onChange(images[index].imageURL)}
-          />
-        ) : (
-          <></>
-        )}
-      </div>
+      ></div>
     );
   };
 

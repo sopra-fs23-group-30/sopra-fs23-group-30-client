@@ -117,11 +117,7 @@ export default function Search() {
             className="col-span-3 xl:col-span-3 text-white rounded flex items-center justify-center"
             style={{ minHeight: "200px" }}
           >
-            <ImageSlider
-              images={JSON.parse(listing.imagesJson)}
-              canEdit={false}
-              onChange={() => {}}
-            />
+            <ImageSlider images={JSON.parse(listing.imagesJson)} />
           </div>
           <div className="col-span-2 xl:col-span-2 grid grid-rows-1 lg:grid-cols-2 my-2">
             <div className="col-span-1 flex flex-col justify-center mb-4 lg:mb-0">

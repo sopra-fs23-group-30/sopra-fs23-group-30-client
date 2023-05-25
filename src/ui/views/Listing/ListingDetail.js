@@ -114,14 +114,6 @@ export default function ListingDetail() {
     updateListing();
   };
 
-  const handleDeleteImage = (imageUrl) => {
-    let tempImages = imageUrls.filter((image) => {
-      return image.imageURL !== imageUrl;
-    });
-    setImageUrls(tempImages);
-    updateListing();
-  };
-
   const updateListing = async () => {
     let toUpdateObj = {
       title: listingData.title,
@@ -380,11 +372,7 @@ export default function ListingDetail() {
       if (!isEditingImages) {
         return (
           <>
-            <ImageSlider
-              images={imageUrls}
-              canEdit={true}
-              onChange={handleDeleteImage}
-            />
+            <ImageSlider images={imageUrls} />
             <button
               onClick={() => setIsEditingImages(true)}
               type="button"
@@ -416,9 +404,7 @@ export default function ListingDetail() {
         );
       }
     } else {
-      return (
-        <ImageSlider images={imageUrls} canEdit={false} onChange={() => {}} />
-      );
+      return <ImageSlider images={imageUrls} />;
     }
   };
 
