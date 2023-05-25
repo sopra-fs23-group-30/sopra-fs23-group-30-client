@@ -231,15 +231,15 @@ export default function ProfilePage(props) {
               <svg
                 fill="none"
                 stroke="currentColor"
-                stroke-width="3"
+                strokeWidth="3"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
                 className="w-4 h-4 mr-2 hover:text-blue-600 text-gray-400 group-hover:text-blue-600"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
                 ></path>
               </svg>
@@ -307,7 +307,7 @@ export default function ProfilePage(props) {
                   onChange={handleFileChange}
                 />
                 <label
-                  for="img"
+                  htmlFor="img"
                   className="text-white text-center focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 bg-secondary hover:bg-primary focus:outline-none"
                 >
                   Change Photo
@@ -440,15 +440,15 @@ export default function ProfilePage(props) {
                   <svg
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
+                    strokeWidth="2"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
                     aria-hidden="true"
                     className="pl-1 w-5 h-5"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
                     ></path>
                   </svg>
@@ -466,7 +466,7 @@ export default function ProfilePage(props) {
                     <input {...getInputProps()} />
                     <div className="flex items-center justify-center w-full">
                       <label
-                        for="dropzone-file"
+                        htmlFor="dropzone-file"
                         className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
                       >
                         {currentDocument ? (
@@ -484,9 +484,9 @@ export default function ProfilePage(props) {
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
                                 d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                               ></path>
                             </svg>
