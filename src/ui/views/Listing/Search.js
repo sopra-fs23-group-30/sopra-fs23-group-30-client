@@ -11,7 +11,6 @@ import { Fragment, useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 import { Link } from "react-router-dom";
-import ImageSlider from "ui/components/general/ImageSlider";
 
 const sortOptions = [
   {
@@ -117,7 +116,7 @@ export default function Search() {
             className="col-span-3 xl:col-span-3 text-white rounded flex items-center justify-center"
             style={{ minHeight: "200px" }}
           >
-            <ImageSlider images={JSON.parse(listing.imagesJson)} />
+            <ImageElement images={JSON.parse(listing.imagesJson)} />
           </div>
           <div className="col-span-2 xl:col-span-2 grid grid-rows-1 lg:grid-cols-2 my-2">
             <div className="col-span-1 flex flex-col justify-center mb-4 lg:mb-0">

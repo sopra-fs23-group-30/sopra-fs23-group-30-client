@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 import { useNavigate, useParams } from "react-router-dom";
 import EditableCheckbox from "ui/components/general/EditableCheckbox";
-import ImageSlider from "ui/components/general/ImageSlider";
+import ImageElement from "ui/components/general/ImageElement";
 import ImageUploader from "ui/components/general/ImageUploader";
 import Map from "ui/components/listing/Map";
 import TransparentEditableAddress from "ui/components/listing/TransparentEditableAddress";
@@ -372,7 +372,7 @@ export default function ListingDetail() {
       if (!isEditingImages) {
         return (
           <>
-            <ImageSlider images={imageUrls} />
+            <ImageElement images={imageUrls} />
             <button
               onClick={() => setIsEditingImages(true)}
               type="button"
@@ -404,7 +404,7 @@ export default function ListingDetail() {
         );
       }
     } else {
-      return <ImageSlider images={imageUrls} />;
+      return <ImageElement images={imageUrls} />;
     }
   };
 
