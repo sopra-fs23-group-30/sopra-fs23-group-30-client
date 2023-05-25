@@ -4,8 +4,7 @@ import toast from "react-hot-toast";
 import { decodeToken } from "react-jwt";
 import { useNavigate, useParams } from "react-router-dom";
 import EditableCheckbox from "ui/components/general/EditableCheckbox";
-import ImageElement from "ui/components/general/ImageElement";
-import ImageUploader from "ui/components/general/ImageUploader";
+import ImageSlider from "ui/components/general/ImageSlider";
 import Map from "ui/components/listing/Map";
 import TransparentEditableAddress from "ui/components/listing/TransparentEditableAddress";
 import TransparendEditableString from "ui/components/listing/TransparentEditableString";
@@ -16,9 +15,8 @@ export default function ListingDetail() {
   const [canEdit, setCanEdit] = useState(false);
   const [hasApplied, setHasApplied] = useState(false);
   const [imageUrls, setImageUrls] = useState([]);
-  const [imageFiles, setImageFiles] = useState([]);
+  const [imageFiles] = useState([]);
   const navigate = useNavigate();
-  const [isEditingImages, setIsEditingImages] = useState(false);
 
   let params = useParams();
 
@@ -182,6 +180,7 @@ export default function ListingDetail() {
     }
     setListingData(response.data);
     setImageUrls(JSON.parse(response.data.imagesJson));
+    console.log(JSON.parse(response.data.imagesJson));
     setCanEdit(response.data.listerId === userId);
   };
 
@@ -233,7 +232,7 @@ export default function ListingDetail() {
             <button
               onClick={() => handleApply()}
               type="button"
-              className="w-full font-bold md:w-1/4 text-white bg-secondary hover:bg-primary focus:ring-4 focus:ring-primary-300 rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none dark:focus:ring-blue-800"
+              className="h-10 w-full font-bold md:w-1/4 text-white bg-secondary hover:bg-primary focus:ring-4 focus:ring-primary-300 rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none dark:focus:ring-blue-800"
             >
               Apply
             </button>
@@ -367,45 +366,13 @@ export default function ListingDetail() {
     );
   };
 
-  const editableImages = () => {
-    if (canEdit) {
-      if (!isEditingImages) {
-        return (
-          <>
-            <ImageElement images={imageUrls} />
-            <button
-              onClick={() => setIsEditingImages(true)}
-              type="button"
-              className="w-full font-bold md:w-1/4 text-white bg-secondary hover:bg-primary focus:ring-4 focus:ring-primary-300 rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none dark:focus:ring-blue-800"
-            >
-              Upload Images
-            </button>
-          </>
-        );
-      } else {
-        return (
-          <>
-            <ImageUploader
-              onChange={(e) => {
-                setImageFiles(e);
-              }}
-            />
-            <button
-              onClick={() => {
-                setIsEditingImages(false);
-                updateListing();
-              }}
-              type="button"
-              className="w-full font-bold md:w-1/4 text-white bg-secondary hover:bg-primary focus:ring-4 focus:ring-primary-300 rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none dark:focus:ring-blue-800"
-            >
-              Confirm
-            </button>
-          </>
-        );
-      }
-    } else {
-      return <ImageElement images={imageUrls} />;
-    }
+  const images = () => {
+    return (
+      <ImageSlider
+        className="h-56 sm:h-96 xl:h-96 2xl:h-96"
+        imageUrls={imageUrls}
+      />
+    );
   };
 
   return (
@@ -460,7 +427,7 @@ export default function ListingDetail() {
           </li>
         </ol>
       </nav>
-      {editableImages()}
+      {images()}
       {titleInformationRow()}
       {descriptionSection()}
       {listerSection()}

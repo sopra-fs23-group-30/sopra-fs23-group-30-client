@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
-import ImageElement from "ui/components/general/ImageElement";
+import ImageSlider from "ui/components/general/ImageSlider";
 
 const Landing = () => {
   const [listings, setListings] = useState([]);
@@ -46,15 +46,13 @@ const Landing = () => {
   }, [listings, currentIndex]);
 
   const listingItem = (listing) => {
+    let imgUrls = JSON.parse(listing.imagesJson);
     return (
       <Link to={`/signup`}>
         <div className="rounded-lg p-4 mt-4 bg-white shadow-md">
           <div className="grid grid-cols-2 gap-3">
-            <div
-              className="col-span-3 xl:col-span-3 text-white rounded flex items-center justify-center"
-              style={{ minHeight: "200px" }}
-            >
-              <ImageElement images={JSON.parse(listing.imagesJson)} />
+            <div className="col-span-2">
+              <ImageSlider className="z-50 h-48" imageUrls={imgUrls} />
             </div>
           </div>
           <div className="flex flex-col items-center justify-center text-center">
