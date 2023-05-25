@@ -1,8 +1,4 @@
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  XMarkIcon,
-} from "@heroicons/react/20/solid";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
 import React, { useEffect, useState } from "react";
 
 function ImageSlider(props) {
