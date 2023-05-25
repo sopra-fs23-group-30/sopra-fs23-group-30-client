@@ -127,7 +127,7 @@ export default function MyApplications() {
             ) : (
               application.state !== "DECLINED" && (
                 <Dropdown
-                  className="text-center text-white bg-secondary hover:bg-primary focus:ring-4 focus:ring-primary-300 rounded-lg text-sm focus:outline-none dark:focus:ring-blue-800"
+                  className="text-center text-white bg-secondary focus:ring-4 focus:ring-primary-300 rounded-lg text-sm focus:outline-none dark:focus:ring-blue-800"
                   label="Actions"
                   dismissOnClick={false}
                 >
