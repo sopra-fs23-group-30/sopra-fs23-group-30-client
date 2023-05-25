@@ -39,7 +39,7 @@ function ImageSlider(props) {
         {canEdit ? (
           <XMarkIcon
             className="absolute top-2 right-2 w-10"
-            onClick={props.onChange(images[index].url)}
+            onClick={props.onChange(images[index].imageURL)}
           />
         ) : (
           <></>
