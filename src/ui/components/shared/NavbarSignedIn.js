@@ -6,6 +6,7 @@ import {
 import jwt_decode from "jwt-decode";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { api } from "helpers/api";
 
 const handleLogout = () => {
   localStorage.removeItem("authtoken");
@@ -51,27 +52,42 @@ function NavbarSignedIn() {
     setGoToProfileLink("/profile/" + claims.userId);
     setProfilePictureURL(claims.profilePictureURL);
     setFirstname(claims.firstname);
-    setProfileId(claims.userId)
-
+    setProfileId(claims.userId);
 
     connectApplications(claims.userId, handleChangedItems);
     return () => {
       disconnectApplications();
     };
-
   }, [handleChangedItems]);
 
-  const defaultPictureURL = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+  const defaultPictureURL =
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
   const renderAvatarImage = () => {
     return (
       <img
         className="object-cover h-10 w-10 rounded-full"
         alt="head of lister / searcher"
-        src={profilePictureURL ? profilePictureURL : defaultPictureURL}
+        src={profilePictureURL ?? defaultPictureURL}
       />
     );
   };
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      let response = await api.get("/profiles/" + profileId);
+      if (response.status !== 200) {
+        toast("Fetch unsuccessful", {
+          duration: 4000,
+          position: "top-right",
+          icon: "❌",
+        });
+      }
+      setProfilePictureURL(response.data.profilePictureURL);
+      setFirstname(response.data.firstname);
+    };
+    loadProfile();
+  }, [firstname, profileId, profilePictureURL]);
 
   return (
     <div className="bg-white w-full">
