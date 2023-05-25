@@ -114,7 +114,7 @@ function EditableLifespan(props) {
         <div className="flex flex-row">
           <label
             htmlFor="small-input"
-            className="block text-sm font-medium text-gray-900 dark:text-white"
+            className="block text-sm font-medium dark:text-white"
           >
             {props.label}
           </label>
@@ -162,7 +162,7 @@ function EditableLifespan(props) {
               value={lifespan.text}
               onChange={(e) => updateText(e.target.value)}
               placeholder="What did you do?"
-              className="h-7 block w-full p-2 text-gray-400 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500"
+              className={`h-7 block w-full p-2 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ${lifespan.isEditing ? 'text-black' : 'text-gray-400'}`}
             />
           </div>
           <div className="flex flex-row">
@@ -173,7 +173,7 @@ function EditableLifespan(props) {
               value={lifespan.fromDate}
               placeholder="From"
               onChange={(e) => updateFrom(e.target.value)}
-              class="h-7 block w-full p-2 text-gray-400 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500"
+              className={`h-7 block w-full p-2 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ${lifespan.isEditing ? 'text-black' : 'text-gray-400'}`}
             />
             <div className="mx-4">-</div>
             <input
@@ -183,7 +183,7 @@ function EditableLifespan(props) {
               placeholder="To"
               onChange={(e) => updateTo(e.target.value)}
               value={lifespan.toDate}
-              class="h-7 block w-full p-2 text-gray-400 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500"
+              className={`h-7 block w-full p-2 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-blue-500 focus:border-blue-500 ${lifespan.isEditing ? 'text-black' : 'text-gray-400'}`}
             />
           </div>
         </div>
